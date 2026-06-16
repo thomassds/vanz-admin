@@ -66,6 +66,7 @@ Clientes são os responsáveis (ex: pais de alunos). Cada cliente pode ter um ou
 ### ClientsPage — `/clients`
 
 Elementos:
+
 - Barra de filtros: input de busca (nome/documento), select de status (Ativo/Inativo)
 - Botão "Novo cliente"
 - Tabela de clientes com colunas: Nome, Documento, Status, Ações
@@ -75,6 +76,7 @@ Elementos:
 ### ClientDetailPage — `/clients/:id`
 
 Elementos:
+
 - Card com dados do cliente
 - Botão "Editar cliente"
 - Seção de dependentes com lista e botão "Adicionar dependente"
@@ -83,52 +85,52 @@ Elementos:
 ### ClientFormModal
 
 - Modal com formulário de criação/edição de cliente
-- Campos: Nome, Documento (CPF/CNPJ), Telefone (opcional), E-mail (opcional)
+- Campos: Todos campos da entidade do cliente
 - Botões: Cancelar / Salvar
 
 ### DependentFormModal
 
 - Modal com formulário de criação/edição de dependente
-- Campos: Nome, Documento, Data de nascimento (opcional)
+- Campos: Todos campos da entidade do dependente
 - Botões: Cancelar / Salvar
 
 ---
 
 ## Integração com API
 
-| Ação                  | Endpoint                           | Método   |
-| --------------------- | ---------------------------------- | -------- |
-| Listar clientes       | `/api/v1/clients`                  | GET      |
-| Criar cliente         | `/api/v1/clients`                  | POST     |
-| Atualizar cliente     | `/api/v1/clients/:id`              | PUT      |
-| Desativar cliente     | `/api/v1/clients/:id/disable`      | PUT      |
-| Listar dependentes    | `/api/v1/clients/dependents`       | GET      |
-| Criar dependente      | `/api/v1/clients/dependents`       | POST     |
-| Atualizar dependente  | `/api/v1/clients/dependents/:id`   | PUT      |
-| Excluir dependente    | `/api/v1/clients/dependents/:id`   | DELETE   |
+| Ação                 | Endpoint                         | Método |
+| -------------------- | -------------------------------- | ------ |
+| Listar clientes      | `/api/v1/clients`                | GET    |
+| Criar cliente        | `/api/v1/clients`                | POST   |
+| Atualizar cliente    | `/api/v1/clients/:id`            | PUT    |
+| Desativar cliente    | `/api/v1/clients/:id/disable`    | PUT    |
+| Listar dependentes   | `/api/v1/clients/dependents`     | GET    |
+| Criar dependente     | `/api/v1/clients/dependents`     | POST   |
+| Atualizar dependente | `/api/v1/clients/dependents/:id` | PUT    |
+| Excluir dependente   | `/api/v1/clients/dependents/:id` | DELETE |
 
 ### Parâmetros de listagem de clientes
 
-| Parâmetro | Tipo   | Obrigatório |
-| --------- | ------ | ----------- |
-| `page`    | int    | Sim         |
-| `limit`   | int    | Sim         |
-| `name`    | string | Não         |
-| `document`| string | Não         |
-| `status`  | string | Não         |
+| Parâmetro  | Tipo   | Obrigatório |
+| ---------- | ------ | ----------- |
+| `page`     | int    | Sim         |
+| `limit`    | int    | Sim         |
+| `name`     | string | Não         |
+| `document` | string | Não         |
+| `status`   | string | Não         |
 
 ---
 
 ## Estados das Telas
 
-| Estado          | Comportamento                                                  |
-| --------------- | -------------------------------------------------------------- |
-| Loading lista   | Skeleton na tabela                                             |
-| Lista vazia     | Ilustração + mensagem "Nenhum cliente cadastrado" + CTA        |
-| Erro de listagem| Mensagem de erro + botão "Tentar novamente"                    |
-| Loading modal   | Botão de salvar com spinner e desabilitado                     |
-| Sucesso cadastro| Toast "Cliente cadastrado com sucesso" + fechar modal          |
-| Confirmação exclusão | Dialog de confirmação antes de excluir/desativar         |
+| Estado               | Comportamento                                           |
+| -------------------- | ------------------------------------------------------- |
+| Loading lista        | Skeleton na tabela                                      |
+| Lista vazia          | Ilustração + mensagem "Nenhum cliente cadastrado" + CTA |
+| Erro de listagem     | Mensagem de erro + botão "Tentar novamente"             |
+| Loading modal        | Botão de salvar com spinner e desabilitado              |
+| Sucesso cadastro     | Toast "Cliente cadastrado com sucesso" + fechar modal   |
+| Confirmação exclusão | Dialog de confirmação antes de excluir/desativar        |
 
 ---
 
@@ -137,33 +139,33 @@ Elementos:
 ```ts
 // createClientSchema
 z.object({
-  name: z.string().min(2, 'Nome obrigatório'),
-  document: z.string().min(11, 'Documento inválido'),
+  name: z.string().min(2, "Nome obrigatório"),
+  document: z.string().min(11, "Documento inválido"),
   phone: z.string().optional(),
-  email: z.string().email('E-mail inválido').optional().or(z.literal('')),
-})
+  email: z.string().email("E-mail inválido").optional().or(z.literal("")),
+});
 
 // createDependentSchema
 z.object({
-  name: z.string().min(2, 'Nome obrigatório'),
-  document: z.string().min(11, 'Documento inválido'),
+  name: z.string().min(2, "Nome obrigatório"),
+  document: z.string().min(11, "Documento inválido"),
   birthDate: z.string().optional(),
-})
+});
 ```
 
 ---
 
 ## Erros Esperados
 
-| Código da API              | Mensagem para o usuário                               |
-| -------------------------- | ----------------------------------------------------- |
-| `CLIENT_ALREADY_EXISTS`    | "Já existe um cliente com este documento"             |
-| `CLIENT_NOT_FOUND`         | "Cliente não encontrado"                              |
-| `DEPENDENT_ALREADY_EXISTS` | "Já existe um dependente com este documento"          |
-| `DEPENDENT_NOT_FOUND`      | "Dependente não encontrado"                           |
-| `TENANT_ACCESS_DENIED`     | "Acesso negado"                                       |
-| `INVALID_CLIENT_DATA`      | Erros de campo exibidos inline                        |
-| `UNAUTHORIZED`             | Redirect para /login                                  |
+| Código da API              | Mensagem para o usuário                      |
+| -------------------------- | -------------------------------------------- |
+| `CLIENT_ALREADY_EXISTS`    | "Já existe um cliente com este documento"    |
+| `CLIENT_NOT_FOUND`         | "Cliente não encontrado"                     |
+| `DEPENDENT_ALREADY_EXISTS` | "Já existe um dependente com este documento" |
+| `DEPENDENT_NOT_FOUND`      | "Dependente não encontrado"                  |
+| `TENANT_ACCESS_DENIED`     | "Acesso negado"                              |
+| `INVALID_CLIENT_DATA`      | Erros de campo exibidos inline               |
+| `UNAUTHORIZED`             | Redirect para /login                         |
 
 ---
 

@@ -119,7 +119,79 @@ Para formulários com múltiplos passos (ex: Onboarding):
 
 ---
 
-# 6. Regras
+# 6. Máscaras de Input
+
+## Utilitário `formatTaxIdentifier`
+
+```ts
+// shared/utils/taxIdentifier.ts
+import { formatTaxIdentifier } from '@/shared/utils/taxIdentifier'
+```
+
+Detecta automaticamente CPF (≤ 11 dígitos) ou CNPJ (12–14 dígitos) e aplica a máscara correta:
+
+| Tipo | Máscara              | Exemplo              |
+| ---- | -------------------- | -------------------- |
+| CPF  | `000.000.000-00`     | `123.456.789-09`     |
+| CNPJ | `00.000.000/0000-00` | `12.345.678/0001-95` |
+
+A função aceita qualquer string (com ou sem máscara prévia) — strip de não-dígitos é feito internamente.
+Pode ser usada tanto para formatação de exibição quanto como máscara de digitação.
+
+## Utilitário `formatPhone`
+
+```ts
+// shared/utils/phone.ts
+import { formatPhone } from '@/shared/utils/phone'
+```
+
+Detecta automaticamente fixo (10 dígitos) ou celular (11 dígitos):
+
+| Tipo    | Máscara              | Exemplo            |
+| ------- | -------------------- | ------------------ |
+| Fixo    | `(00) 0000-0000`     | `(11) 3456-7890`   |
+| Celular | `(00) 00000-0000`    | `(11) 99999-9999`  |
+
+---
+
+## Padrão com React Hook Form (`Controller`)
+
+Campos com máscara não podem usar `register` diretamente porque o `onChange` nativo não formata o valor. Usar `Controller`:
+
+```tsx
+import { useForm, Controller } from 'react-hook-form'
+import { formatTaxIdentifier } from '@/shared/utils/taxIdentifier'
+
+const { control } = useForm<FormData>({ resolver: zodResolver(schema) })
+
+<Controller
+  name="taxIdentifier"
+  control={control}
+  render={({ field }) => (
+    <input
+      type="text"
+      placeholder="000.000.000-00"
+      value={field.value ?? ''}
+      onChange={(e) => field.onChange(formatTaxIdentifier(e.target.value))}
+      onBlur={field.onBlur}
+    />
+  )}
+/>
+```
+
+## Schema Zod para `taxIdentifier`
+
+O valor armazenado e submetido à API é a string **formatada** (com máscara). O mínimo do Zod deve refletir o tamanho mínimo formatado:
+
+```ts
+taxIdentifier: z.string().min(14, 'Documento inválido'),
+// CPF formatado tem 14 chars: "000.000.000-00"
+// CNPJ formatado tem 18 chars: "00.000.000/0000-00"
+```
+
+---
+
+# 7. Regras
 
 - Todo formulário usa React Hook Form + Zod — sem exceção
 - Nunca validar campos manualmente com `if (!value)` — usar schema
@@ -127,4 +199,5 @@ Para formulários com múltiplos passos (ex: Onboarding):
 - Erros exibidos inline abaixo do campo correspondente
 - Botão de submit desabilitado durante loading (`isLoading`)
 - Reset do formulário após submit bem-sucedido via `reset()`
-- Campos com máscara (CPF, CNPJ, telefone) usar formatação no `onChange` sem afetar o valor submetido (sem máscara para a API)
+- Campos com máscara usam `Controller` (não `register`) — o valor formatado é enviado à API
+- A formatação de `taxIdentifier` fica em `shared/utils/taxIdentifier.ts` — nunca inline no componente

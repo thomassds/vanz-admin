@@ -26,8 +26,14 @@ export const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = store.getState().auth.token
+  const token = localStorage.getItem('token')
   if (token) config.headers.Authorization = `Bearer ${token}`
+
+  // Todas as requisições autenticadas enviam o tenant no header X-API-KEY.
+  // O valor é o tenant.id persistido no localStorage após o login.
+  const tenantId = localStorage.getItem('tenantId')
+  if (tenantId) config.headers['X-API-KEY'] = tenantId
+
   return config
 })
 
@@ -35,7 +41,9 @@ axiosInstance.interceptors.response.use(
   (res) => res,
   (error) => {
     if (error.response?.status === 401) {
-      store.dispatch(logout())
+      localStorage.removeItem('token')
+      localStorage.removeItem('tenantId')
+      window.location.href = '/login'
     }
     return Promise.reject(error)
   },
@@ -146,10 +154,25 @@ O arquivo `.env.example` deve sempre conter todas as variáveis necessárias.
 
 ---
 
-# 8. Regras
+# 8. Autenticação e Headers
+
+Toda requisição autenticada envia dois headers obrigatórios:
+
+| Header          | Valor                            | Origem                          |
+| --------------- | -------------------------------- | ------------------------------- |
+| `Authorization` | `Bearer <token>`                 | `localStorage.getItem('token')` |
+| `X-API-KEY`     | `<tenant.id>`                    | `localStorage.getItem('tenantId')` |
+
+O `tenantId` é persistido em `localStorage` pelo `setCredentials` (authSlice) no momento do login e removido no `logout` e na limpeza por 401.
+
+Endpoints de auth (`/auth`, `/auth/*`) não enviam `X-API-KEY` porque o `tenantId` ainda não existe nesse momento — o interceptor só injeta o header `if (tenantId)`.
+
+---
+
+# 9. Regras
 
 - Nenhum componente faz chamada HTTP diretamente — apenas via RTK Query hooks
-- `tenantId` nunca enviado no body/query — é extraído do JWT no backend
+- `tenantId` nunca enviado no body/query — vai exclusivamente no header `X-API-KEY`
 - Paginação sempre com `page` e `limit`
 - Toda mutation invalida as tags correspondentes no RTK Query
 - Variáveis de ambiente sempre via `import.meta.env.VITE_*` — nunca hardcoded

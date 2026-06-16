@@ -8,6 +8,8 @@ const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'))
 const OnboardingPage = lazy(() => import('@/features/auth/pages/OnboardingPage'))
 const RecoveryPasswordPage = lazy(() => import('@/features/auth/pages/RecoveryPasswordPage'))
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
+const ClientsPage = lazy(() => import('@/features/clients/pages/ClientsPage'))
+const ClientDetailPage = lazy(() => import('@/features/clients/pages/ClientDetailPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 function PageLoader() {
@@ -63,6 +65,22 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<PageLoader />}>
                 <DashboardPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/clients',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ClientsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/clients/:id',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ClientDetailPage />
               </Suspense>
             ),
           },

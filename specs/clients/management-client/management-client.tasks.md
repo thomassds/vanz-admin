@@ -6,63 +6,75 @@
 
 ## Store
 
-- [ ] Criar `features/clients/store/clientsApi.ts` com endpoints:
-  - [ ] `getClients` (query com filtros e paginação)
-  - [ ] `createClient` (mutation)
-  - [ ] `updateClient` (mutation)
-  - [ ] `disableClient` (mutation)
-  - [ ] `getDependents` (query com filtro por clientId)
-  - [ ] `createDependent` (mutation)
-  - [ ] `updateDependent` (mutation)
-  - [ ] `deleteDependent` (mutation)
-- [ ] Registrar `clientsApi` no `app/store.ts`
+- [x] Criar `features/clients/store/clientsApi.ts` com endpoints:
+  - [x] `getClients` (query com filtros e paginação)
+  - [x] `getClient` (query por ID — necessário para ClientDetailPage)
+  - [x] `createClient` (mutation)
+  - [x] `updateClient` (mutation)
+  - [x] `disableClient` (mutation)
+  - [x] `getDependents` (query com filtro por clientId)
+  - [x] `createDependent` (mutation)
+  - [x] `updateDependent` (mutation)
+  - [x] `deleteDependent` (mutation)
+- [x] Registrar `clientsApi` no `app/store.ts`
 
 ---
 
 ## Types e Schemas
 
-- [ ] Criar `features/clients/types/client.types.ts` com interfaces: `Client`, `Dependent`, `ClientFilters`, `CreateClientDTO`, `CreateDependentDTO`
-- [ ] Criar `features/clients/schemas/create-client.schema.ts`
-- [ ] Criar `features/clients/schemas/create-dependent.schema.ts`
-- [ ] Criar `features/clients/utils/clientErrorMessages.ts`
+- [x] Criar `features/clients/types/client.types.ts` com interfaces: `Client`, `Dependent`, `ClientFilters`, `CreateClientDTO`, `UpdateClientDTO`, `CreateDependentDTO`, `UpdateDependentDTO`
+- [x] Criar `features/clients/schemas/create-client.schema.ts`
+- [x] Criar `features/clients/schemas/create-dependent.schema.ts`
+- [x] Criar `features/clients/utils/clientErrorMessages.ts`
+
+---
+
+## Componentes Compartilhados (criados em `shared/`)
+
+- [x] Criar `shared/hooks/useToast.ts`
+- [x] Criar `shared/components/Toast.tsx`
+- [x] Criar `shared/components/Modal.tsx`
+- [x] Criar `shared/components/ConfirmDialog.tsx`
 
 ---
 
 ## Componentes
 
-- [ ] Criar `features/clients/components/ClientsTable.tsx` (tabela com paginação e ações)
-- [ ] Criar `features/clients/components/ClientFilters.tsx` (inputs de busca e select de status)
-- [ ] Criar `features/clients/components/ClientFormModal.tsx` (modal de criar/editar cliente)
-- [ ] Criar `features/clients/components/DisableClientDialog.tsx` (confirmação de desativação)
-- [ ] Criar `features/clients/components/DependentsTable.tsx` (tabela de dependentes)
-- [ ] Criar `features/clients/components/DependentFormModal.tsx` (modal de criar/editar dependente)
-- [ ] Criar `features/clients/components/DeleteDependentDialog.tsx` (confirmação de exclusão)
+- [x] Criar `features/clients/components/ClientsTable.tsx` (tabela com paginação e ações)
+- [x] Criar `features/clients/components/ClientFilters.tsx` (inputs de busca e select de status)
+- [x] Criar `features/clients/components/ClientFormModal.tsx` (modal de criar/editar cliente)
+- [x] Criar `features/clients/components/DisableClientDialog.tsx` (confirmação de desativação)
+- [x] Criar `features/clients/components/DependentsTable.tsx` (tabela de dependentes)
+- [x] Criar `features/clients/components/DependentFormModal.tsx` (modal de criar/editar dependente)
+- [x] Criar `features/clients/components/DeleteDependentDialog.tsx` (confirmação de exclusão)
 
 ---
 
 ## Pages
 
-- [ ] Criar `features/clients/pages/ClientsPage.tsx`
-  - [ ] Compor `ClientFilters` + `ClientsTable`
-  - [ ] Botão "Novo cliente" abre `ClientFormModal`
-  - [ ] Default export
+- [x] Criar `features/clients/pages/ClientsPage.tsx`
+  - [x] Compor `ClientFilters` + `ClientsTable`
+  - [x] Botão "Novo cliente" abre `ClientFormModal`
+  - [x] Default export
 
-- [ ] Criar `features/clients/pages/ClientDetailPage.tsx`
-  - [ ] Card com dados do cliente
-  - [ ] Botão "Editar" abre `ClientFormModal` em modo edição
-  - [ ] Seção de dependentes com `DependentsTable`
-  - [ ] Default export
+- [x] Criar `features/clients/pages/ClientDetailPage.tsx`
+  - [x] Card com dados do cliente
+  - [x] Botão "Editar" abre `ClientFormModal` em modo edição
+  - [x] Seção de dependentes com `DependentsTable`
+  - [x] Default export
 
 ---
 
 ## Rotas
 
-- [ ] Adicionar rota `/clients` → `ClientsPage` (protegida)
-- [ ] Adicionar rota `/clients/:id` → `ClientDetailPage` (protegida)
+- [x] Adicionar rota `/clients` → `ClientsPage` (protegida)
+- [x] Adicionar rota `/clients/:id` → `ClientDetailPage` (protegida)
 
 ---
 
 ## Testes
+
+> Nota: os testes das APIs/componentes de clientes ainda não foram escritos.
 
 - [ ] Teste: listagem de clientes com sucesso
 - [ ] Teste: filtros aplicados na query

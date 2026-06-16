@@ -159,42 +159,100 @@ export const {
 
 ---
 
-# 6. Padrão de Store Root
+# 6. Persistência de Estado (redux-persist)
+
+O slice `auth` é persistido no `localStorage` via `redux-persist`. Os demais slices (ui, RTK Query) **não** são persistidos.
 
 ```ts
 // app/store.ts
 import { configureStore } from '@reduxjs/toolkit'
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import { authSlice } from '@/features/auth/store/authSlice'
-import { clientsApi } from '@/features/clients/store/clientsApi'
-import { contractsApi } from '@/features/contracts/store/contractsApi'
-import { receivablesApi } from '@/features/finances/store/receivablesApi'
 import { authApi } from '@/features/auth/store/authApi'
+
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['user', 'token', 'tenantId', 'isAuthenticated'],
+}
+
+const persistedAuthReducer = persistReducer(authPersistConfig, authSlice.reducer)
 
 export const store = configureStore({
   reducer: {
-    auth: authSlice.reducer,
-    [authApi.reducerPath]: authApi.reducer,
-    [clientsApi.reducerPath]: clientsApi.reducer,
-    [contractsApi.reducerPath]: contractsApi.reducer,
-    [receivablesApi.reducerPath]: receivablesApi.reducer,
+    auth: persistedAuthReducer,
+    // ...outros reducers
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      authApi.middleware,
-      clientsApi.middleware,
-      contractsApi.middleware,
-      receivablesApi.middleware,
-    ),
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Obrigatório: redux-persist despacha actions com valores não serializáveis
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(/* middlewares */),
 })
+
+export const persistor = persistStore(store)
+```
+
+O `persistor` é usado no `main.tsx` via `<PersistGate loading={null} persistor={persistor}>` para segurar a renderização até o estado ser reidratado do localStorage.
+
+### O que é persistido
+
+| Campo            | Motivo                                                    |
+| ---------------- | --------------------------------------------------------- |
+| `user`           | Exibir nome/avatar sem refetch ao recarregar a página     |
+| `token`          | Manter sessão ativa entre recargas                        |
+| `tenantId`       | Interceptor lê do localStorage para o header `X-API-KEY` |
+| `isAuthenticated`| ProtectedRoute sabe se o usuário está logado              |
+
+### O que NÃO é persistido
+
+- `ui` slice — o sidebar já recalcula o estado inicial via `window.innerWidth`
+- RTK Query caches — dados da API sempre devem ser buscados frescos
+
+---
+
+# 7. Padrão de Store Root
+
+```ts
+// app/store.ts (estrutura completa esperada)
+import { configureStore } from '@reduxjs/toolkit'
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import { authSlice } from '@/features/auth/store/authSlice'
+import { clientsApi } from '@/features/clients/store/clientsApi'
+import { authApi } from '@/features/auth/store/authApi'
+
+const persistedAuthReducer = persistReducer(
+  { key: 'auth', storage, whitelist: ['user', 'token', 'tenantId', 'isAuthenticated'] },
+  authSlice.reducer,
+)
+
+export const store = configureStore({
+  reducer: {
+    auth: persistedAuthReducer,
+    [authApi.reducerPath]: authApi.reducer,
+    [clientsApi.reducerPath]: clientsApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] },
+    }).concat(authApi.middleware, clientsApi.middleware),
+})
+
+export const persistor = persistStore(store)
 ```
 
 ---
 
-# 7. Regras
+# 8. Regras
 
 - Nunca mutar estado diretamente fora dos reducers (RTK usa Immer internamente)
 - Actions com nomes descritivos e no padrão verbo + substantivo: `setCredentials`, `logout`, `openModal`
 - Selectors sempre via `useSelector` — sem acesso direto ao `store.getState()` em componentes
 - Nenhum efeito colateral dentro de reducers
-- `tenantId` sempre extraído do `state.auth.user` — nunca passado manualmente como payload de API
+- `tenantId` nunca enviado no body/query — vai exclusivamente no header `X-API-KEY` (ver `standards/api.md`)
 - Tags RTK Query nomeadas igual ao recurso: `'Client'`, `'Contract'`, `'Receivable'`
+- Apenas slices de sessão/autenticação são persistidos — nunca RTK Query caches
