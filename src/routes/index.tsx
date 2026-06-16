@@ -5,6 +5,7 @@ import { GuestRoute } from './GuestRoute'
 
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'))
 const OnboardingPage = lazy(() => import('@/features/auth/pages/OnboardingPage'))
+const RecoveryPasswordPage = lazy(() => import('@/features/auth/pages/RecoveryPasswordPage'))
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
 
 function PageLoader() {
@@ -36,6 +37,14 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <OnboardingPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/recovery-password',
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <RecoveryPasswordPage />
           </Suspense>
         ),
       },

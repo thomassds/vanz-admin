@@ -40,66 +40,81 @@ Fluxo de 2 etapas: o usuário informa o e-mail, recebe um código de recuperaç�
 
 ### RecoveryPasswordPage — Container Multi-Step
 
-| Step | Componente              | Descrição                             |
-| ---- | ----------------------- | ------------------------------------- |
-| 1    | `RequestCodeForm`       | Input de e-mail + botão enviar        |
-| 2    | `ResetPasswordForm`     | Código + nova senha + confirmação     |
+| Step | Componente          | Descrição                             |
+| ---- | ------------------- | ------------------------------------- |
+| 1    | `RequestCodeForm`   | Input de e-mail + botão enviar        |
+| 2    | `EmailCodeForm`     | Input do código de 6 dígitos (e-mail) |
+| 3    | `ResetPasswordForm` | Código + nova senha + confirmação     |
 
 ---
 
 ## Integração com API
 
-| Ação              | Endpoint                        | Método |
-| ----------------- | ------------------------------- | ------ |
-| Solicitar código  | `/api/v1/auth/request-code`     | POST   |
-| Redefinir senha   | `/api/v1/auth/recovery-password`| POST   |
+| Ação             | Endpoint                         | Método |
+| ---------------- | -------------------------------- | ------ |
+| Solicitar código | `/api/v1/auth/request-code`      | POST   |
+| Validar código   | `/api/v1/auth/validate-code`     | POST   |
+| Redefinir senha  | `/api/v1/auth/recovery-password` | POST   |
 
 ---
 
 ## Validação (Zod)
 
 ### Step 1 — requestCodeSchema
+
 ```ts
 z.object({
-  email: z.string().email('E-mail inválido'),
-})
+  email: z.string().email("E-mail inválido"),
+});
 ```
 
 ### Step 2 — resetPasswordSchema
+
 ```ts
 z.object({
-  code: z.string().length(6, 'Código deve ter 6 dígitos'),
-  password: z.string().min(8, 'Mínimo 8 caracteres'),
+  userId: z.string().uuid(),
+  type: z.enum(["email", "phone"]),
+  code: z.string().length(6),
+  justCheck: z.boolean().optional(),
+});
+```
+
+### Step 3 — resetPasswordSchema
+
+```ts
+z.object({
+  code: z.string().length(6, "Código deve ter 6 dígitos"),
+  password: z.string().min(8, "Mínimo 8 caracteres"),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: 'As senhas não coincidem',
-  path: ['confirmPassword'],
-})
+  message: "As senhas não coincidem",
+  path: ["confirmPassword"],
+});
 ```
 
 ---
 
 ## Estados das Telas
 
-| Estado          | Comportamento                                      |
-| --------------- | -------------------------------------------------- |
-| Loading         | Botão desabilitado com spinner                     |
-| Erro de campo   | Mensagem inline abaixo do campo                    |
-| Erro de API     | Mensagem acima do botão                            |
-| Sucesso Step 1  | Avança para Step 2 com mensagem de confirmação     |
-| Sucesso Step 2  | Redirect para /login com toast de sucesso          |
-| Reenviar código | Link habilitado após 60 segundos                   |
+| Estado          | Comportamento                                  |
+| --------------- | ---------------------------------------------- |
+| Loading         | Botão desabilitado com spinner                 |
+| Erro de campo   | Mensagem inline abaixo do campo                |
+| Erro de API     | Mensagem acima do botão                        |
+| Sucesso Step 1  | Avança para Step 2 com mensagem de confirmação |
+| Sucesso Step 2  | Redirect para /login com toast de sucesso      |
+| Reenviar código | Link habilitado após 60 segundos               |
 
 ---
 
 ## Erros Esperados
 
-| Código da API    | Mensagem para o usuário                              |
-| ---------------- | ---------------------------------------------------- |
-| `USER_NOT_FOUND` | "E-mail não cadastrado na plataforma"                |
-| `INVALID_CODE`   | "Código inválido"                                    |
-| `CODE_EXPIRED`   | "Código expirado. Solicite um novo."                 |
-| `WEAK_PASSWORD`  | "A nova senha não atende aos requisitos mínimos"     |
+| Código da API    | Mensagem para o usuário                          |
+| ---------------- | ------------------------------------------------ |
+| `USER_NOT_FOUND` | "E-mail não cadastrado na plataforma"            |
+| `INVALID_CODE`   | "Código inválido"                                |
+| `CODE_EXPIRED`   | "Código expirado. Solicite um novo."             |
+| `WEAK_PASSWORD`  | "A nova senha não atende aos requisitos mínimos" |
 
 ---
 

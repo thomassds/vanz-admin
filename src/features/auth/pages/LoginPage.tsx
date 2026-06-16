@@ -1,8 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { AuthLayout } from '@/layouts/AuthLayout'
 import { LoginForm } from '../components/LoginForm'
 
+interface LoginPageState {
+  successMessage?: string
+}
+
 export default function LoginPage() {
+  const location = useLocation()
+  const { successMessage } = (location.state ?? {}) as LoginPageState
+
   return (
     <AuthLayout>
       <header>
@@ -13,6 +20,12 @@ export default function LoginPage() {
           Faça login para continuar
         </p>
       </header>
+
+      {successMessage && (
+        <p className="mt-4 text-center text-xs font-bold text-[#1aa15a] lg:text-left">
+          {successMessage}
+        </p>
+      )}
 
       <LoginForm />
 

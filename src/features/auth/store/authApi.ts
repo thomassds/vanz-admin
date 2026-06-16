@@ -37,7 +37,7 @@ interface OnboardingResponse {
 type CodeChannel = 'email' | 'phone'
 
 interface RequestCodeRequest {
-  userId: string
+  userId?: string
   email?: string
   phone?: string
   channel: CodeChannel
@@ -52,12 +52,24 @@ interface ValidateCodeRequest {
   userId: string
   type: CodeChannel
   code: string
+  justCheck?: boolean
 }
 
 interface ValidateCodeResponse {
   validated: boolean
   userId: string
   type: CodeChannel
+}
+
+interface RecoveryPasswordRequest {
+  userId: string
+  type: CodeChannel
+  code: string
+  password: string
+}
+
+interface RecoveryPasswordResponse {
+  updated: boolean
 }
 
 interface PersonalDataRequest {
@@ -118,6 +130,9 @@ export const authApi = createApi({
     createCompany: builder.mutation<CompanyDataResponse, CompanyDataRequest>({
       query: (body) => ({ url: '/auth/onboarding/company', method: 'POST', data: body }),
     }),
+    recoveryPassword: builder.mutation<RecoveryPasswordResponse, RecoveryPasswordRequest>({
+      query: (body) => ({ url: '/auth/recovery-password', method: 'POST', data: body }),
+    }),
   }),
 })
 
@@ -128,4 +143,5 @@ export const {
   useValidateCodeMutation,
   useSavePersonalDataMutation,
   useCreateCompanyMutation,
+  useRecoveryPasswordMutation,
 } = authApi
