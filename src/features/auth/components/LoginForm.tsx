@@ -27,6 +27,57 @@ export function LoginForm() {
   const handleLogin = async (data: LoginFormData) => {
     try {
       const result = await login(data).unwrap()
+      const { user } = result
+
+      if (!user.validatedEmailAt) {
+        void navigate('/onboarding', {
+          state: {
+            resumeStep: 'email-code',
+            userId: user.id,
+            email: data.email,
+            password: data.password,
+          },
+        })
+        return
+      }
+
+      if (!user.taxIdentifier) {
+        void navigate('/onboarding', {
+          state: {
+            resumeStep: 'personal-data',
+            userId: user.id,
+            email: data.email,
+            password: data.password,
+          },
+        })
+        return
+      }
+
+      if (!user.validatedPhoneAt) {
+        void navigate('/onboarding', {
+          state: {
+            resumeStep: 'phone-code',
+            userId: user.id,
+            email: data.email,
+            password: data.password,
+            phone: user.phone ?? undefined,
+          },
+        })
+        return
+      }
+
+      if (!result.tenant) {
+        void navigate('/onboarding', {
+          state: {
+            resumeStep: 'company-data',
+            userId: user.id,
+            email: data.email,
+            password: data.password,
+          },
+        })
+        return
+      }
+
       dispatch(setCredentials(result))
       void navigate('/dashboard')
     } catch (err) {

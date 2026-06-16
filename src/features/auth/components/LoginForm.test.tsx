@@ -4,8 +4,9 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { LoginForm } from './LoginForm'
+import OnboardingPage from '../pages/OnboardingPage'
 import { authSlice } from '../store/authSlice'
 import { authApi } from '../store/authApi'
 import { axiosInstance } from '@/shared/api/axiosInstance'
@@ -27,8 +28,11 @@ function renderLoginForm() {
 
   render(
     <Provider store={store}>
-      <MemoryRouter>
-        <LoginForm />
+      <MemoryRouter initialEntries={['/login']}>
+        <Routes>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/onboarding" element={<OnboardingPage />} />
+        </Routes>
       </MemoryRouter>
     </Provider>,
   )
@@ -44,7 +48,18 @@ describe('LoginForm', () => {
   it('submissão com dados válidos chama a mutation de login', async () => {
     mockedAxiosInstance.mockResolvedValueOnce({
       data: {
-        data: { token: 'fake-token', user: { id: '1', name: 'Teste', email: 'teste@vans.com' } },
+        data: {
+          accessToken: 'fake-token',
+          user: {
+            id: '1',
+            name: 'Teste',
+            email: 'teste@vans.com',
+            taxIdentifier: '***.456.789-**',
+            validatedEmailAt: '2026-01-01T00:00:00.000Z',
+            validatedPhoneAt: '2026-01-01T00:00:00.000Z',
+          },
+          tenant: { id: 't1', name: 'Empresa Teste' },
+        },
       },
     })
 
@@ -130,8 +145,136 @@ describe('LoginForm', () => {
 
     resolveRequest({
       data: {
-        data: { token: 'fake-token', user: { id: '1', name: 'Teste', email: 'teste@vans.com' } },
+        data: {
+          accessToken: 'fake-token',
+          user: {
+            id: '1',
+            name: 'Teste',
+            email: 'teste@vans.com',
+            taxIdentifier: '***.456.789-**',
+            validatedEmailAt: '2026-01-01T00:00:00.000Z',
+            validatedPhoneAt: '2026-01-01T00:00:00.000Z',
+          },
+          tenant: { id: 't1', name: 'Empresa Teste' },
+        },
       },
     })
+  })
+
+  it('redireciona para onboarding no step de e-mail quando o e-mail não foi validado', async () => {
+    mockedAxiosInstance.mockResolvedValueOnce({
+      data: {
+        data: {
+          accessToken: 'fake-token',
+          user: {
+            id: '1',
+            name: 'Teste',
+            email: 'teste@vans.com',
+            taxIdentifier: null,
+            validatedEmailAt: null,
+            validatedPhoneAt: null,
+          },
+        },
+      },
+    })
+
+    const { store } = renderLoginForm()
+    const user = userEvent.setup()
+
+    await user.type(screen.getByLabelText('Email'), 'teste@vans.com')
+    await user.type(screen.getByLabelText('Senha'), 'senha123')
+    await user.click(screen.getByRole('button', { name: /entrar/i }))
+
+    expect(await screen.findByText(/Enviamos um código de 6 dígitos para/)).toBeInTheDocument()
+    expect(store.getState().auth.isAuthenticated).toBe(false)
+  })
+
+  it('redireciona para onboarding no step de dados pessoais quando o taxIdentifier não foi cadastrado', async () => {
+    mockedAxiosInstance.mockResolvedValueOnce({
+      data: {
+        data: {
+          accessToken: 'fake-token',
+          user: {
+            id: '1',
+            name: 'Teste',
+            email: 'teste@vans.com',
+            taxIdentifier: null,
+            validatedEmailAt: '2026-01-01T00:00:00.000Z',
+            validatedPhoneAt: null,
+          },
+        },
+      },
+    })
+
+    const { store } = renderLoginForm()
+    const user = userEvent.setup()
+
+    await user.type(screen.getByLabelText('Email'), 'teste@vans.com')
+    await user.type(screen.getByLabelText('Senha'), 'senha123')
+    await user.click(screen.getByRole('button', { name: /entrar/i }))
+
+    expect(await screen.findByText('Seus dados pessoais')).toBeInTheDocument()
+    expect(store.getState().auth.isAuthenticated).toBe(false)
+  })
+
+  it('redireciona para onboarding no step de validação de telefone quando o taxIdentifier existe mas o telefone não foi validado', async () => {
+    mockedAxiosInstance
+      .mockResolvedValueOnce({
+        data: {
+          data: {
+            accessToken: 'fake-token',
+            user: {
+              id: '1',
+              name: 'Teste',
+              email: 'teste@vans.com',
+              phone: '11999999999',
+              taxIdentifier: '***.456.789-**',
+              validatedEmailAt: '2026-01-01T00:00:00.000Z',
+              validatedPhoneAt: null,
+            },
+          },
+        },
+      })
+      .mockResolvedValueOnce({ data: { data: { sent: true, userId: '1' } } })
+
+    const { store } = renderLoginForm()
+    const user = userEvent.setup()
+
+    await user.type(screen.getByLabelText('Email'), 'teste@vans.com')
+    await user.type(screen.getByLabelText('Senha'), 'senha123')
+    await user.click(screen.getByRole('button', { name: /entrar/i }))
+
+    expect(await screen.findByText('Confirme seu telefone')).toBeInTheDocument()
+    expect(screen.getByText('11999999999')).toBeInTheDocument()
+    expect(store.getState().auth.isAuthenticated).toBe(false)
+  })
+
+  it('redireciona para onboarding no step de empresa quando o tenant não foi cadastrado', async () => {
+    mockedAxiosInstance.mockResolvedValueOnce({
+      data: {
+        data: {
+          accessToken: 'fake-token',
+          user: {
+            id: '1',
+            name: 'Teste',
+            email: 'teste@vans.com',
+            taxIdentifier: '***.456.789-**',
+            validatedEmailAt: '2026-01-01T00:00:00.000Z',
+            validatedPhoneAt: '2026-01-01T00:00:00.000Z',
+          },
+          tenant: null,
+        },
+      },
+    })
+
+    const { store } = renderLoginForm()
+    const user = userEvent.setup()
+
+    await user.type(screen.getByLabelText('Email'), 'teste@vans.com')
+    await user.type(screen.getByLabelText('Senha'), 'senha123')
+    await user.click(screen.getByRole('button', { name: /entrar/i }))
+
+    expect(await screen.findByText('Dados da empresa')).toBeInTheDocument()
+    expect(store.getState().auth.isAuthenticated).toBe(false)
   })
 })

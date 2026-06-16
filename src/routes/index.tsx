@@ -4,6 +4,7 @@ import { ProtectedRoute } from './ProtectedRoute'
 import { GuestRoute } from './GuestRoute'
 
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'))
+const OnboardingPage = lazy(() => import('@/features/auth/pages/OnboardingPage'))
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
 
 function PageLoader() {
@@ -27,6 +28,14 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <LoginPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/onboarding',
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <OnboardingPage />
           </Suspense>
         ),
       },
