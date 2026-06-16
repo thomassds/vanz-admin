@@ -2,11 +2,13 @@ import { lazy, Suspense } from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ProtectedRoute } from './ProtectedRoute'
 import { GuestRoute } from './GuestRoute'
+import { AppLayout } from '@/layouts/AppLayout'
 
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'))
 const OnboardingPage = lazy(() => import('@/features/auth/pages/OnboardingPage'))
 const RecoveryPasswordPage = lazy(() => import('@/features/auth/pages/RecoveryPasswordPage'))
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 function PageLoader() {
   return (
@@ -54,13 +56,26 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
-        path: '/dashboard',
-        element: (
-          <Suspense fallback={<PageLoader />}>
-            <DashboardPage />
-          </Suspense>
-        ),
+        element: <AppLayout />,
+        children: [
+          {
+            path: '/dashboard',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <DashboardPage />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
+  },
+  {
+    path: '*',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <NotFoundPage />
+      </Suspense>
+    ),
   },
 ])
