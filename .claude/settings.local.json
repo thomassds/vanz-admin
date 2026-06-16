@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\Lanmar\\\\Desktop\\\\Projetos\\\\Vans\\\\frontend\" -Recurse -Depth 3 | Where-Object { $_.PSIsContainer } | Select-Object FullName)",
+      "Read(//c/Users/Lanmar/Desktop/Projetos/Vans/backend/specs/clients/management-client/**)"
+    ]
+  }
+}

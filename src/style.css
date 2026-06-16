@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito:wght@400;500;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* ─── Marca ─────────────────────────────────────────── */
+  --color-primary:       #00B4E0;
+  --color-primary-hover: #009EC8;
+  --color-primary-light: #E0F7FC;
+  --color-navy:          #0D1B3E;
+  --color-navy-light:    #1A2F5E;
+
+  /* ─── Neutros ───────────────────────────────────────── */
+  --color-surface:       #F0F9FF;
+  --color-gray-50:       #F8FAFC;
+  --color-gray-100:      #F1F5F9;
+  --color-gray-200:      #E2E8F0;
+  --color-gray-400:      #94A3B8;
+  --color-gray-600:      #475569;
+  --color-gray-900:      #0F172A;
+
+  /* ─── Status ────────────────────────────────────────── */
+  --color-success:       #16A34A;
+  --color-success-light: #DCFCE7;
+  --color-danger:        #DC2626;
+  --color-danger-light:  #FEE2E2;
+  --color-warning:       #D97706;
+  --color-warning-light: #FEF3C7;
+  --color-info:          #0EA5E9;
+  --color-info-light:    #E0F2FE;
+
+  /* ─── Tipografia ────────────────────────────────────── */
+  --font-heading: "Montserrat", sans-serif;
+  --font-body:    "Nunito", sans-serif;
+
+  /* ─── Fonte padrão ──────────────────────────────────── */
+  --default-font-family: var(--font-body);
+}
+
+/* ─── Reset base ────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-gray-900);
+  background-color: var(--color-gray-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-navy);
+}
