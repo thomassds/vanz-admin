@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ContractStatusBadge } from "./ContractStatusBadge";
 import type { Contract } from "../types/contract.types";
+import { isoToBR } from "@/shared/utils/date";
 
 interface ContractsTableProps {
   contracts: Contract[] | undefined;
@@ -16,7 +17,7 @@ interface ContractsTableProps {
 const SKELETON_ROWS = 5;
 
 function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("pt-BR");
+  return isoToBR(dateStr.slice(0, 10));
 }
 
 function formatCurrency(value: number): string {

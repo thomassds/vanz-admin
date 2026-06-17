@@ -117,3 +117,14 @@ export interface ActivateContractResponse {
   contractId: string
   status: 'active'
 }
+
+export interface SuspendContractDTO {
+  reason: string
+}
+
+export interface SuspendContractResponse {
+  contractId: string
+  status: 'inactive'
+  suspendedAt: string
+  reason: string
+}

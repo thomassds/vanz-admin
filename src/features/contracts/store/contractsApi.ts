@@ -10,6 +10,8 @@ import type {
   ContractHistoryResponse,
   CreateContractDTO,
   RenewContractDTO,
+  SuspendContractDTO,
+  SuspendContractResponse,
   UpdateContractDTO,
 } from "../types/contract.types";
 
@@ -72,6 +74,14 @@ export const contractsApi = createApi({
       }),
       invalidatesTags: (_result, _error, { id }) => [{ type: "Contract", id }],
     }),
+    suspendContract: builder.mutation<SuspendContractResponse, { id: string } & SuspendContractDTO>({
+      query: ({ id, ...body }) => ({
+        url: `/contracts/${id}/suspend`,
+        method: "POST",
+        data: body,
+      }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Contract", id }],
+    }),
   }),
 });
 
@@ -84,4 +94,5 @@ export const {
   useRenewContractMutation,
   useCancelContractMutation,
   useActivateContractMutation,
+  useSuspendContractMutation,
 } = contractsApi;

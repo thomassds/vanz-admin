@@ -9,6 +9,7 @@ import { ContractForm } from '../components/ContractForm'
 import { ContractHistorySection } from '../components/ContractHistorySection'
 import { RenewContractModal } from '../components/RenewContractModal'
 import { CancelContractModal } from '../components/CancelContractModal'
+import { SuspendContractModal } from '../components/SuspendContractModal'
 import { useGetContractByIdQuery, useUpdateContractMutation, useActivateContractMutation } from '../store/contractsApi'
 import { getActivationErrorMessage } from '../utils/contractActivationErrors'
 import type { CreateContractFormData } from '../schemas/create-contract.schema'
@@ -38,6 +39,7 @@ export default function ContractDetailPage() {
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [renewModalOpen, setRenewModalOpen] = useState(false)
   const [cancelModalOpen, setCancelModalOpen] = useState(false)
+  const [suspendModalOpen, setSuspendModalOpen] = useState(false)
 
   const {
     data: contract,
@@ -115,13 +117,24 @@ export default function ContractDetailPage() {
                   {isActivating ? 'Ativando...' : 'Ativar contrato'}
                 </button>
               )}
-              <button
-                type="button"
-                onClick={() => setRenewModalOpen(true)}
-                className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100"
-              >
-                Renovar contrato
-              </button>
+              {contract.status === 'active' && (
+                <button
+                  type="button"
+                  onClick={() => setSuspendModalOpen(true)}
+                  className="rounded-md border border-yellow-300 px-3 py-1.5 text-sm font-medium text-yellow-700 hover:bg-yellow-50"
+                >
+                  Suspender contrato
+                </button>
+              )}
+              {contract.status !== 'inactive' && (
+                <button
+                  type="button"
+                  onClick={() => setRenewModalOpen(true)}
+                  className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100"
+                >
+                  Renovar contrato
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => setEditModalOpen(true)}
@@ -265,6 +278,15 @@ export default function ContractDetailPage() {
           isOpen={cancelModalOpen}
           onClose={() => setCancelModalOpen(false)}
           onSuccess={() => showToast('Contrato cancelado com sucesso.', 'success')}
+        />
+      )}
+
+      {id && (
+        <SuspendContractModal
+          contractId={id}
+          isOpen={suspendModalOpen}
+          onClose={() => setSuspendModalOpen(false)}
+          onSuccess={() => showToast('Contrato suspenso com sucesso.', 'success')}
         />
       )}
     </div>
