@@ -13,6 +13,7 @@ const ClientDetailPage = lazy(() => import('@/features/clients/pages/ClientDetai
 const ContractsPage = lazy(() => import('@/features/contracts/pages/ContractsPage'))
 const ContractFormPage = lazy(() => import('@/features/contracts/pages/ContractFormPage'))
 const ContractDetailPage = lazy(() => import('@/features/contracts/pages/ContractDetailPage'))
+const ReceivablesPage = lazy(() => import('@/features/finances/pages/ReceivablesPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 function PageLoader() {
@@ -108,6 +109,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<PageLoader />}>
                 <ContractDetailPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/finances/receivables',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ReceivablesPage />
               </Suspense>
             ),
           },

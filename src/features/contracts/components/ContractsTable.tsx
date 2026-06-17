@@ -1,26 +1,26 @@
-import { useNavigate } from 'react-router-dom'
-import { ContractStatusBadge } from './ContractStatusBadge'
-import type { Contract } from '../types/contract.types'
+import { useNavigate } from "react-router-dom";
+import { ContractStatusBadge } from "./ContractStatusBadge";
+import type { Contract } from "../types/contract.types";
 
 interface ContractsTableProps {
-  contracts: Contract[] | undefined
-  total: number
-  page: number
-  limit: number
-  isLoading: boolean
-  isError: boolean
-  onRefetch: () => void
-  onPageChange: (page: number) => void
+  contracts: Contract[] | undefined;
+  total: number;
+  page: number;
+  limit: number;
+  isLoading: boolean;
+  isError: boolean;
+  onRefetch: () => void;
+  onPageChange: (page: number) => void;
 }
 
-const SKELETON_ROWS = 5
+const SKELETON_ROWS = 5;
 
 function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('pt-BR')
+  return new Date(dateStr).toLocaleDateString("pt-BR");
 }
 
 function formatCurrency(value: number): string {
-  return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
 export function ContractsTable({
@@ -33,8 +33,8 @@ export function ContractsTable({
   onRefetch,
   onPageChange,
 }: ContractsTableProps) {
-  const navigate = useNavigate()
-  const totalPages = Math.ceil(total / limit)
+  const navigate = useNavigate();
+  const totalPages = Math.ceil(total / limit);
 
   if (isError) {
     return (
@@ -48,7 +48,7 @@ export function ContractsTable({
           Tentar novamente
         </button>
       </div>
-    )
+    );
   }
 
   return (
@@ -57,12 +57,24 @@ export function ContractsTable({
         <table className="w-full text-sm">
           <thead className="bg-gray-50">
             <tr className="border-b border-gray-200">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Cliente</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Valor</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Status</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Início</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Vencimento</th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600">Ações</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                Cliente
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                Valor
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                Status
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                Início
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                Vencimento
+              </th>
+              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600">
+                Ações
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -78,17 +90,27 @@ export function ContractsTable({
                 ))
               : contracts?.map((contract) => (
                   <tr key={contract.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium text-gray-900">{contract.client?.name ?? '—'}</td>
-                    <td className="px-4 py-3 text-gray-600">{formatCurrency(contract.value)}</td>
-                    <td className="px-4 py-3">
-                      <ContractStatusBadge status={contract.status} />
+                    <td className="px-4 py-3 font-medium text-gray-900">
+                      {contract?.client?.name}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">{formatDate(contract.startDate)}</td>
-                    <td className="px-4 py-3 text-gray-600">{formatDate(contract.endDate)}</td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {formatCurrency(contract?.value ?? 0)}
+                    </td>
+                    <td className="px-4 py-3">
+                      <ContractStatusBadge status={contract?.status} />
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {formatDate(contract?.startDate ?? "")}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {formatDate(contract?.endDate ?? "")}
+                    </td>
                     <td className="px-4 py-3 text-right">
                       <button
                         type="button"
-                        onClick={() => void navigate(`/contracts/${contract.id}`)}
+                        onClick={() =>
+                          void navigate(`/contracts/${contract.id}`)
+                        }
                         className="text-xs font-medium text-primary hover:underline"
                       >
                         Ver detalhe
@@ -109,7 +131,7 @@ export function ContractsTable({
       {totalPages > 1 && (
         <div className="flex items-center justify-between border-t border-gray-200 px-4 py-3">
           <span className="text-xs text-gray-500">
-            {total} contrato{total !== 1 ? 's' : ''}
+            {total} contrato{total !== 1 ? "s" : ""}
           </span>
           <div className="flex gap-1">
             <button
@@ -135,5 +157,5 @@ export function ContractsTable({
         </div>
       )}
     </div>
-  )
+  );
 }

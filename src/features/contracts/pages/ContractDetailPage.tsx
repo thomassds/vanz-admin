@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Modal } from '@/shared/components/Modal'
 import { Toast } from '@/shared/components/Toast'
 import { useToast } from '@/shared/hooks/useToast'
+import { isoToBR } from '@/shared/utils/date'
 import { ContractStatusBadge } from '../components/ContractStatusBadge'
 import { ContractForm } from '../components/ContractForm'
 import { useGetContractByIdQuery, useUpdateContractMutation } from '../store/contractsApi'
@@ -18,7 +19,7 @@ function DetailItem({ label, value }: { label: string; value: string | null | un
 }
 
 function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('pt-BR')
+  return isoToBR(dateStr.slice(0, 10))
 }
 
 function formatCurrency(value: number): string {

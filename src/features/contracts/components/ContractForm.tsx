@@ -94,15 +94,14 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
     setValue('endDate', end.toISOString().slice(0, 10))
   }, [watchedStartDate, watchedDurationMonths, setValue])
 
-  // Auto-calcula totalValue = value * durationMonths - discount
+  // Auto-calcula totalValue = value - discount
   useEffect(() => {
     const v = parseFloat(String(watchedValue).replace(',', '.'))
-    const months = parseInt(String(watchedDurationMonths), 10)
     const d = parseFloat(String(watchedDiscount ?? '0').replace(',', '.'))
-    if (isNaN(v) || isNaN(months)) return
-    const total = v * months - (isNaN(d) ? 0 : d)
+    if (isNaN(v)) return
+    const total = v - (isNaN(d) ? 0 : d)
     setValue('totalValue', Math.max(0, total))
-  }, [watchedValue, watchedDurationMonths, watchedDiscount, setValue])
+  }, [watchedValue, watchedDiscount, setValue])
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
