@@ -6,6 +6,7 @@ import type {
   ContractFilters,
   ContractHistoryResponse,
   CreateContractDTO,
+  RenewContractDTO,
   UpdateContractDTO,
 } from "../types/contract.types";
 
@@ -45,6 +46,14 @@ export const contractsApi = createApi({
       }),
       providesTags: (_result, _error, { id }) => [{ type: "Contract", id }],
     }),
+    renewContract: builder.mutation<Contract, { id: string } & RenewContractDTO>({
+      query: ({ id, ...body }) => ({
+        url: `/contracts/${id}/renew`,
+        method: "POST",
+        data: body,
+      }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Contract", id }],
+    }),
   }),
 });
 
@@ -54,4 +63,5 @@ export const {
   useCreateContractMutation,
   useUpdateContractMutation,
   useGetContractHistoryQuery,
+  useRenewContractMutation,
 } = contractsApi;

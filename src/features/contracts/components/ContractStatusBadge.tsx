@@ -5,6 +5,8 @@ const STATUS_MAP: Record<ContractStatus, { label: string; className: string }> =
   active: { label: 'Ativo', className: 'bg-success-light text-success' },
   inactive: { label: 'Inativo', className: 'bg-gray-100 text-gray-500' },
   pending: { label: 'Pendente', className: 'bg-yellow-50 text-yellow-700' },
+  suspended: { label: 'Suspenso', className: 'bg-orange-50 text-orange-700' },
+  canceled: { label: 'Cancelado', className: 'bg-red-50 text-red-600' },
 }
 
 interface ContractStatusBadgeProps {

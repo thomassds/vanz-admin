@@ -7,6 +7,7 @@ import { isoToBR } from '@/shared/utils/date'
 import { ContractStatusBadge } from '../components/ContractStatusBadge'
 import { ContractForm } from '../components/ContractForm'
 import { ContractHistorySection } from '../components/ContractHistorySection'
+import { RenewContractModal } from '../components/RenewContractModal'
 import { useGetContractByIdQuery, useUpdateContractMutation } from '../store/contractsApi'
 import type { CreateContractFormData } from '../schemas/create-contract.schema'
 
@@ -32,6 +33,7 @@ export default function ContractDetailPage() {
   const navigate = useNavigate()
   const { toast, showToast, dismissToast } = useToast()
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [renewModalOpen, setRenewModalOpen] = useState(false)
 
   const {
     data: contract,
@@ -87,14 +89,25 @@ export default function ContractDetailPage() {
           <h3 className="font-['Montserrat',sans-serif] text-sm font-bold text-navy">
             Dados do contrato
           </h3>
-          <button
-            type="button"
-            onClick={() => setEditModalOpen(true)}
-            disabled={isLoading || !contract}
-            className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
-          >
-            Editar contrato
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setRenewModalOpen(true)}
+              disabled={isLoading || !contract || contract.status === 'canceled'}
+              title={contract?.status === 'canceled' ? 'Contratos cancelados não podem ser renovados' : undefined}
+              className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Renovar contrato
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditModalOpen(true)}
+              disabled={isLoading || !contract}
+              className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+            >
+              Editar contrato
+            </button>
+          </div>
         </div>
 
         {isLoading ? (
@@ -205,6 +218,15 @@ export default function ContractDetailPage() {
             onCancel={() => setEditModalOpen(false)}
           />
         </Modal>
+      )}
+
+      {contract && (
+        <RenewContractModal
+          contract={contract}
+          isOpen={renewModalOpen}
+          onClose={() => setRenewModalOpen(false)}
+          onSuccess={() => showToast('Contrato renovado com sucesso.', 'success')}
+        />
       )}
     </div>
   )

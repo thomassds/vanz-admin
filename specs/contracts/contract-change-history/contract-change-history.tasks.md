@@ -6,58 +6,59 @@
 
 ## Types
 
-- [ ] Adicionar em `features/contracts/types/contract.types.ts`:
-  - [ ] `ContractEventType` (union dos 8 tipos de evento)
-  - [ ] `ContractHistoryEvent` (id, tenantId, contractId, eventType, oldValue, newValue, metadata, createdAt)
-  - [ ] `ContractHistoryResponse` (items, page, limit, total, totalPages)
+- [x] Adicionar em `features/contracts/types/contract.types.ts`:
+  - [x] `ContractEventType` (union dos 8 tipos de evento)
+  - [x] `ContractHistoryEvent` (id, tenantId, contractId, eventType, oldValue, newValue, metadata, createdAt)
+  - [x] `ContractHistoryResponse` (items, page, limit, total, totalPages)
 
 ---
 
 ## Store
 
-- [ ] Adicionar endpoint `getContractHistory` em `features/contracts/store/contractsApi.ts`:
-  - [ ] Query `GET /contracts/:id/history` com params `{ id, page, limit }`
-  - [ ] `providesTags`: `[{ type: 'Contract', id }]`
-  - [ ] `transformResponse` para desembrulhar `data` da resposta
+- [x] Adicionar endpoint `getContractHistory` em `features/contracts/store/contractsApi.ts`:
+  - [x] Query `GET /contracts/:id/history` com params `{ id, page, limit }`
+  - [x] `providesTags`: `[{ type: 'Contract', id }]`
+  - [x] Sem `transformResponse` — `axiosBaseQuery` já desembrulha `result.data.data`
 
 ---
 
 ## Componentes
 
-- [ ] Criar `features/contracts/components/ContractHistorySection.tsx`
-  - [ ] Aceita `contractId: string` como prop
-  - [ ] Gerencia estado de `page` internamente
-  - [ ] Chama `useGetContractHistoryQuery({ id: contractId, page, limit: 10 })`
-  - [ ] Renderiza lista de eventos em ordem decrescente
-  - [ ] Cada evento exibe:
-    - [ ] Badge colorido com label PT-BR do tipo de evento
-    - [ ] Data e hora formatados (`dd/mm/yyyy às HH:mm`)
-    - [ ] Diff (oldValue → newValue) para `CONTRACT_UPDATED` e `CONTRACT_RENEWED`
-    - [ ] Metadata: `reason` para `CONTRACT_SUSPENDED` e `CONTRACT_CANCELED`
-    - [ ] Metadata: nome do dependente para `DEPENDENT_LINKED` e `DEPENDENT_UNLINKED`
-  - [ ] Skeleton de 5 linhas durante loading
-  - [ ] Estado vazio: "Nenhum evento registrado para este contrato."
-  - [ ] Estado de erro: "Erro ao carregar histórico." + botão "Tentar novamente"
-  - [ ] Paginação (Anterior / Próxima / indicador página / totalPages)
+- [x] Criar `features/contracts/components/ContractHistorySection.tsx`
+  - [x] Aceita `contractId: string` como prop
+  - [x] Gerencia estado de `page` internamente
+  - [x] Chama `useGetContractHistoryQuery({ id: contractId, page, limit: 10 })`
+  - [x] Renderiza lista de eventos em ordem decrescente
+  - [x] Cada evento exibe:
+    - [x] Badge colorido com label PT-BR do tipo de evento
+    - [x] Data e hora formatados (`dd/mm/yyyy às HH:mm`)
+    - [x] Diff (oldValue → newValue) para `CONTRACT_UPDATED` e `CONTRACT_RENEWED`
+    - [x] Metadata: `reason` para `CONTRACT_SUSPENDED` e `CONTRACT_CANCELED`
+    - [x] Metadata: `dependentId` de `newValue` para `DEPENDENT_LINKED` e `DEPENDENT_UNLINKED`
+  - [x] Skeleton de 5 linhas durante loading
+  - [x] Estado vazio: "Nenhum evento registrado para este contrato."
+  - [x] Estado de erro: "Erro ao carregar histórico." + botão "Tentar novamente"
+  - [x] Paginação (Anterior / Próxima / indicador página / totalPages)
 
 ---
 
 ## Utils
 
-- [ ] Criar `features/contracts/utils/contractHistory.ts`:
-  - [ ] `EVENT_LABELS`: mapa `ContractEventType → string` (labels PT-BR)
-  - [ ] `EVENT_BADGE_CLASS`: mapa `ContractEventType → string` (classes Tailwind de cor)
-  - [ ] `FIELD_LABELS`: mapa de campo → label PT-BR (value, discount, dueDay, etc.)
-  - [ ] `formatDiffValue(key, value)`: formata valor do diff (data → dd/mm/yyyy, número → R$, resto → string)
-  - [ ] `getDiffEntries(oldValue, newValue)`: retorna apenas os campos que mudaram
+- [x] Criar `features/contracts/utils/contractHistory.ts`:
+  - [x] `EVENT_LABELS`: mapa `ContractEventType → string` (labels PT-BR)
+  - [x] `EVENT_BADGE_CLASS`: mapa `ContractEventType → string` (classes Tailwind de cor)
+  - [x] `FIELD_LABELS`: mapa de campo → label PT-BR (value, discount, dueDay, etc.)
+  - [x] `formatDiffValue(key, value)`: formata valor do diff (data → dd/mm/yyyy, número → R$, resto → string)
+  - [x] `normalizeForComparison(key, value)`: normaliza datas para `yyyy-mm-dd` antes de comparar (resolve divergência de formato entre `oldValue` e `newValue`)
+  - [x] `getDiffEntries(oldValue, newValue)`: retorna apenas os campos cujos valores normalizados diferirem
 
 ---
 
 ## Page
 
-- [ ] Adicionar `<ContractHistorySection contractId={id} />` na `ContractDetailPage.tsx`
-  - [ ] Posição: abaixo da seção de recebíveis
-  - [ ] Envolvida em card com título "Histórico"
+- [x] Adicionar `<ContractHistorySection contractId={id} />` na `ContractDetailPage.tsx`
+  - [x] Posição: abaixo da seção de recebíveis, com `mt-6`
+  - [x] Card com título "Histórico" encapsulado no próprio componente
 
 ---
 

@@ -1,4 +1,4 @@
-export type ContractStatus = 'active' | 'inactive' | 'pending'
+export type ContractStatus = 'active' | 'inactive' | 'pending' | 'suspended' | 'canceled'
 
 export type ContractEventType =
   | 'CONTRACT_CREATED'
@@ -90,4 +90,14 @@ export interface UpdateContractDTO {
   totalValue: number
   dueDay: number
   durationMonths: number
+}
+
+export interface RenewContractDTO {
+  startDate: string
+  endDate: string
+  value?: number
+  discount?: number
+  durationMonths?: number
+  firstPaymentDate?: string
+  dueDay?: number
 }
