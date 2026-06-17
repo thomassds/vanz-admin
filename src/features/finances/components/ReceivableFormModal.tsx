@@ -8,8 +8,8 @@ import { useGetContractsQuery } from '@/features/contracts/store/contractsApi'
 import { useCreateReceivableMutation, useUpdateReceivableMutation } from '../store/receivablesApi'
 import { createReceivableSchema } from '../schemas/create-receivable.schema'
 import { updateReceivableSchema } from '../schemas/update-receivable.schema'
-import type { CreateReceivableFormData } from '../schemas/create-receivable.schema'
-import type { UpdateReceivableFormData } from '../schemas/update-receivable.schema'
+import type { CreateReceivableFormData, CreateReceivableFormInput } from '../schemas/create-receivable.schema'
+import type { UpdateReceivableFormData, UpdateReceivableFormInput } from '../schemas/update-receivable.schema'
 import { getReceivableErrorMessage } from '../utils/receivableErrorMessages'
 import { isTerminalStatus } from '../utils/receivableStatus'
 import type { ApiError } from '@/shared/types/api.types'
@@ -46,16 +46,14 @@ export function ReceivableFormModal({
   )
 
   // — Create form —
-  const createForm = useForm<CreateReceivableFormData>({
+  const createForm = useForm<CreateReceivableFormInput, unknown, CreateReceivableFormData>({
     resolver: zodResolver(createReceivableSchema),
   })
 
   // — Update form —
-  const updateForm = useForm<UpdateReceivableFormData>({
+  const updateForm = useForm<UpdateReceivableFormInput, unknown, UpdateReceivableFormData>({
     resolver: zodResolver(updateReceivableSchema),
   })
-
-  const activeErrors = isEditing ? updateForm.formState.errors : createForm.formState.errors
 
   useEffect(() => {
     if (!isOpen) return
@@ -147,7 +145,7 @@ export function ReceivableFormModal({
                   if (!e.target.value) createForm.setValue('contractId', '')
                 }}
                 onFocus={() => setShowDropdown(true)}
-                className={inputClass(!!activeErrors.contractId)}
+                className={inputClass(!!createForm.formState.errors.contractId)}
               />
               {showDropdown && contractsData && contractsData.items.length > 0 && (
                 <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-md">
@@ -175,8 +173,8 @@ export function ReceivableFormModal({
               )}
             </div>
             <input type="hidden" {...createForm.register('contractId')} />
-            {activeErrors.contractId && (
-              <span className="text-xs text-danger">{activeErrors.contractId.message}</span>
+            {createForm.formState.errors.contractId && (
+              <span className="text-xs text-danger">{createForm.formState.errors.contractId.message}</span>
             )}
           </div>
 
@@ -196,12 +194,12 @@ export function ReceivableFormModal({
                   value={field.value ?? ''}
                   onChange={(e) => field.onChange(e.target.value)}
                   onBlur={field.onBlur}
-                  className={inputClass(!!activeErrors.installmentNumber)}
+                  className={inputClass(!!createForm.formState.errors.installmentNumber)}
                 />
               )}
             />
-            {activeErrors.installmentNumber && (
-              <span className="text-xs text-danger">{activeErrors.installmentNumber.message}</span>
+            {createForm.formState.errors.installmentNumber && (
+              <span className="text-xs text-danger">{createForm.formState.errors.installmentNumber.message}</span>
             )}
           </div>
 
@@ -225,12 +223,12 @@ export function ReceivableFormModal({
                       field.onChange(masked.length === 10 ? brToISO(masked) : '')
                     }}
                     onBlur={field.onBlur}
-                    className={inputClass(!!activeErrors.dueDate)}
+                    className={inputClass(!!createForm.formState.errors.dueDate)}
                   />
                 )}
               />
-              {activeErrors.dueDate && (
-                <span className="text-xs text-danger">{activeErrors.dueDate.message}</span>
+              {createForm.formState.errors.dueDate && (
+                <span className="text-xs text-danger">{createForm.formState.errors.dueDate.message}</span>
               )}
             </div>
 
@@ -249,12 +247,12 @@ export function ReceivableFormModal({
                     value={field.value ?? ''}
                     onChange={(e) => field.onChange(e.target.value)}
                     onBlur={field.onBlur}
-                    className={inputClass(!!activeErrors.value)}
+                    className={inputClass(!!createForm.formState.errors.value)}
                   />
                 )}
               />
-              {activeErrors.value && (
-                <span className="text-xs text-danger">{activeErrors.value.message}</span>
+              {createForm.formState.errors.value && (
+                <span className="text-xs text-danger">{createForm.formState.errors.value.message}</span>
               )}
             </div>
           </div>

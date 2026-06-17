@@ -33,3 +33,4 @@ export const createContractSchema = z.object({
 })
 
 export type CreateContractFormData = z.infer<typeof createContractSchema>
+export type CreateContractFormInput = z.input<typeof createContractSchema>

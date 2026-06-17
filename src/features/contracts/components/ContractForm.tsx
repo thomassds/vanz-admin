@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@/shared/utils/cn'
 import { useGetClientsQuery, useGetDependentsQuery } from '@/features/clients/store/clientsApi'
 import { createContractSchema } from '../schemas/create-contract.schema'
-import type { CreateContractFormData } from '../schemas/create-contract.schema'
+import type { CreateContractFormData, CreateContractFormInput } from '../schemas/create-contract.schema'
 import type { Contract } from '../types/contract.types'
 import type { ApiError } from '@/shared/types/api.types'
 import { getContractErrorMessage } from '../utils/contractErrorMessages'
@@ -43,7 +43,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
     watch,
     setError,
     formState: { errors },
-  } = useForm<CreateContractFormData>({
+  } = useForm<CreateContractFormInput, unknown, CreateContractFormData>({
     resolver: zodResolver(createContractSchema),
     defaultValues: {
       clientId: contract?.clientId ?? '',

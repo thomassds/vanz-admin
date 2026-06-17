@@ -16,3 +16,4 @@ export const createReceivableSchema = z.object({
 })
 
 export type CreateReceivableFormData = z.infer<typeof createReceivableSchema>
+export type CreateReceivableFormInput = z.input<typeof createReceivableSchema>

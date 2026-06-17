@@ -10,3 +10,4 @@ export const updateReceivableSchema = z.object({
 })
 
 export type UpdateReceivableFormData = z.infer<typeof updateReceivableSchema>
+export type UpdateReceivableFormInput = z.input<typeof updateReceivableSchema>
