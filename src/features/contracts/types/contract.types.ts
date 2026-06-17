@@ -101,3 +101,14 @@ export interface RenewContractDTO {
   firstPaymentDate?: string
   dueDay?: number
 }
+
+export interface CancelContractDTO {
+  reason: string
+}
+
+export interface CancelContractResponse {
+  contractId: string
+  status: 'canceled'
+  canceledAt: string
+  reason: string
+}

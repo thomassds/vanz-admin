@@ -2,6 +2,8 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { axiosBaseQuery } from "@/shared/api/axiosBaseQuery";
 import type { PaginatedResponse } from "@/shared/types/api.types";
 import type {
+  CancelContractDTO,
+  CancelContractResponse,
   Contract,
   ContractFilters,
   ContractHistoryResponse,
@@ -54,6 +56,14 @@ export const contractsApi = createApi({
       }),
       invalidatesTags: (_result, _error, { id }) => [{ type: "Contract", id }],
     }),
+    cancelContract: builder.mutation<CancelContractResponse, { id: string } & CancelContractDTO>({
+      query: ({ id, ...body }) => ({
+        url: `/contracts/${id}/cancel`,
+        method: "POST",
+        data: body,
+      }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Contract", id }],
+    }),
   }),
 });
 
@@ -64,4 +74,5 @@ export const {
   useUpdateContractMutation,
   useGetContractHistoryQuery,
   useRenewContractMutation,
+  useCancelContractMutation,
 } = contractsApi;

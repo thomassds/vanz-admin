@@ -8,6 +8,7 @@ import { ContractStatusBadge } from '../components/ContractStatusBadge'
 import { ContractForm } from '../components/ContractForm'
 import { ContractHistorySection } from '../components/ContractHistorySection'
 import { RenewContractModal } from '../components/RenewContractModal'
+import { CancelContractModal } from '../components/CancelContractModal'
 import { useGetContractByIdQuery, useUpdateContractMutation } from '../store/contractsApi'
 import type { CreateContractFormData } from '../schemas/create-contract.schema'
 
@@ -34,6 +35,7 @@ export default function ContractDetailPage() {
   const { toast, showToast, dismissToast } = useToast()
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [renewModalOpen, setRenewModalOpen] = useState(false)
+  const [cancelModalOpen, setCancelModalOpen] = useState(false)
 
   const {
     data: contract,
@@ -106,6 +108,15 @@ export default function ContractDetailPage() {
               className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
             >
               Editar contrato
+            </button>
+            <button
+              type="button"
+              onClick={() => setCancelModalOpen(true)}
+              disabled={isLoading || !contract || contract.status === 'canceled'}
+              title={contract?.status === 'canceled' ? 'Este contrato já foi cancelado' : undefined}
+              className="rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Cancelar contrato
             </button>
           </div>
         </div>
@@ -226,6 +237,15 @@ export default function ContractDetailPage() {
           isOpen={renewModalOpen}
           onClose={() => setRenewModalOpen(false)}
           onSuccess={() => showToast('Contrato renovado com sucesso.', 'success')}
+        />
+      )}
+
+      {id && (
+        <CancelContractModal
+          contractId={id}
+          isOpen={cancelModalOpen}
+          onClose={() => setCancelModalOpen(false)}
+          onSuccess={() => showToast('Contrato cancelado com sucesso.', 'success')}
         />
       )}
     </div>
