@@ -32,7 +32,7 @@ export function MonthlyRevenueTable({
 }: MonthlyRevenueTableProps) {
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="font-['Montserrat',sans-serif] text-sm font-bold text-navy">
           Receita Mensal
         </h3>

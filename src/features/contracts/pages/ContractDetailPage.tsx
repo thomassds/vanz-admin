@@ -9,8 +9,10 @@ import { ContractForm } from '../components/ContractForm'
 import { ContractHistorySection } from '../components/ContractHistorySection'
 import { RenewContractModal } from '../components/RenewContractModal'
 import { CancelContractModal } from '../components/CancelContractModal'
-import { useGetContractByIdQuery, useUpdateContractMutation } from '../store/contractsApi'
+import { useGetContractByIdQuery, useUpdateContractMutation, useActivateContractMutation } from '../store/contractsApi'
+import { getActivationErrorMessage } from '../utils/contractActivationErrors'
 import type { CreateContractFormData } from '../schemas/create-contract.schema'
+import type { ApiError } from '@/shared/types/api.types'
 
 function DetailItem({ label, value }: { label: string; value: string | null | undefined }) {
   return (
@@ -44,11 +46,21 @@ export default function ContractDetailPage() {
   } = useGetContractByIdQuery(id!, { skip: !id })
 
   const [updateContract, { isLoading: isUpdating }] = useUpdateContractMutation()
+  const [activateContract, { isLoading: isActivating }] = useActivateContractMutation()
 
   async function handleUpdate(data: CreateContractFormData) {
     await updateContract({ id: id!, ...data }).unwrap()
     setEditModalOpen(false)
     showToast('Contrato atualizado com sucesso.', 'success')
+  }
+
+  async function handleActivate() {
+    try {
+      await activateContract({ id: id! }).unwrap()
+      showToast('Contrato ativado com sucesso.', 'success')
+    } catch (err) {
+      showToast(getActivationErrorMessage((err as ApiError).code), 'error')
+    }
   }
 
   if (isError) {
@@ -91,34 +103,41 @@ export default function ContractDetailPage() {
           <h3 className="font-['Montserrat',sans-serif] text-sm font-bold text-navy">
             Dados do contrato
           </h3>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setRenewModalOpen(true)}
-              disabled={isLoading || !contract || contract.status === 'canceled'}
-              title={contract?.status === 'canceled' ? 'Contratos cancelados não podem ser renovados' : undefined}
-              className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Renovar contrato
-            </button>
-            <button
-              type="button"
-              onClick={() => setEditModalOpen(true)}
-              disabled={isLoading || !contract}
-              className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
-            >
-              Editar contrato
-            </button>
-            <button
-              type="button"
-              onClick={() => setCancelModalOpen(true)}
-              disabled={isLoading || !contract || contract.status === 'canceled'}
-              title={contract?.status === 'canceled' ? 'Este contrato já foi cancelado' : undefined}
-              className="rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Cancelar contrato
-            </button>
-          </div>
+          {contract && contract.status !== 'canceled' && (
+            <div className="flex gap-2">
+              {contract.status !== 'active' && (
+                <button
+                  type="button"
+                  onClick={() => void handleActivate()}
+                  disabled={isActivating}
+                  className="rounded-md border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {isActivating ? 'Ativando...' : 'Ativar contrato'}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setRenewModalOpen(true)}
+                className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100"
+              >
+                Renovar contrato
+              </button>
+              <button
+                type="button"
+                onClick={() => setEditModalOpen(true)}
+                className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100"
+              >
+                Editar contrato
+              </button>
+              <button
+                type="button"
+                onClick={() => setCancelModalOpen(true)}
+                className="rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50"
+              >
+                Cancelar contrato
+              </button>
+            </div>
+          )}
         </div>
 
         {isLoading ? (

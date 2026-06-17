@@ -7,6 +7,7 @@ const STATUS_LABELS: Record<ReceivableStatusValue, string> = {
   2: 'Pago',
   3: 'Vencido',
   4: 'Cancelado',
+  5: 'Contrato pendente',
 }
 
 const STATUS_CLASSES: Record<ReceivableStatusValue, string> = {
@@ -15,6 +16,7 @@ const STATUS_CLASSES: Record<ReceivableStatusValue, string> = {
   2: 'bg-success-light text-success',
   3: 'bg-red-50 text-red-700',
   4: 'bg-orange-50 text-orange-700',
+  5: 'bg-yellow-50 text-yellow-700',
 }
 
 export function getStatusLabel(status: number): string {
@@ -30,5 +32,5 @@ export function getAllowedTransitions(status: number): ReceivableStatusValue[] {
 }
 
 export function isTerminalStatus(status: number): boolean {
-  return status === 2 || status === 4
+  return status === 2 || status === 4 || status === 5
 }

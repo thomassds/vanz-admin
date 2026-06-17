@@ -38,8 +38,8 @@ export default function DashboardPage() {
   } = useGetMonthlyRevenueQuery({ months })
 
   return (
-    <div className="grid gap-8">
-      <h2 className="font-['Montserrat',sans-serif] text-2xl font-bold text-navy">Dashboard</h2>
+    <div className="grid gap-6 md:gap-8">
+      <h2 className="font-['Montserrat',sans-serif] text-xl font-bold text-navy sm:text-2xl">Dashboard</h2>
 
       {/* KPIs */}
       <SummaryKpis
@@ -51,7 +51,7 @@ export default function DashboardPage() {
 
       {/* Próximos vencimentos */}
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <div className="border-b border-gray-200 px-6 py-4">
+        <div className="border-b border-gray-200 px-4 py-4 sm:px-6">
           <h3 className="font-['Montserrat',sans-serif] text-sm font-bold text-navy">
             Próximos Vencimentos
           </h3>
@@ -70,7 +70,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Receita mensal */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
         <MonthlyRevenueTable
           data={revenue?.data}
           months={months}

@@ -16,28 +16,30 @@ Cada recebível tem um status que segue uma máquina de estados bem definida.
 
 ## Status de Recebíveis
 
-| Valor | Status    | Cor sugerida |
-| ----- | --------- | ------------ |
-| 0     | Pendente  | Cinza        |
-| 1     | Cobrado   | Azul         |
-| 2     | Pago      | Verde        |
-| 3     | Vencido   | Vermelho     |
-| 4     | Cancelado | Laranja      |
+| Valor | Status             | Cor sugerida |
+| ----- | ------------------ | ------------ |
+| 0     | Pendente           | Cinza        |
+| 1     | Cobrado            | Azul         |
+| 2     | Pago               | Verde        |
+| 3     | Vencido            | Vermelho     |
+| 4     | Cancelado          | Laranja      |
+| 5     | Contrato pendente  | Amarelo      |
 
 ### Transições permitidas
 
-| De        | Para      | Permitido |
-| --------- | --------- | --------- |
-| Pendente  | Cobrado   | ✅        |
-| Pendente  | Vencido   | ✅        |
-| Pendente  | Cancelado | ✅        |
-| Cobrado   | Pago      | ✅        |
-| Cobrado   | Vencido   | ✅        |
-| Cobrado   | Cancelado | ✅        |
-| Vencido   | Pago      | ✅        |
-| Vencido   | Cancelado | ✅        |
-| Pago      | qualquer  | ❌        |
-| Cancelado | qualquer  | ❌        |
+| De                 | Para      | Permitido |
+| ------------------ | --------- | --------- |
+| Pendente           | Cobrado   | ✅        |
+| Pendente           | Vencido   | ✅        |
+| Pendente           | Cancelado | ✅        |
+| Cobrado            | Pago      | ✅        |
+| Cobrado            | Vencido   | ✅        |
+| Cobrado            | Cancelado | ✅        |
+| Vencido            | Pago      | ✅        |
+| Vencido            | Cancelado | ✅        |
+| Pago               | qualquer  | ❌        |
+| Cancelado          | qualquer  | ❌        |
+| Contrato pendente  | qualquer  | ❌        |
 
 ---
 
@@ -133,7 +135,7 @@ Campos de edição:
 | Erro de listagem   | Mensagem de erro + botão "Tentar novamente"                    |
 | Loading modal      | Botão salvar com spinner e desabilitado                        |
 | Sucesso alteração  | Toast de sucesso + invalidação da lista                        |
-| Status Pago/Cancelado | Ações de edição desabilitadas na linha                     |
+| Status Pago/Cancelado/Contrato pendente | Ações de edição desabilitadas na linha        |
 
 ---
 
@@ -180,7 +182,7 @@ z.object({
 - [ ] Novo recebível pode ser cadastrado via modal
 - [ ] Status pode ser alterado respeitando as transições permitidas
 - [ ] Opções de status no select limitadas às transições válidas para o status atual
-- [ ] Campos de valor e vencimento bloqueados para recebíveis com status Pago
+- [ ] Campos de valor e vencimento bloqueados para recebíveis com status Pago, Cancelado ou Contrato pendente
 - [ ] Toast de sucesso após cada operação
 - [ ] Erros da API exibidos com mensagem amigável
 - [ ] Listagem atualizada automaticamente após qualquer operação

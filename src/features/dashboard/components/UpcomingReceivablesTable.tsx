@@ -65,10 +65,14 @@ export function UpcomingReceivablesTable({
           <thead className="bg-gray-50">
             <tr className="border-b border-gray-200">
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Cliente</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Parcela</th>
+              <th className="hidden px-4 py-3 text-left text-xs font-semibold text-gray-600 sm:table-cell">
+                Parcela
+              </th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Vencimento</th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Valor</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Status</th>
+              <th className="hidden px-4 py-3 text-left text-xs font-semibold text-gray-600 sm:table-cell">
+                Status
+              </th>
               <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600">Ação</th>
             </tr>
           </thead>
@@ -85,11 +89,18 @@ export function UpcomingReceivablesTable({
                 ))
               : data?.map((r) => (
                   <tr key={r.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium text-gray-900">{r.clientName}</td>
-                    <td className="px-4 py-3 text-gray-600">#{r.installmentNumber}</td>
+                    <td className="px-4 py-3">
+                      <span className="font-medium text-gray-900">{r.clientName}</span>
+                      <span className="mt-0.5 block text-xs text-gray-400 sm:hidden">
+                        {STATUS_LABELS[r.status] ?? r.status}
+                      </span>
+                    </td>
+                    <td className="hidden px-4 py-3 text-gray-600 sm:table-cell">
+                      #{r.installmentNumber}
+                    </td>
                     <td className="px-4 py-3 text-gray-600">{isoToBR(r.dueDate.slice(0, 10))}</td>
                     <td className="px-4 py-3 text-gray-600">{formatCurrency(r.value)}</td>
-                    <td className="px-4 py-3">
+                    <td className="hidden px-4 py-3 sm:table-cell">
                       <span
                         className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_CLASS[r.status] ?? 'bg-gray-100 text-gray-600'}`}
                       >
@@ -104,7 +115,7 @@ export function UpcomingReceivablesTable({
                         }
                         className="text-xs font-medium text-primary hover:underline"
                       >
-                        Ver recebível
+                        Ver →
                       </button>
                     </td>
                   </tr>

@@ -32,25 +32,25 @@ function KpiCard({
             : 'text-navy'
 
   return (
-    <div className="flex flex-col gap-1 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-      <span className="text-xs font-semibold text-gray-400">{label}</span>
-      <span className={`text-xl font-bold ${accentClass}`}>{value}</span>
+    <div className="flex flex-col gap-1 rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:p-4">
+      <span className="text-xs font-semibold text-gray-400 leading-tight">{label}</span>
+      <span className={`text-lg font-bold sm:text-xl ${accentClass}`}>{value}</span>
     </div>
   )
 }
 
 function SkeletonCard() {
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="h-3 w-24 animate-pulse rounded bg-gray-200" />
-      <div className="h-6 w-16 animate-pulse rounded bg-gray-200" />
+    <div className="flex flex-col gap-2 rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:p-4">
+      <div className="h-3 w-20 animate-pulse rounded bg-gray-200" />
+      <div className="h-5 w-14 animate-pulse rounded bg-gray-200" />
     </div>
   )
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="mb-3 font-['Montserrat',sans-serif] text-sm font-bold text-navy">
+    <h3 className="mb-2 font-['Montserrat',sans-serif] text-sm font-bold text-navy sm:mb-3">
       {children}
     </h3>
   )
@@ -73,7 +73,7 @@ export function SummaryKpis({ summary, isLoading, isError, onRefetch }: SummaryK
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4 sm:gap-6">
       {/* Clientes */}
       <div>
         <SectionTitle>Clientes</SectionTitle>

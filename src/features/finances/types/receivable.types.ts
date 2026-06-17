@@ -1,4 +1,4 @@
-export type ReceivableStatusValue = 0 | 1 | 2 | 3 | 4
+export type ReceivableStatusValue = 0 | 1 | 2 | 3 | 4 | 5
 
 export const ALLOWED_STATUS_TRANSITIONS: Record<ReceivableStatusValue, ReceivableStatusValue[]> = {
   0: [1, 3, 4],
@@ -6,6 +6,7 @@ export const ALLOWED_STATUS_TRANSITIONS: Record<ReceivableStatusValue, Receivabl
   2: [],
   3: [2, 4],
   4: [],
+  5: [],
 }
 
 export interface ReceivableContract {

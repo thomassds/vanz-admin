@@ -112,3 +112,8 @@ export interface CancelContractResponse {
   canceledAt: string
   reason: string
 }
+
+export interface ActivateContractResponse {
+  contractId: string
+  status: 'active'
+}

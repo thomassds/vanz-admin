@@ -292,7 +292,8 @@ export function ReceivableFormModal({
         >
           {locked && (
             <p className="rounded-md bg-gray-50 px-3 py-2 text-xs text-gray-500">
-              Recebíveis com status <strong>Pago</strong> ou <strong>Cancelado</strong> não podem ser alterados.
+              Recebíveis com status <strong>Pago</strong>, <strong>Cancelado</strong> ou{' '}
+              <strong>Contrato pendente</strong> não podem ser alterados.
             </p>
           )}
 

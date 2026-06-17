@@ -87,11 +87,11 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
   useEffect(() => {
     const months = parseInt(String(watchedDurationMonths), 10)
     if (!watchedStartDate || isNaN(months) || months < 1) return
-    const start = new Date(watchedStartDate)
-    if (isNaN(start.getTime())) return
-    const end = new Date(start)
-    end.setMonth(end.getMonth() + months)
-    setValue('endDate', end.toISOString().slice(0, 10))
+    const [y, m, d] = watchedStartDate.split('-').map(Number)
+    if (!y || !m || !d) return
+    const end = new Date(y, m - 1 + months, d)
+    const iso = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`
+    setValue('endDate', iso)
   }, [watchedStartDate, watchedDurationMonths, setValue])
 
   // Auto-calcula totalValue = value - discount
