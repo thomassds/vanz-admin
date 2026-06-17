@@ -10,6 +10,9 @@ const RecoveryPasswordPage = lazy(() => import('@/features/auth/pages/RecoveryPa
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
 const ClientsPage = lazy(() => import('@/features/clients/pages/ClientsPage'))
 const ClientDetailPage = lazy(() => import('@/features/clients/pages/ClientDetailPage'))
+const ContractsPage = lazy(() => import('@/features/contracts/pages/ContractsPage'))
+const ContractFormPage = lazy(() => import('@/features/contracts/pages/ContractFormPage'))
+const ContractDetailPage = lazy(() => import('@/features/contracts/pages/ContractDetailPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 function PageLoader() {
@@ -81,6 +84,30 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<PageLoader />}>
                 <ClientDetailPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/contracts',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ContractsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/contracts/new',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ContractFormPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/contracts/:id',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ContractDetailPage />
               </Suspense>
             ),
           },
