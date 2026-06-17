@@ -4,6 +4,7 @@ import type { PaginatedResponse } from "@/shared/types/api.types";
 import type {
   Contract,
   ContractFilters,
+  ContractHistoryResponse,
   CreateContractDTO,
   UpdateContractDTO,
 } from "../types/contract.types";
@@ -33,6 +34,17 @@ export const contractsApi = createApi({
       }),
       invalidatesTags: ["Contract"],
     }),
+    getContractHistory: builder.query<
+      ContractHistoryResponse,
+      { id: string; page: number; limit: number }
+    >({
+      query: ({ id, page, limit }) => ({
+        url: `/contracts/${id}/history`,
+        method: "GET",
+        params: { page, limit },
+      }),
+      providesTags: (_result, _error, { id }) => [{ type: "Contract", id }],
+    }),
   }),
 });
 
@@ -41,4 +53,5 @@ export const {
   useGetContractByIdQuery,
   useCreateContractMutation,
   useUpdateContractMutation,
+  useGetContractHistoryQuery,
 } = contractsApi;

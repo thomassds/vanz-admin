@@ -1,5 +1,34 @@
 export type ContractStatus = 'active' | 'inactive' | 'pending'
 
+export type ContractEventType =
+  | 'CONTRACT_CREATED'
+  | 'CONTRACT_UPDATED'
+  | 'CONTRACT_ACTIVATED'
+  | 'CONTRACT_SUSPENDED'
+  | 'CONTRACT_CANCELED'
+  | 'CONTRACT_RENEWED'
+  | 'DEPENDENT_LINKED'
+  | 'DEPENDENT_UNLINKED'
+
+export interface ContractHistoryEvent {
+  id: string
+  tenantId: string
+  contractId: string
+  eventType: ContractEventType
+  oldValue: Record<string, unknown> | null
+  newValue: Record<string, unknown> | null
+  metadata: Record<string, unknown> | null
+  createdAt: string
+}
+
+export interface ContractHistoryResponse {
+  items: ContractHistoryEvent[]
+  page: number
+  limit: number
+  total: number
+  totalPages: number
+}
+
 export interface ContractClient {
   id: string
   name: string

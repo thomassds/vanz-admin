@@ -6,6 +6,7 @@ import { useToast } from '@/shared/hooks/useToast'
 import { isoToBR } from '@/shared/utils/date'
 import { ContractStatusBadge } from '../components/ContractStatusBadge'
 import { ContractForm } from '../components/ContractForm'
+import { ContractHistorySection } from '../components/ContractHistorySection'
 import { useGetContractByIdQuery, useUpdateContractMutation } from '../store/contractsApi'
 import type { CreateContractFormData } from '../schemas/create-contract.schema'
 
@@ -163,7 +164,7 @@ export default function ContractDetailPage() {
 
       {/* Link para recebíveis */}
       {contract && (
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-['Montserrat',sans-serif] text-sm font-bold text-navy">
@@ -181,6 +182,13 @@ export default function ContractDetailPage() {
               Ver recebíveis →
             </button>
           </div>
+        </div>
+      )}
+
+      {/* Histórico */}
+      {id && (
+        <div className="mt-6">
+          <ContractHistorySection contractId={id} />
         </div>
       )}
 
