@@ -4,15 +4,19 @@ import { useSelector } from 'react-redux'
 import { selectAuth } from '@/features/auth/store/authSlice'
 import type { ConnectionStatus, LivePosition, VehiclePositionEvent } from '../types/position.types'
 
-const WS_URL = (import.meta.env.VITE_API_URL as string ?? '').replace(/\/api\/?$/, '')
+const WS_URL = import.meta.env.VITE_WS_URL as string
 
 export function useTrackingSocket() {
-  const { token, tenantId } = useSelector(selectAuth)
+  const auth = useSelector(selectAuth)
   const [status, setStatus] = useState<ConnectionStatus>('connecting')
   const [positions, setPositions] = useState<Map<string, LivePosition>>(new Map())
   const socketRef = useRef<Socket | null>(null)
 
   useEffect(() => {
+    // Fallback to localStorage in case redux-persist hasn't rehydrated yet
+    const token = auth.token ?? localStorage.getItem('token')
+    const tenantId = auth.tenantId ?? localStorage.getItem('tenantId')
+
     if (!token || !tenantId) {
       setStatus('disconnected')
       return
@@ -26,14 +30,20 @@ export function useTrackingSocket() {
         'x-tenant-id': tenantId,
       },
       query: { token, tenantId },
-      transports: ['polling', 'websocket'],
+      transports: ['polling'],
+      upgrade: false,
     })
 
     socketRef.current = socket
 
     socket.on('connect', () => setStatus('connected'))
     socket.on('disconnect', () => setStatus('disconnected'))
-    socket.on('connect_error', () => setStatus('reconnecting'))
+
+    socket.on('connect_error', (err) => {
+      console.error('[TrackingSocket] connect_error:', err.message, err)
+      setStatus('reconnecting')
+    })
+
     socket.on('reconnect_attempt', () => setStatus('reconnecting'))
 
     socket.on('error', (err: { code?: string }) => {
@@ -55,7 +65,7 @@ export function useTrackingSocket() {
       socket.disconnect()
       socketRef.current = null
     }
-  }, [token, tenantId])
+  }, [auth.token, auth.tenantId])
 
   return { positions, status }
 }
