@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 import { ProtectedRoute } from './ProtectedRoute'
 import { GuestRoute } from './GuestRoute'
 import { AppLayout } from '@/layouts/AppLayout'
@@ -16,6 +16,7 @@ const ContractDetailPage = lazy(() => import('@/features/contracts/pages/Contrac
 const ReceivablesPage = lazy(() => import('@/features/finances/pages/ReceivablesPage'))
 const PayablesPage = lazy(() => import('@/features/finances/pages/PayablesPage'))
 const VehiclesPage = lazy(() => import('@/features/vehicles/pages/VehiclesPage'))
+const TrackingPage = lazy(() => import('@/features/tracking/pages/TrackingPage'))
 const LandingPage = lazy(() => import('@/pages/LandingPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
@@ -116,6 +117,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<PageLoader />}>
                 <ContractDetailPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/tracking',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <TrackingPage />
               </Suspense>
             ),
           },

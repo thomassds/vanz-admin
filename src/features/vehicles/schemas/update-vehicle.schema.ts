@@ -7,12 +7,12 @@ export const updateVehicleSchema = z
     plate: z.string().min(1).max(20).optional(),
     model: z.string().min(1).max(100).optional(),
     capacity: z
-      .number({ invalid_type_error: 'Capacidade inválida' })
+      .number()
       .int()
       .positive('Capacidade deve ser maior que zero')
       .optional(),
     year: z
-      .number({ invalid_type_error: 'Ano inválido' })
+      .number()
       .int()
       .min(1900, 'Ano inválido')
       .max(currentYear + 1, 'Ano inválido')

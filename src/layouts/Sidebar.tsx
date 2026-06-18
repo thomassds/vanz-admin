@@ -6,7 +6,7 @@ import { closeSidebar, selectIsSidebarOpen } from '@/shared/store/uiSlice'
 interface NavItem {
   label: string
   to: string
-  icon: 'home' | 'users' | 'file' | 'wallet' | 'receipt' | 'truck'
+  icon: 'home' | 'users' | 'file' | 'wallet' | 'receipt' | 'truck' | 'location'
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -14,6 +14,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Clientes', to: '/clients', icon: 'users' },
   { label: 'Contratos', to: '/contracts', icon: 'file' },
   { label: 'Veículos', to: '/vehicles', icon: 'truck' },
+  { label: 'Rastreamento', to: '/tracking', icon: 'location' },
   { label: 'Contas a receber', to: '/finances/receivables', icon: 'wallet' },
   { label: 'Contas a pagar', to: '/finances/payables', icon: 'receipt' },
 ]
@@ -40,6 +41,16 @@ function NavIcon({ type }: { type: NavItem['icon'] }) {
     return (
       <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0">
         <path fill="currentColor" d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h8v1.5H8V12Zm0 4h8v1.5H8V16Z" />
+      </svg>
+    )
+  }
+  if (type === 'location') {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0">
+        <path
+          fill="currentColor"
+          d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7Zm0 4.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"
+        />
       </svg>
     )
   }

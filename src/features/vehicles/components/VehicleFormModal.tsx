@@ -117,9 +117,6 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
       hasError ? 'border-danger' : 'border-gray-200',
     )
 
-  const form = isEditing ? updateForm : createForm
-  const errors = form.formState.errors
-
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={isEditing ? 'Editar veículo' : 'Novo veículo'}>
       {/* ── CREATE MODE ── */}

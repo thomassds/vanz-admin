@@ -218,7 +218,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
               control={createForm.control}
               render={({ field }) => (
                 <select
-                  value={field.value ?? ''}
+                  value={(field.value as number | undefined) ?? ''}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                   onBlur={field.onBlur}
                   className={cn(
@@ -464,7 +464,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
               render={({ field }) => (
                 <select
                   disabled={locked}
-                  value={field.value ?? ''}
+                  value={(field.value as number | undefined) ?? ''}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                   onBlur={field.onBlur}
                   className={cn(
