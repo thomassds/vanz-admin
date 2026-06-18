@@ -47,7 +47,7 @@ export default function TrackingPage() {
 
       <div className="mb-6 flex items-center justify-between">
         <h2 className="font-['Montserrat',sans-serif] text-2xl font-bold text-navy">
-          Rastreamento
+          Dispositivos
         </h2>
         <button
           type="button"
