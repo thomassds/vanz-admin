@@ -25,8 +25,8 @@ export function useTrackingSocket() {
         authorization: `Bearer ${token}`,
         'x-tenant-id': tenantId,
       },
-      query: { token },
-      transports: ['websocket', 'polling'],
+      query: { token, tenantId },
+      transports: ['polling', 'websocket'],
     })
 
     socketRef.current = socket
