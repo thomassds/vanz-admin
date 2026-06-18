@@ -7,6 +7,7 @@ import { useGetDevicesQuery, useDeleteDeviceMutation } from '../store/trackingAp
 import { getDeviceErrorMessage } from '../utils/deviceErrors'
 import { DevicesTable } from '../components/DevicesTable'
 import { CreateDeviceModal } from '../components/CreateDeviceModal'
+import { TrackingTabs } from '../components/TrackingTabs'
 import type { Device } from '../types/device.types'
 import type { ApiError } from '@/shared/types/api.types'
 
@@ -47,7 +48,7 @@ export default function TrackingPage() {
 
       <div className="mb-6 flex items-center justify-between">
         <h2 className="font-['Montserrat',sans-serif] text-2xl font-bold text-navy">
-          Dispositivos
+          Rastreamento
         </h2>
         <button
           type="button"
@@ -57,6 +58,8 @@ export default function TrackingPage() {
           + Novo dispositivo
         </button>
       </div>
+
+      <TrackingTabs />
 
       {/* Filtro */}
       <div className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">

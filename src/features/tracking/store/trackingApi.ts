@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { axiosBaseQuery } from '@/shared/api/axiosBaseQuery'
 import type { PaginatedResponse } from '@/shared/types/api.types'
 import type { Device, DeviceFilters, CreateDeviceDTO } from '../types/device.types'
+import type { VehiclePositionResult } from '../types/position.types'
 
 export const trackingApi = createApi({
   reducerPath: 'trackingApi',
@@ -20,6 +21,9 @@ export const trackingApi = createApi({
       query: (id) => ({ url: `/tracking/devices/${id}`, method: 'DELETE' }),
       invalidatesTags: ['Device'],
     }),
+    getVehiclePosition: builder.query<VehiclePositionResult, string>({
+      query: (vehicleId) => ({ url: `/tracking/vehicles/${vehicleId}/position`, method: 'GET' }),
+    }),
   }),
 })
 
@@ -27,4 +31,5 @@ export const {
   useGetDevicesQuery,
   useCreateDeviceMutation,
   useDeleteDeviceMutation,
+  useLazyGetVehiclePositionQuery,
 } = trackingApi

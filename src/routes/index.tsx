@@ -17,6 +17,7 @@ const ReceivablesPage = lazy(() => import('@/features/finances/pages/Receivables
 const PayablesPage = lazy(() => import('@/features/finances/pages/PayablesPage'))
 const VehiclesPage = lazy(() => import('@/features/vehicles/pages/VehiclesPage'))
 const TrackingPage = lazy(() => import('@/features/tracking/pages/TrackingPage'))
+const TrackingMapPage = lazy(() => import('@/features/tracking/pages/TrackingMapPage'))
 const LandingPage = lazy(() => import('@/pages/LandingPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
@@ -125,6 +126,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<PageLoader />}>
                 <TrackingPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/tracking/map',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <TrackingMapPage />
               </Suspense>
             ),
           },
