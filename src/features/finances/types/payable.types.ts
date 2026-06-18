@@ -12,6 +12,7 @@ export interface Payable {
   id: string
   tenantId: string
   contractId: string | null
+  vehicleId: string | null
   value: string
   dueDate: string
   paidAt: string | null
@@ -28,6 +29,7 @@ export interface PayableFilters {
   status?: number
   category?: number
   contractId?: string
+  vehicleId?: string
   dueDateFrom?: string
   dueDateTo?: string
 }
@@ -38,6 +40,7 @@ export interface CreatePayableDTO {
   category: number
   status?: number
   contractId?: string
+  vehicleId?: string
   description?: string
 }
 
@@ -47,5 +50,6 @@ export interface UpdatePayableDTO {
   dueDate?: string
   status?: number
   category?: number
+  vehicleId?: string | null
   description?: string
 }

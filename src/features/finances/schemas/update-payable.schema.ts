@@ -9,6 +9,7 @@ export const updatePayableSchema = z.object({
   dueDate: z.string().min(1, 'Vencimento obrigatório'),
   category: z.coerce.number().int().min(1).max(5, { message: 'Categoria obrigatória' }),
   status: z.number().int().min(0).max(3).optional(),
+  vehicleId: z.string().nullable().optional(),
   description: z.string().max(500, 'Máximo 500 caracteres').optional(),
 })
 

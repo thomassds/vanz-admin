@@ -10,6 +10,7 @@ export const createPayableSchema = z.object({
   category: z.coerce.number().int().min(1).max(5, { message: 'Categoria obrigatória' }),
   status: z.number().int().min(0).max(3).optional().default(0),
   contractId: z.string().optional(),
+  vehicleId: z.string().optional(),
   description: z.string().max(500, 'Máximo 500 caracteres').optional(),
 })
 

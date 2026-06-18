@@ -16,6 +16,7 @@ import { contractsApi } from '@/features/contracts/store/contractsApi'
 import { receivablesApi } from '@/features/finances/store/receivablesApi'
 import { payablesApi } from '@/features/finances/store/payablesApi'
 import { dashboardApi } from '@/features/dashboard/store/dashboardApi'
+import { vehiclesApi } from '@/features/vehicles/store/vehiclesApi'
 
 const authPersistConfig = {
   key: 'auth',
@@ -35,13 +36,14 @@ export const store = configureStore({
     [receivablesApi.reducerPath]: receivablesApi.reducer,
     [payablesApi.reducerPath]: payablesApi.reducer,
     [dashboardApi.reducerPath]: dashboardApi.reducer,
+    [vehiclesApi.reducerPath]: vehiclesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authApi.middleware, clientsApi.middleware, contractsApi.middleware, receivablesApi.middleware, payablesApi.middleware, dashboardApi.middleware),
+    }).concat(authApi.middleware, clientsApi.middleware, contractsApi.middleware, receivablesApi.middleware, payablesApi.middleware, dashboardApi.middleware, vehiclesApi.middleware),
 })
 
 export const persistor = persistStore(store)

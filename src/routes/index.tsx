@@ -15,6 +15,8 @@ const ContractFormPage = lazy(() => import('@/features/contracts/pages/ContractF
 const ContractDetailPage = lazy(() => import('@/features/contracts/pages/ContractDetailPage'))
 const ReceivablesPage = lazy(() => import('@/features/finances/pages/ReceivablesPage'))
 const PayablesPage = lazy(() => import('@/features/finances/pages/PayablesPage'))
+const VehiclesPage = lazy(() => import('@/features/vehicles/pages/VehiclesPage'))
+const LandingPage = lazy(() => import('@/pages/LandingPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 function PageLoader() {
@@ -28,7 +30,11 @@ function PageLoader() {
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/dashboard" replace />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <LandingPage />
+      </Suspense>
+    ),
   },
   {
     element: <GuestRoute />,
@@ -110,6 +116,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<PageLoader />}>
                 <ContractDetailPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/vehicles',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <VehiclesPage />
               </Suspense>
             ),
           },

@@ -13,6 +13,7 @@ interface Filters {
   status: string
   category: string
   contractId: string
+  vehicleId: string
   dueDateFrom: string
   dueDateTo: string
 }
@@ -24,6 +25,7 @@ export default function PayablesPage() {
     status: '',
     category: '',
     contractId: '',
+    vehicleId: '',
     dueDateFrom: '',
     dueDateTo: '',
   })
@@ -37,6 +39,7 @@ export default function PayablesPage() {
     ...(filters.status !== '' ? { status: parseInt(filters.status, 10) } : {}),
     ...(filters.category !== '' ? { category: parseInt(filters.category, 10) } : {}),
     ...(filters.contractId ? { contractId: filters.contractId } : {}),
+    ...(filters.vehicleId ? { vehicleId: filters.vehicleId } : {}),
     ...(filters.dueDateFrom ? { dueDateFrom: filters.dueDateFrom } : {}),
     ...(filters.dueDateTo ? { dueDateTo: filters.dueDateTo } : {}),
   })
