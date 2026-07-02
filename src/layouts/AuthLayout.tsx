@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import backgroundHome from '@/assets/background-home.png'
 
 const features = [
   { title: 'Segurança', text: 'Proteção em tempo real', icon: 'shield' as const },
@@ -8,28 +7,28 @@ const features = [
 ]
 
 const stats = [
-  { label: 'Rotas ativas agora', value: '137', dot: '#37A52D' },
-  { label: 'Vans em operação', value: '75', dot: '#26AAFF' },
-  { label: 'Alunos transportados', value: '1.125', dot: '#7A53FF', tag: '#37A52D' },
+  { label: 'Rotas ativas agora', value: '137', dotClass: 'bg-success' },
+  { label: 'Vans em operação', value: '75', dotClass: 'bg-info' },
+  { label: 'Alunos transportados', value: '1.125', dotClass: 'bg-primary' },
 ]
 
 function FeatureIcon({ type }: { type: 'shield' | 'pin' | 'chat' }) {
   if (type === 'shield') {
     return (
-      <svg viewBox="0 0 24 24" className="h-6 w-6 text-[#00c8ff]">
+      <svg viewBox="0 0 24 24" className="h-5 w-5 text-primary">
         <path fill="currentColor" d="M12 2 4 5v6c0 5.2 3.4 9.9 8 11 4.6-1.1 8-5.8 8-11V5l-8-3Zm-1.2 14.8-3.4-3.4 1.4-1.4 2 2 4.2-4.2 1.4 1.4-5.6 5.6Z" />
       </svg>
     )
   }
   if (type === 'pin') {
     return (
-      <svg viewBox="0 0 24 24" className="h-6 w-6 text-[#00c8ff]">
+      <svg viewBox="0 0 24 24" className="h-5 w-5 text-primary">
         <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z" />
       </svg>
     )
   }
   return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6 text-[#00c8ff]">
+    <svg viewBox="0 0 24 24" className="h-5 w-5 text-primary">
       <path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm3 7a1.5 1.5 0 1 0 0 .01V11Zm5 0a1.5 1.5 0 1 0 0 .01V11Zm5 0a1.5 1.5 0 1 0 0 .01V11Z" />
     </svg>
   )
@@ -41,76 +40,91 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ children }: AuthLayoutProps) {
   return (
-    <main className="h-screen w-screen max-h-screen max-w-screen overflow-hidden bg-white text-[#0c315e] [font-family:'Nunito','Segoe_UI',sans-serif]">
-      <section className="grid h-full w-full max-h-full max-w-full grid-rows-[58%_42%] overflow-hidden lg:grid-cols-[66.7%_33.3%] lg:grid-rows-1">
-
-        {/* Left — marketing panel */}
-        <article className="relative h-full min-h-0 overflow-hidden bg-gradient-to-br from-[#edf4fb] via-[#e7f1fa] to-[#dcecf8] px-[18px] pb-3 pt-5 sm:px-8 lg:px-[56px] lg:pb-6 lg:pt-[52px]">
-          <img
-            src={backgroundHome}
-            alt=""
-            className="absolute inset-0 h-full max-h-full w-full max-w-full object-cover object-[58%_center] opacity-95 lg:opacity-80"
+    <main className="min-h-screen w-full bg-app font-body text-text lg:h-screen lg:overflow-hidden">
+      <section className="flex min-h-screen w-full flex-col lg:h-full lg:flex-row">
+        {/* Painel de marca — 100% CSS, sem imagens */}
+        <article className="relative isolate overflow-hidden bg-navy px-6 py-8 lg:flex lg:w-[56%] lg:flex-col lg:justify-between lg:px-14 lg:py-12">
+          {/* Brilhos decorativos */}
+          <div
             aria-hidden="true"
+            className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/25 blur-[120px]"
           />
           <div
-            className="absolute inset-0 bg-gradient-to-b from-[#f1f8fde6] via-[#f3faff9e] to-[#eefaff1f] lg:bg-gradient-to-r lg:from-[#f1f8fdf5] lg:via-[#f0f8fdea] lg:to-[#ecf8ff26]"
             aria-hidden="true"
+            className="pointer-events-none absolute -bottom-40 right-0 h-[28rem] w-[28rem] rounded-full bg-info/20 blur-[140px]"
+          />
+          {/* Grade sutil de fundo */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
           />
 
-          <header className="relative z-10">
-            <h1 className="m-0 text-center font-['Montserrat',sans-serif] text-[clamp(4.1rem,20vw,5.4rem)] font-bold leading-[0.86] tracking-[0.01em] text-[#00c8ff] drop-shadow-[0_4px_4px_rgba(0,0,0,0.18)] lg:text-left lg:text-[96px]">
-              VANS
-            </h1>
-            <p className="mt-1.5 text-center font-['Montserrat',sans-serif] text-[1.05rem] font-semibold text-[#708097] lg:text-left lg:text-base">
+          <header className="relative">
+            <div className="flex items-center justify-center gap-3 lg:justify-start">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/15 ring-1 ring-primary/40">
+                <svg viewBox="0 0 24 24" className="h-6 w-6 text-primary">
+                  <path
+                    fill="currentColor"
+                    d="M3 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H3V6Zm0 3h18v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Zm12 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"
+                  />
+                </svg>
+              </span>
+              <h1 className="m-0 font-heading text-4xl font-extrabold tracking-tight text-white lg:text-5xl">
+                VANZ
+              </h1>
+            </div>
+            <p className="mt-3 text-center font-heading text-sm font-medium text-white/60 lg:text-left lg:text-base">
               Gestão inteligente para transporte escolar
             </p>
           </header>
 
-          <div className="relative z-10 mt-0 hidden max-w-[540px] lg:mt-[56px] lg:block">
-            <h2 className="m-0 font-['Montserrat',sans-serif] text-[48px] font-bold leading-[1.1] tracking-[-0.01em] text-[#002c66]">
+          <div className="relative mt-12 hidden max-w-[560px] lg:block">
+            <h2 className="m-0 font-heading text-[2.75rem] font-bold leading-[1.12] text-white">
               Mais segurança.
               <br />
               Mais controle.
               <br />
-              <span className="text-[#00c8ff]">Mais confiança.</span>
+              <span className="bg-gradient-to-r from-primary to-info bg-clip-text text-transparent">
+                Mais confiança.
+              </span>
             </h2>
-            <p className="mt-4 max-w-[430px] font-['Montserrat',sans-serif] text-[16px] font-semibold leading-[1.28] text-[#708097]">
+            <p className="mt-5 max-w-md text-base leading-relaxed text-white/60">
               Acompanhe rotas em tempo real, gerencie alunos e mantenha pais,
               escola e condutores sempre conectados.
             </p>
-          </div>
 
-          <div className="relative z-10 mt-[36px] hidden max-w-[560px] grid-cols-3 gap-[22px] lg:grid">
-            {features.map((feature) => (
-              <article key={feature.title}>
-                <span className="mb-2 inline-flex h-[50px] w-[50px] items-center justify-center rounded-[12px] border-2 border-[#00c8ff] bg-[#fffffff0]">
-                  <FeatureIcon type={feature.icon} />
-                </span>
-                <h3 className="m-0 font-['Montserrat',sans-serif] text-[16px] font-bold text-[#002c66]">
-                  {feature.title}
-                </h3>
-                <p className="mt-1 max-w-[125px] font-['Montserrat',sans-serif] text-xs font-medium leading-[1.18] text-[#708097]">
-                  {feature.text}
-                </p>
-              </article>
-            ))}
+            <div className="mt-10 grid max-w-[540px] grid-cols-3 gap-4">
+              {features.map((feature) => (
+                <article
+                  key={feature.title}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition-colors hover:border-primary/40 hover:bg-white/10"
+                >
+                  <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 ring-1 ring-primary/30">
+                    <FeatureIcon type={feature.icon} />
+                  </span>
+                  <h3 className="m-0 font-heading text-sm font-bold text-white">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-1 text-xs leading-snug text-white/55">
+                    {feature.text}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
 
           <div
-            className="relative z-10 mt-[42px] hidden max-w-[730px] grid-cols-3 overflow-hidden rounded-xl border border-[#c7d9e9] bg-[#ffffffeb] shadow-[0_12px_20px_rgba(21,94,142,0.16)] lg:grid"
+            className="relative mt-10 hidden max-w-[620px] grid-cols-3 divide-x divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm lg:grid"
             aria-label="Métricas de operação"
           >
             {stats.map((item) => (
-              <article key={item.label} className="border-r border-[#d3e1ec] px-8 py-4 last:border-r-0">
-                <p className="m-0 flex items-center justify-between font-['Montserrat',sans-serif] text-[14px] font-semibold text-[#708097]">
-                  <span>{item.label}</span>
-                  {item.tag ? (
-                    <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: item.tag }} />
-                  ) : null}
+              <article key={item.label} className="px-5 py-4">
+                <p className="m-0 text-xs font-medium text-white/55">
+                  {item.label}
                 </p>
-                <div className="mt-2 flex items-center gap-2.5">
-                  <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: item.dot }} />
-                  <strong className="font-['Montserrat',sans-serif] text-[38px] font-bold leading-none text-[#002c66]">
+                <div className="mt-2 flex items-center gap-2">
+                  <span className={`h-2 w-2 animate-pulse rounded-full ${item.dotClass}`} />
+                  <strong className="font-heading text-3xl font-bold leading-none text-white">
                     {item.value}
                   </strong>
                 </div>
@@ -119,16 +133,15 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           </div>
         </article>
 
-        {/* Right — auth slot */}
-        <aside className="relative flex h-full items-center justify-center overflow-hidden bg-[#f7f9fc] px-4 py-3 lg:px-0 lg:py-6">
+        {/* Slot de autenticação */}
+        <aside className="flex flex-1 items-start justify-center px-4 py-8 lg:items-center lg:overflow-y-auto lg:px-8 lg:py-6">
           <div
-            className="w-full max-w-[411px] rounded-[22px] border border-[#cde0ee] bg-[#fffffff2] p-4 shadow-[0_18px_32px_rgba(25,63,89,0.21)] lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+            className="w-full max-w-[440px] rounded-3xl border border-border bg-card p-7 shadow-xl shadow-black/5 sm:p-9"
             aria-label="Acesso da plataforma"
           >
             {children}
           </div>
         </aside>
-
       </section>
     </main>
   )

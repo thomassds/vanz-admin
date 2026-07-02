@@ -11,12 +11,12 @@ const STATUS_LABELS: Record<ReceivableStatusValue, string> = {
 }
 
 const STATUS_CLASSES: Record<ReceivableStatusValue, string> = {
-  0: 'bg-gray-100 text-gray-500',
-  1: 'bg-blue-50 text-blue-700',
-  2: 'bg-success-light text-success',
-  3: 'bg-red-50 text-red-700',
-  4: 'bg-orange-50 text-orange-700',
-  5: 'bg-yellow-50 text-yellow-700',
+  0: 'bg-card-hover text-text-muted',
+  1: 'bg-info-soft text-info',
+  2: 'bg-success-soft text-success',
+  3: 'bg-danger-soft text-danger',
+  4: 'bg-orange-500/15 text-orange-500',
+  5: 'bg-warning-soft text-warning',
 }
 
 export function getStatusLabel(status: number): string {
@@ -24,7 +24,7 @@ export function getStatusLabel(status: number): string {
 }
 
 export function getStatusClass(status: number): string {
-  return STATUS_CLASSES[status as ReceivableStatusValue] ?? 'bg-gray-100 text-gray-500'
+  return STATUS_CLASSES[status as ReceivableStatusValue] ?? 'bg-card-hover text-text-muted'
 }
 
 export function getAllowedTransitions(status: number): ReceivableStatusValue[] {

@@ -13,14 +13,14 @@ export const EVENT_LABELS: Record<ContractEventType, string> = {
 }
 
 export const EVENT_BADGE_CLASS: Record<ContractEventType, string> = {
-  CONTRACT_CREATED: 'bg-blue-100 text-blue-700',
-  CONTRACT_UPDATED: 'bg-gray-100 text-gray-600',
-  CONTRACT_ACTIVATED: 'bg-green-100 text-green-700',
-  CONTRACT_SUSPENDED: 'bg-yellow-100 text-yellow-700',
-  CONTRACT_CANCELED: 'bg-red-100 text-red-600',
-  CONTRACT_RENEWED: 'bg-indigo-100 text-indigo-700',
-  DEPENDENT_LINKED: 'bg-teal-100 text-teal-700',
-  DEPENDENT_UNLINKED: 'bg-gray-100 text-gray-500',
+  CONTRACT_CREATED: 'bg-info-soft text-info',
+  CONTRACT_UPDATED: 'bg-card-hover text-text-muted',
+  CONTRACT_ACTIVATED: 'bg-success-soft text-success',
+  CONTRACT_SUSPENDED: 'bg-warning-soft text-warning',
+  CONTRACT_CANCELED: 'bg-danger-soft text-danger',
+  CONTRACT_RENEWED: 'bg-primary-soft text-primary',
+  DEPENDENT_LINKED: 'bg-success-soft text-success',
+  DEPENDENT_UNLINKED: 'bg-card-hover text-text-muted',
 }
 
 const DATE_FIELDS = new Set(['startDate', 'endDate', 'firstPaymentDate'])

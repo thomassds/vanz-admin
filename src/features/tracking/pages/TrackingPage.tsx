@@ -46,30 +46,36 @@ export default function TrackingPage() {
     <div>
       {toast && <Toast {...toast} onDismiss={dismissToast} />}
 
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="font-['Montserrat',sans-serif] text-2xl font-bold text-navy">
-          Rastreamento
-        </h2>
+      <div className="mb-6 flex items-center justify-between gap-3">
+        <header>
+          <h2 className="font-heading text-2xl font-bold text-text">Rastreamento</h2>
+          <p className="mt-1 text-sm text-text-muted">
+            Dispositivos e localização da frota em tempo real
+          </p>
+        </header>
         <button
           type="button"
           onClick={() => setCreateOpen(true)}
-          className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover"
+          className="flex shrink-0 items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover"
         >
-          + Novo dispositivo
+          <svg viewBox="0 0 24 24" className="h-4 w-4">
+            <path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z" />
+          </svg>
+          Novo dispositivo
         </button>
       </div>
 
       <TrackingTabs />
 
       {/* Filtro */}
-      <div className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+      <div className="mb-4 rounded-2xl border border-border bg-card p-4 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Veículo</label>
+            <label className="text-xs font-semibold text-text-muted">Veículo</label>
             <select
               value={vehicleFilter}
               onChange={(e) => { setVehicleFilter(e.target.value); setPage(1) }}
-              className="h-9 min-w-[200px] rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary"
+              className="h-9 min-w-[200px] rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
             >
               <option value="">Todos os veículos</option>
               {vehiclesData?.items.map((v) => (
@@ -82,7 +88,7 @@ export default function TrackingPage() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         <DevicesTable
           devices={data?.items}
           vehicles={vehiclesData?.items}

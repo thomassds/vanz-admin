@@ -40,11 +40,11 @@ export function DevicesTable({
   if (isError) {
     return (
       <div className="flex flex-col items-center gap-3 py-16 text-center">
-        <p className="text-sm text-gray-600">Erro ao carregar dispositivos.</p>
+        <p className="text-sm text-text-muted">Erro ao carregar dispositivos.</p>
         <button
           type="button"
           onClick={onRefetch}
-          className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+          className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
         >
           Tentar novamente
         </button>
@@ -56,32 +56,32 @@ export function DevicesTable({
     <div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50">
-            <tr className="border-b border-gray-200">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Veículo</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Nome</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Tipo</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Status</th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600">Ações</th>
+          <thead>
+            <tr className="border-b border-border">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">Veículo</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">Nome</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">Tipo</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">Status</th>
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-text-subtle">Ações</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-border">
             {isLoading
               ? Array.from({ length: SKELETON_ROWS }).map((_, i) => (
                   <tr key={i}>
                     {Array.from({ length: 5 }).map((_, j) => (
                       <td key={j} className="px-4 py-3">
-                        <div className="h-4 animate-pulse rounded bg-gray-200" />
+                        <div className="h-4 animate-pulse rounded bg-card-hover" />
                       </td>
                     ))}
                   </tr>
                 ))
               : devices?.map((d) => (
-                  <tr key={d.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium text-gray-900">
+                  <tr key={d.id} className="transition-colors hover:bg-card-hover">
+                    <td className="px-4 py-3 font-medium text-text">
                       {vehicleLabel(d.vehicleId, vehicles)}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">{d.name || '—'}</td>
+                    <td className="px-4 py-3 text-text-muted">{d.name || '—'}</td>
                     <td className="px-4 py-3">
                       <DeviceTypeBadge type={d.type} />
                     </td>
@@ -105,13 +105,13 @@ export function DevicesTable({
 
       {!isLoading && devices?.length === 0 && (
         <div className="flex flex-col items-center gap-2 py-16 text-center">
-          <p className="text-sm text-gray-600">Nenhum dispositivo encontrado.</p>
+          <p className="text-sm text-text-muted">Nenhum dispositivo encontrado.</p>
         </div>
       )}
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-gray-200 px-4 py-3">
-          <span className="text-xs text-gray-500">
+        <div className="flex items-center justify-between border-t border-border px-4 py-3">
+          <span className="text-xs text-text-subtle">
             {total} dispositivo{total !== 1 ? 's' : ''}
           </span>
           <div className="flex gap-1">
@@ -119,18 +119,18 @@ export function DevicesTable({
               type="button"
               disabled={page <= 1}
               onClick={() => onPageChange(page - 1)}
-              className="rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+              className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-40"
             >
               Anterior
             </button>
-            <span className="flex items-center px-3 text-xs text-gray-600">
+            <span className="flex items-center px-3 text-xs text-text-muted">
               {page} / {totalPages}
             </span>
             <button
               type="button"
               disabled={page >= totalPages}
               onClick={() => onPageChange(page + 1)}
-              className="rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+              className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-40"
             >
               Próxima
             </button>

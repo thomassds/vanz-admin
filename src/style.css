@@ -1,6 +1,57 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito:wght@400;500;700&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Tokens semânticos (mudam com o tema) ──────────────── */
+:root {
+  --app:          #F8FAFC;
+  --card:         #FFFFFF;
+  --card-hover:   #F1F5F9;
+  --text:         #0F172A;
+  --text-muted:   #475569;
+  --text-subtle:  #94A3B8;
+  --border:       #E2E8F0;
+  --input:        #FFFFFF;
+  --primary-soft: #E0F7FC;
+  --success-soft: #DCFCE7;
+  --danger-soft:  #FEE2E2;
+  --warning-soft: #FEF3C7;
+  --info-soft:    #E0F2FE;
+}
+
+.dark {
+  --app:          #0B1220;
+  --card:         #101A2E;
+  --card-hover:   #182338;
+  --text:         #E6EAF2;
+  --text-muted:   #94A3B8;
+  --text-subtle:  #5B6B85;
+  --border:       #233049;
+  --input:        #0D1728;
+  --primary-soft: #0E2A38;
+  --success-soft: #0F2A1A;
+  --danger-soft:  #331416;
+  --warning-soft: #33260D;
+  --info-soft:    #0C2536;
+}
+
+@theme inline {
+  --color-app:          var(--app);
+  --color-card:         var(--card);
+  --color-card-hover:   var(--card-hover);
+  --color-text:         var(--text);
+  --color-text-muted:   var(--text-muted);
+  --color-text-subtle:  var(--text-subtle);
+  --color-border:       var(--border);
+  --color-input:        var(--input);
+  --color-primary-soft: var(--primary-soft);
+  --color-success-soft: var(--success-soft);
+  --color-danger-soft:  var(--danger-soft);
+  --color-warning-soft: var(--warning-soft);
+  --color-info-soft:    var(--info-soft);
+}
+
 @theme {
   /* ─── Marca ─────────────────────────────────────────── */
   --color-primary:       #00B4E0;
@@ -9,7 +60,7 @@
   --color-navy:          #0D1B3E;
   --color-navy-light:    #1A2F5E;
 
-  /* ─── Neutros ───────────────────────────────────────── */
+  /* ─── Neutros (paleta bruta — preferir tokens semânticos) */
   --color-surface:       #F0F9FF;
   --color-gray-50:       #F8FAFC;
   --color-gray-100:      #F1F5F9;
@@ -37,21 +88,24 @@
 }
 
 /* ─── Reset base ────────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* Na camada `base` para que utilitários (ex.: text-white) prevaleçam */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-body {
-  font-family: var(--font-body);
-  color: var(--color-gray-900);
-  background-color: var(--color-gray-50);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background-color: var(--app);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  color: var(--color-navy);
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--text);
+  }
 }

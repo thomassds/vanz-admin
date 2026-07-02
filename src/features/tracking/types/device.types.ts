@@ -5,6 +5,7 @@ export interface Device {
   id: string
   tenantId: string
   vehicleId: string
+  userId: string | null
   externalDeviceId: number
   uniqueId: string
   name: string
@@ -24,6 +25,7 @@ export interface DeviceFilters {
 
 export interface CreateDeviceDTO {
   vehicleId: string
+  userId?: string
   uniqueId?: string
   name?: string
   type?: number

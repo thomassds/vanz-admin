@@ -13,8 +13,8 @@ interface PersonalDataFormProps {
 }
 
 const fieldClass =
-  "h-[34px] w-full rounded-[4px] border bg-white px-[10px] font-['Noto_Sans',sans-serif] text-xs text-[#8994a9] outline-none transition-colors focus:border-[#70c9ec]"
-const labelClass = "font-['Noto_Sans',sans-serif] text-xs font-bold text-[#8994a9]"
+  "h-11 w-full rounded-xl border bg-input px-4 text-sm text-text placeholder:text-text-subtle outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+const labelClass = "text-xs font-bold uppercase tracking-wide text-text-muted"
 
 export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
   const [savePersonalData, { isLoading }] = useSavePersonalDataMutation()
@@ -41,7 +41,7 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
   return (
     <form
       onSubmit={handleSubmit(handlePersonalData)}
-      className="mt-6 grid gap-3 px-0 lg:px-6"
+      className="mt-7 grid gap-4"
       noValidate
     >
       <div className="grid gap-1">
@@ -52,11 +52,11 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
           id="taxIdentifier"
           type="text"
           placeholder="000.000.000-00"
-          className={cn(fieldClass, errors.taxIdentifier ? 'border-red-400' : 'border-[#8994a9]')}
+          className={cn(fieldClass, errors.taxIdentifier ? 'border-danger' : 'border-border')}
           {...register('taxIdentifier')}
         />
         {errors.taxIdentifier && (
-          <span className="text-xs text-red-500">{errors.taxIdentifier.message}</span>
+          <span className="text-xs text-danger">{errors.taxIdentifier.message}</span>
         )}
       </div>
 
@@ -69,7 +69,7 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
             id="countryCode"
             type="text"
             placeholder="55"
-            className={cn(fieldClass, errors.countryCode ? 'border-red-400' : 'border-[#8994a9]')}
+            className={cn(fieldClass, errors.countryCode ? 'border-danger' : 'border-border')}
             {...register('countryCode')}
           />
         </div>
@@ -81,13 +81,13 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
             id="phone"
             type="text"
             placeholder="11999999999"
-            className={cn(fieldClass, errors.phone ? 'border-red-400' : 'border-[#8994a9]')}
+            className={cn(fieldClass, errors.phone ? 'border-danger' : 'border-border')}
             {...register('phone')}
           />
         </div>
       </div>
       {(errors.countryCode ?? errors.phone) && (
-        <span className="text-xs text-red-500">
+        <span className="text-xs text-danger">
           {errors.countryCode?.message ?? errors.phone?.message}
         </span>
       )}
@@ -100,10 +100,10 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
           id="zipCode"
           type="text"
           placeholder="00000000"
-          className={cn(fieldClass, errors.zipCode ? 'border-red-400' : 'border-[#8994a9]')}
+          className={cn(fieldClass, errors.zipCode ? 'border-danger' : 'border-border')}
           {...register('zipCode')}
         />
-        {errors.zipCode && <span className="text-xs text-red-500">{errors.zipCode.message}</span>}
+        {errors.zipCode && <span className="text-xs text-danger">{errors.zipCode.message}</span>}
       </div>
 
       <div className="grid grid-cols-[1fr_100px] gap-2">
@@ -115,7 +115,7 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
             id="street"
             type="text"
             placeholder="Avenida Paulista"
-            className={cn(fieldClass, errors.street ? 'border-red-400' : 'border-[#8994a9]')}
+            className={cn(fieldClass, errors.street ? 'border-danger' : 'border-border')}
             {...register('street')}
           />
         </div>
@@ -127,13 +127,13 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
             id="number"
             type="text"
             placeholder="1000"
-            className={cn(fieldClass, errors.number ? 'border-red-400' : 'border-[#8994a9]')}
+            className={cn(fieldClass, errors.number ? 'border-danger' : 'border-border')}
             {...register('number')}
           />
         </div>
       </div>
       {(errors.street ?? errors.number) && (
-        <span className="text-xs text-red-500">{errors.street?.message ?? errors.number?.message}</span>
+        <span className="text-xs text-danger">{errors.street?.message ?? errors.number?.message}</span>
       )}
 
       <div className="grid gap-1">
@@ -144,11 +144,11 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
           id="neighborhood"
           type="text"
           placeholder="Bela Vista"
-          className={cn(fieldClass, errors.neighborhood ? 'border-red-400' : 'border-[#8994a9]')}
+          className={cn(fieldClass, errors.neighborhood ? 'border-danger' : 'border-border')}
           {...register('neighborhood')}
         />
         {errors.neighborhood && (
-          <span className="text-xs text-red-500">{errors.neighborhood.message}</span>
+          <span className="text-xs text-danger">{errors.neighborhood.message}</span>
         )}
       </div>
 
@@ -161,7 +161,7 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
             id="city"
             type="text"
             placeholder="São Paulo"
-            className={cn(fieldClass, errors.city ? 'border-red-400' : 'border-[#8994a9]')}
+            className={cn(fieldClass, errors.city ? 'border-danger' : 'border-border')}
             {...register('city')}
           />
         </div>
@@ -174,13 +174,13 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
             type="text"
             placeholder="SP"
             maxLength={2}
-            className={cn(fieldClass, errors.state ? 'border-red-400' : 'border-[#8994a9]')}
+            className={cn(fieldClass, errors.state ? 'border-danger' : 'border-border')}
             {...register('state')}
           />
         </div>
       </div>
       {(errors.city ?? errors.state) && (
-        <span className="text-xs text-red-500">{errors.city?.message ?? errors.state?.message}</span>
+        <span className="text-xs text-danger">{errors.city?.message ?? errors.state?.message}</span>
       )}
 
       <div className="grid gap-1">
@@ -191,19 +191,19 @@ export function PersonalDataForm({ userId, onSuccess }: PersonalDataFormProps) {
           id="complement"
           type="text"
           placeholder="Apto 101"
-          className={cn(fieldClass, 'border-[#8994a9]')}
+          className={cn(fieldClass, 'border-border')}
           {...register('complement')}
         />
       </div>
 
-      {errors.root && <p className="text-center text-xs text-red-500">{errors.root.message}</p>}
+      {errors.root && <p className="text-center text-xs text-danger">{errors.root.message}</p>}
 
       <button
         type="submit"
         disabled={isLoading}
-        className="mt-6 h-10 w-[150px] justify-self-center rounded-[5px] bg-[#00c8ff] font-['Noto_Sans',sans-serif] text-xs font-bold tracking-[0.03em] text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-4 h-11 w-full rounded-xl bg-primary font-heading text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary-hover hover:shadow-primary/35 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isLoading ? 'Enviando...' : 'CONTINUAR'}
+        {isLoading ? 'Enviando...' : 'Continuar'}
       </button>
     </form>
   )

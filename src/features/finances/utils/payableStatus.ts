@@ -9,10 +9,10 @@ const STATUS_LABELS: Record<PayableStatusValue, string> = {
 }
 
 const STATUS_CLASSES: Record<PayableStatusValue, string> = {
-  0: 'bg-gray-100 text-gray-500',
-  1: 'bg-success-light text-success',
-  2: 'bg-red-50 text-red-700',
-  3: 'bg-orange-50 text-orange-700',
+  0: 'bg-card-hover text-text-muted',
+  1: 'bg-success-soft text-success',
+  2: 'bg-danger-soft text-danger',
+  3: 'bg-orange-500/15 text-orange-500',
 }
 
 export function getPayableStatusLabel(status: number): string {
@@ -20,7 +20,7 @@ export function getPayableStatusLabel(status: number): string {
 }
 
 export function getPayableStatusClass(status: number): string {
-  return STATUS_CLASSES[status as PayableStatusValue] ?? 'bg-gray-100 text-gray-500'
+  return STATUS_CLASSES[status as PayableStatusValue] ?? 'bg-card-hover text-text-muted'
 }
 
 export function getAllowedPayableTransitions(status: number): PayableStatusValue[] {

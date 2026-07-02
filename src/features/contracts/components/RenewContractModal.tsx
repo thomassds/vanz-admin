@@ -117,7 +117,7 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
         <div className="grid grid-cols-2 gap-4">
           {/* Data de início */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">
+            <label className="text-xs font-semibold text-text-muted">
               Data de início <span className="text-danger">*</span>
             </label>
             <Controller
@@ -135,8 +135,8 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
                   }}
                   onBlur={field.onBlur}
                   className={cn(
-                    'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                    errors.startDate ? 'border-danger' : 'border-gray-200',
+                    'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                    errors.startDate ? 'border-danger' : 'border-border',
                   )}
                 />
               )}
@@ -148,7 +148,7 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
 
           {/* Duração */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Duração (meses)</label>
+            <label className="text-xs font-semibold text-text-muted">Duração (meses)</label>
             <Controller
               name="durationMonths"
               control={control}
@@ -161,8 +161,8 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
                   onChange={(e) => field.onChange(e.target.value)}
                   onBlur={field.onBlur}
                   className={cn(
-                    'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                    errors.durationMonths ? 'border-danger' : 'border-gray-200',
+                    'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                    errors.durationMonths ? 'border-danger' : 'border-border',
                   )}
                 />
               )}
@@ -174,20 +174,20 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
 
           {/* Vencimento (automático) */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Vencimento (automático)</label>
+            <label className="text-xs font-semibold text-text-muted">Vencimento (automático)</label>
             <input
               type="text"
               disabled
               value={computedEndDate ? isoToBR(computedEndDate) : ''}
               placeholder="Calculado automaticamente"
-              className="h-9 w-full rounded-md border border-gray-200 bg-gray-50 px-3 text-sm text-gray-500 outline-none placeholder:text-gray-300"
+              className="h-9 w-full rounded-xl border border-border bg-app px-3 text-sm text-text-subtle outline-none placeholder:text-text-subtle"
             />
             <input type="hidden" {...register('endDate')} />
           </div>
 
           {/* Primeiro pagamento */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Primeiro pagamento</label>
+            <label className="text-xs font-semibold text-text-muted">Primeiro pagamento</label>
             <Controller
               name="firstPaymentDate"
               control={control}
@@ -202,7 +202,7 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
                     field.onChange(masked.length === 10 ? brToISO(masked) : '')
                   }}
                   onBlur={field.onBlur}
-                  className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary"
+                  className="h-9 w-full rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
               )}
             />
@@ -212,7 +212,7 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
         <div className="grid grid-cols-2 gap-4">
           {/* Valor mensal */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Valor mensal (R$)</label>
+            <label className="text-xs font-semibold text-text-muted">Valor mensal (R$)</label>
             <Controller
               name="value"
               control={control}
@@ -225,8 +225,8 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
                   onChange={(e) => field.onChange(e.target.value)}
                   onBlur={field.onBlur}
                   className={cn(
-                    'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                    errors.value ? 'border-danger' : 'border-gray-200',
+                    'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                    errors.value ? 'border-danger' : 'border-border',
                   )}
                 />
               )}
@@ -238,7 +238,7 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
 
           {/* Desconto */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Desconto (R$)</label>
+            <label className="text-xs font-semibold text-text-muted">Desconto (R$)</label>
             <Controller
               name="discount"
               control={control}
@@ -251,8 +251,8 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
                   onChange={(e) => field.onChange(e.target.value)}
                   onBlur={field.onBlur}
                   className={cn(
-                    'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                    errors.discount ? 'border-danger' : 'border-gray-200',
+                    'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                    errors.discount ? 'border-danger' : 'border-border',
                   )}
                 />
               )}
@@ -264,7 +264,7 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
 
           {/* Dia de vencimento */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Dia de vencimento</label>
+            <label className="text-xs font-semibold text-text-muted">Dia de vencimento</label>
             <Controller
               name="dueDay"
               control={control}
@@ -274,8 +274,8 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
                   onChange={(e) => field.onChange(e.target.value)}
                   onBlur={field.onBlur}
                   className={cn(
-                    'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary',
-                    errors.dueDay ? 'border-danger' : 'border-gray-200',
+                    'h-9 w-full rounded-md border bg-card px-3 text-sm text-text outline-none focus:border-primary',
+                    errors.dueDay ? 'border-danger' : 'border-border',
                   )}
                 >
                   <option value="">Selecione</option>
@@ -294,8 +294,8 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
 
           {/* Valor total (automático) */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Valor total (automático)</label>
-            <div className="flex h-9 items-center rounded-md border border-gray-200 bg-gray-50 px-3 text-sm font-semibold text-gray-700">
+            <label className="text-xs font-semibold text-text-muted">Valor total (automático)</label>
+            <div className="flex h-9 items-center rounded-xl border border-border bg-app px-3 text-sm font-semibold text-text">
               {computedTotalValue !== null ? formatCurrency(computedTotalValue) : '—'}
             </div>
           </div>
@@ -310,14 +310,14 @@ export function RenewContractModal({ contract, isOpen, onClose, onSuccess }: Ren
             type="button"
             onClick={onClose}
             disabled={isRenewing}
-            className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+            className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-50"
           >
             Cancelar
           </button>
           <button
             type="submit"
             disabled={isRenewing}
-            className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isRenewing ? 'Renovando...' : 'Renovar'}
           </button>

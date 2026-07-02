@@ -14,11 +14,15 @@ interface AuthState {
   isAuthenticated: boolean
 }
 
+// A sessão é persistida exclusivamente pelo redux-persist (chave
+// `persist:auth` no localStorage). As chaves soltas 'token'/'tenantId'
+// eram uma segunda fonte de verdade que dessincronizava do estado —
+// removidas do fluxo; o logout ainda as limpa por higiene (legado).
 const initialState: AuthState = {
   user: null,
-  token: localStorage.getItem('token'),
-  tenantId: localStorage.getItem('tenantId'),
-  isAuthenticated: !!localStorage.getItem('token'),
+  token: null,
+  tenantId: null,
+  isAuthenticated: false,
 }
 
 export const authSlice = createSlice({
@@ -33,10 +37,6 @@ export const authSlice = createSlice({
       state.token = action.payload.token
       state.tenantId = action.payload.tenant?.id ?? null
       state.isAuthenticated = true
-      localStorage.setItem('token', action.payload.token)
-      if (action.payload.tenant?.id) {
-        localStorage.setItem('tenantId', action.payload.tenant.id)
-      }
     },
     logout(state) {
       state.user = null

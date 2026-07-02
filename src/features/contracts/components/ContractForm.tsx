@@ -141,7 +141,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate className="grid gap-5">
       {/* Cliente */}
       <div className="grid gap-1">
-        <label className="text-xs font-semibold text-gray-600">
+        <label className="text-xs font-semibold text-text-muted">
           Cliente <span className="text-danger">*</span>
         </label>
         <div className="relative" ref={clientDropdownRef}>
@@ -156,18 +156,18 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
             }}
             onFocus={() => setShowClientDropdown(true)}
             className={cn(
-              'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-              errors.clientId ? 'border-danger' : 'border-gray-200',
+              'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+              errors.clientId ? 'border-danger' : 'border-border',
             )}
           />
           {showClientDropdown && clientsData && clientsData.items.length > 0 && (
-            <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-md">
+            <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-xl border border-border bg-card shadow-lg">
               {clientsData.items.map((c) => (
                 <li key={c.id}>
                   <button
                     type="button"
                     onMouseDown={() => handleClientSelect(c.id, c.name)}
-                    className="w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-gray-50"
+                    className="w-full px-3 py-2 text-left text-sm text-text hover:bg-card-hover"
                   >
                     {c.name}
                   </button>
@@ -185,9 +185,9 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
       {/* Dependentes */}
       {selectedClientId && (
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">Dependentes</label>
+          <label className="text-xs font-semibold text-text-muted">Dependentes</label>
           {!dependents || dependents.length === 0 ? (
-            <p className="text-xs text-gray-400">Nenhum dependente cadastrado para este cliente.</p>
+            <p className="text-xs text-text-subtle">Nenhum dependente cadastrado para este cliente.</p>
           ) : (
             <div className="flex flex-wrap gap-2">
               {dependents.map((dep) => {
@@ -201,7 +201,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
                       'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
                       checked
                         ? 'border-primary bg-primary text-white'
-                        : 'border-gray-200 text-gray-600 hover:border-primary hover:text-primary',
+                        : 'border-border text-text-muted hover:border-primary hover:text-primary',
                     )}
                   >
                     {dep.name}
@@ -216,7 +216,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
       {/* Datas */}
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">
+          <label className="text-xs font-semibold text-text-muted">
             Data de início <span className="text-danger">*</span>
           </label>
           <Controller
@@ -234,8 +234,8 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
                 }}
                 onBlur={field.onBlur}
                 className={cn(
-                  'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                  errors.startDate ? 'border-danger' : 'border-gray-200',
+                  'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                  errors.startDate ? 'border-danger' : 'border-border',
                 )}
               />
             )}
@@ -246,7 +246,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">
+          <label className="text-xs font-semibold text-text-muted">
             Primeiro pagamento <span className="text-danger">*</span>
           </label>
           <Controller
@@ -264,8 +264,8 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
                 }}
                 onBlur={field.onBlur}
                 className={cn(
-                  'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                  errors.firstPaymentDate ? 'border-danger' : 'border-gray-200',
+                  'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                  errors.firstPaymentDate ? 'border-danger' : 'border-border',
                 )}
               />
             )}
@@ -276,7 +276,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">Duração (meses) <span className="text-danger">*</span></label>
+          <label className="text-xs font-semibold text-text-muted">Duração (meses) <span className="text-danger">*</span></label>
           <Controller
             name="durationMonths"
             control={control}
@@ -289,8 +289,8 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
                 onChange={(e) => field.onChange(e.target.value)}
                 onBlur={field.onBlur}
                 className={cn(
-                  'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                  errors.durationMonths ? 'border-danger' : 'border-gray-200',
+                  'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                  errors.durationMonths ? 'border-danger' : 'border-border',
                 )}
               />
             )}
@@ -301,13 +301,13 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">Vencimento (automático)</label>
+          <label className="text-xs font-semibold text-text-muted">Vencimento (automático)</label>
           <input
             type="text"
             disabled
             value={computedEndDate ? isoToBR(computedEndDate) : ''}
             placeholder="Calculado automaticamente"
-            className="h-9 w-full rounded-md border border-gray-200 bg-gray-50 px-3 text-sm text-gray-500 outline-none placeholder:text-gray-300"
+            className="h-9 w-full rounded-xl border border-border bg-app px-3 text-sm text-text-subtle outline-none placeholder:text-text-subtle"
           />
           <input type="hidden" {...register('endDate')} />
         </div>
@@ -316,7 +316,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
       {/* Valor, desconto e dia de vencimento */}
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">
+          <label className="text-xs font-semibold text-text-muted">
             Valor mensal (R$) <span className="text-danger">*</span>
           </label>
           <Controller
@@ -331,8 +331,8 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
                 onChange={(e) => field.onChange(e.target.value)}
                 onBlur={field.onBlur}
                 className={cn(
-                  'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                  errors.value ? 'border-danger' : 'border-gray-200',
+                  'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                  errors.value ? 'border-danger' : 'border-border',
                 )}
               />
             )}
@@ -343,7 +343,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">Desconto (R$)</label>
+          <label className="text-xs font-semibold text-text-muted">Desconto (R$)</label>
           <Controller
             name="discount"
             control={control}
@@ -356,8 +356,8 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
                 onChange={(e) => field.onChange(e.target.value)}
                 onBlur={field.onBlur}
                 className={cn(
-                  'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                  errors.discount ? 'border-danger' : 'border-gray-200',
+                  'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                  errors.discount ? 'border-danger' : 'border-border',
                 )}
               />
             )}
@@ -368,7 +368,7 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">
+          <label className="text-xs font-semibold text-text-muted">
             Dia de vencimento <span className="text-danger">*</span>
           </label>
           <Controller
@@ -380,8 +380,8 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
                 onChange={(e) => field.onChange(e.target.value)}
                 onBlur={field.onBlur}
                 className={cn(
-                  'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary',
-                  errors.dueDay ? 'border-danger' : 'border-gray-200',
+                  'h-9 w-full rounded-md border bg-card px-3 text-sm text-text outline-none focus:border-primary',
+                  errors.dueDay ? 'border-danger' : 'border-border',
                 )}
               >
                 <option value="">Selecione</option>
@@ -399,8 +399,8 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">Valor total (automático)</label>
-          <div className="flex h-9 items-center rounded-md border border-gray-200 bg-gray-50 px-3 text-sm font-semibold text-gray-700">
+          <label className="text-xs font-semibold text-text-muted">Valor total (automático)</label>
+          <div className="flex h-9 items-center rounded-xl border border-border bg-app px-3 text-sm font-semibold text-text">
             {formatCurrency(computedTotalValue)}
           </div>
           <input type="hidden" {...register('totalValue')} />
@@ -416,14 +416,14 @@ export function ContractForm({ contract, isLoading, onSubmit, onCancel }: Contra
           type="button"
           onClick={onCancel}
           disabled={isLoading}
-          className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+          className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-50"
         >
           Cancelar
         </button>
         <button
           type="submit"
           disabled={isLoading}
-          className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isLoading ? 'Salvando...' : isEditing ? 'Salvar alterações' : 'Salvar'}
         </button>

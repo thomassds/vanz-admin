@@ -18,10 +18,10 @@ const DIFF_EVENTS = new Set<ContractEventType>(['CONTRACT_UPDATED', 'CONTRACT_RE
 function SkeletonRow() {
   return (
     <div className="flex gap-4 py-4">
-      <div className="h-5 w-28 animate-pulse rounded-full bg-gray-200" />
+      <div className="h-5 w-28 animate-pulse rounded-full bg-card-hover" />
       <div className="flex-1 space-y-2">
-        <div className="h-3 w-32 animate-pulse rounded bg-gray-200" />
-        <div className="h-3 w-48 animate-pulse rounded bg-gray-200" />
+        <div className="h-3 w-32 animate-pulse rounded bg-card-hover" />
+        <div className="h-3 w-48 animate-pulse rounded bg-card-hover" />
       </div>
     </div>
   )
@@ -33,13 +33,13 @@ function EventDiff({ event }: { event: ContractHistoryEvent }) {
   if (entries.length === 0) return null
 
   return (
-    <ul className="mt-2 space-y-1 rounded-md border border-gray-100 bg-gray-50 px-3 py-2">
+    <ul className="mt-2 space-y-1 rounded-lg border border-border bg-app px-3 py-2">
       {entries.map(({ key, label, from, to }) => (
-        <li key={key} className="text-xs text-gray-600">
+        <li key={key} className="text-xs text-text-muted">
           <span className="font-medium">{label}:</span>{' '}
-          <span className="text-red-500 line-through">{from}</span>
+          <span className="text-danger line-through">{from}</span>
           {' → '}
-          <span className="text-green-600 font-medium">{to}</span>
+          <span className="text-success font-medium">{to}</span>
         </li>
       ))}
     </ul>
@@ -55,7 +55,7 @@ function EventMetadata({ event }: { event: ContractHistoryEvent }) {
     typeof meta.reason === 'string'
   ) {
     return (
-      <p className="mt-1 text-xs text-gray-500">
+      <p className="mt-1 text-xs text-text-subtle">
         <span className="font-medium">Motivo:</span> {meta.reason}
       </p>
     )
@@ -68,7 +68,7 @@ function EventMetadata({ event }: { event: ContractHistoryEvent }) {
       (typeof event.oldValue?.dependentId === 'string' && event.oldValue.dependentId)
     if (dependentId) {
       return (
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-text-subtle">
           <span className="font-medium">Dependente:</span> {dependentId}
         </p>
       )
@@ -90,38 +90,38 @@ export function ContractHistorySection({ contractId }: ContractHistorySectionPro
   const loading = isLoading || isFetching
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-      <h3 className="mb-4 font-['Montserrat',sans-serif] text-sm font-bold text-navy">
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <h3 className="mb-4 font-heading text-sm font-bold text-text">
         Histórico
       </h3>
 
       {isError ? (
         <div className="flex flex-col items-center gap-3 py-8 text-center">
-          <p className="text-sm text-gray-600">Erro ao carregar histórico.</p>
+          <p className="text-sm text-text-muted">Erro ao carregar histórico.</p>
           <button
             type="button"
             onClick={refetch}
-            className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+            className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
           >
             Tentar novamente
           </button>
         </div>
       ) : loading ? (
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-border">
           {Array.from({ length: 5 }).map((_, i) => (
             <SkeletonRow key={i} />
           ))}
         </div>
       ) : !data?.items.length ? (
-        <p className="py-8 text-center text-sm text-gray-500">
+        <p className="py-8 text-center text-sm text-text-subtle">
           Nenhum evento registrado para este contrato.
         </p>
       ) : (
         <>
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-border">
             {data.items.map((event) => {
               const badgeClass =
-                EVENT_BADGE_CLASS[event.eventType] ?? 'bg-gray-100 text-gray-600'
+                EVENT_BADGE_CLASS[event.eventType] ?? 'bg-card-hover text-text-muted'
               const label = EVENT_LABELS[event.eventType] ?? event.eventType
 
               return (
@@ -132,7 +132,7 @@ export function ContractHistorySection({ contractId }: ContractHistorySectionPro
                     >
                       {label}
                     </span>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-text-subtle">
                       {formatEventDateTime(event.createdAt)}
                     </span>
                   </div>
@@ -146,8 +146,8 @@ export function ContractHistorySection({ contractId }: ContractHistorySectionPro
           </div>
 
           {(data.totalPages ?? 1) > 1 && (
-            <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-              <span className="text-xs text-gray-400">
+            <div className="flex items-center justify-between border-t border-border pt-4">
+              <span className="text-xs text-text-subtle">
                 {data.total} evento{data.total !== 1 ? 's' : ''}
               </span>
               <div className="flex items-center gap-1">
@@ -155,18 +155,18 @@ export function ContractHistorySection({ contractId }: ContractHistorySectionPro
                   type="button"
                   disabled={page <= 1}
                   onClick={() => setPage((p) => p - 1)}
-                  className="rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+                  className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-40"
                 >
                   Anterior
                 </button>
-                <span className="px-3 text-xs text-gray-500">
+                <span className="px-3 text-xs text-text-subtle">
                   {page} / {data.totalPages}
                 </span>
                 <button
                   type="button"
                   disabled={page >= data.totalPages}
                   onClick={() => setPage((p) => p + 1)}
-                  className="rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+                  className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-40"
                 >
                   Próxima
                 </button>

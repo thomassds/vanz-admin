@@ -51,20 +51,26 @@ export default function ClientsPage() {
     <div>
       {toast && <Toast {...toast} onDismiss={dismissToast} />}
 
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="font-['Montserrat',sans-serif] text-2xl font-bold text-navy">
-          Clientes
-        </h2>
+      <div className="mb-6 flex items-center justify-between gap-3">
+        <header>
+          <h2 className="font-heading text-2xl font-bold text-text">Clientes</h2>
+          <p className="mt-1 text-sm text-text-muted">
+            Gerencie os responsáveis e seus dependentes
+          </p>
+        </header>
         <button
           type="button"
           onClick={openCreate}
-          className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover"
+          className="flex shrink-0 items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover"
         >
-          + Novo cliente
+          <svg viewBox="0 0 24 24" className="h-4 w-4">
+            <path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z" />
+          </svg>
+          Novo cliente
         </button>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         <ClientFilters
           onFilter={(f) => setFilters((prev) => ({ ...prev, ...f, page: 1 }))}
         />

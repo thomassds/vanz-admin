@@ -39,7 +39,10 @@ export default function DashboardPage() {
 
   return (
     <div className="grid gap-6 md:gap-8">
-      <h2 className="font-['Montserrat',sans-serif] text-xl font-bold text-navy sm:text-2xl">Dashboard</h2>
+      <header>
+        <h2 className="font-heading text-xl font-bold text-text sm:text-2xl">Dashboard</h2>
+        <p className="mt-1 text-sm text-text-muted">Visão geral da sua operação</p>
+      </header>
 
       {/* KPIs */}
       <SummaryKpis
@@ -50,12 +53,12 @@ export default function DashboardPage() {
       />
 
       {/* Próximos vencimentos */}
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <div className="border-b border-gray-200 px-4 py-4 sm:px-6">
-          <h3 className="font-['Montserrat',sans-serif] text-sm font-bold text-navy">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+        <div className="border-b border-border px-4 py-4 sm:px-6">
+          <h3 className="font-heading text-sm font-bold text-text">
             Próximos Vencimentos
           </h3>
-          <p className="mt-0.5 text-xs text-gray-400">Recebimentos pendentes nos próximos 30 dias</p>
+          <p className="mt-0.5 text-xs text-text-subtle">Recebimentos pendentes nos próximos 30 dias</p>
         </div>
         <UpcomingReceivablesTable
           data={upcoming?.data}
@@ -70,7 +73,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Receita mensal */}
-      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
+      <div className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
         <MonthlyRevenueTable
           data={revenue?.data}
           months={months}

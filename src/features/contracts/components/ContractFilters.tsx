@@ -41,11 +41,11 @@ export function ContractFilters({ onSearch }: ContractFiltersProps) {
   return (
     <div className="flex flex-wrap items-end gap-3">
       <div className="grid gap-1">
-        <label className="text-xs font-semibold text-gray-600">Status</label>
+        <label className="text-xs font-semibold text-text-muted">Status</label>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="h-9 rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary"
+          className="h-9 rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
         >
           <option value="">Todos</option>
           <option value="active">Ativo</option>
@@ -55,11 +55,11 @@ export function ContractFilters({ onSearch }: ContractFiltersProps) {
       </div>
 
       <div className="grid gap-1">
-        <label className="text-xs font-semibold text-gray-600">Cliente</label>
+        <label className="text-xs font-semibold text-text-muted">Cliente</label>
         <select
           value={clientId}
           onChange={(e) => setClientId(e.target.value)}
-          className="h-9 min-w-[180px] rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary"
+          className="h-9 min-w-[180px] rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
         >
           <option value="">Todos os clientes</option>
           {clientsData?.items.map((c) => (
@@ -71,31 +71,31 @@ export function ContractFilters({ onSearch }: ContractFiltersProps) {
       </div>
 
       <div className="grid gap-1">
-        <label className="text-xs font-semibold text-gray-600">Vencimento de</label>
+        <label className="text-xs font-semibold text-text-muted">Vencimento de</label>
         <input
           type="text"
           placeholder="dd/mm/aaaa"
           value={dueDateFrom}
           onChange={(e) => setDueDateFrom(maskDateBR(e.target.value))}
-          className="h-9 w-32 rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary"
+          className="h-9 w-32 rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20"
         />
       </div>
 
       <div className="grid gap-1">
-        <label className="text-xs font-semibold text-gray-600">Vencimento até</label>
+        <label className="text-xs font-semibold text-text-muted">Vencimento até</label>
         <input
           type="text"
           placeholder="dd/mm/aaaa"
           value={dueDateTo}
           onChange={(e) => setDueDateTo(maskDateBR(e.target.value))}
-          className="h-9 w-32 rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary"
+          className="h-9 w-32 rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20"
         />
       </div>
 
       <button
         type="button"
         onClick={handleSearch}
-        className="h-9 rounded-md bg-primary px-4 text-sm font-semibold text-white hover:bg-primary-hover"
+        className="h-9 rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover"
       >
         Buscar
       </button>
@@ -103,7 +103,7 @@ export function ContractFilters({ onSearch }: ContractFiltersProps) {
       <button
         type="button"
         onClick={handleClear}
-        className="h-9 rounded-md border border-gray-200 px-4 text-sm font-medium text-gray-600 hover:bg-gray-100"
+        className="h-9 rounded-xl border border-border px-4 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
       >
         Limpar
       </button>

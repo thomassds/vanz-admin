@@ -89,13 +89,13 @@ export function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(handleLogin)}
-      className="mt-6 grid gap-3 px-0 lg:px-6"
+      className="mt-7 grid gap-4"
       noValidate
     >
-      <div className="grid gap-1">
+      <div className="grid gap-1.5">
         <label
           htmlFor="email"
-          className="font-['Noto_Sans',sans-serif] text-xs font-bold text-[#8994a9]"
+          className="text-xs font-bold uppercase tracking-wide text-text-muted"
         >
           Email
         </label>
@@ -105,69 +105,71 @@ export function LoginForm() {
           placeholder="Digite seu email de acesso"
           autoComplete="email"
           className={cn(
-            "h-[34px] w-full rounded-[4px] border bg-white px-[10px] font-['Noto_Sans',sans-serif] text-xs text-[#8994a9] outline-none transition-colors focus:border-[#70c9ec]",
-            errors.email ? 'border-red-400' : 'border-[#8994a9]',
+            'h-11 w-full rounded-xl border bg-input px-4 text-sm text-text placeholder:text-text-subtle outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20',
+            errors.email ? 'border-danger' : 'border-border',
           )}
           {...register('email')}
         />
         {errors.email && (
-          <span className="text-xs text-red-500">{errors.email.message}</span>
+          <span className="text-xs text-danger">{errors.email.message}</span>
         )}
       </div>
 
-      <div className="grid gap-1">
+      <div className="grid gap-1.5">
         <label
           htmlFor="password"
-          className="font-['Noto_Sans',sans-serif] text-xs font-bold text-[#8994a9]"
+          className="text-xs font-bold uppercase tracking-wide text-text-muted"
         >
           Senha
         </label>
         <input
           id="password"
           type="password"
-          placeholder="***************"
+          placeholder="Digite sua senha"
           autoComplete="current-password"
           className={cn(
-            "h-[34px] w-full rounded-[4px] border bg-white px-[10px] font-['Noto_Sans',sans-serif] text-xs text-[#8994a9] outline-none transition-colors focus:border-[#70c9ec]",
-            errors.password ? 'border-red-400' : 'border-[#8994a9]',
+            'h-11 w-full rounded-xl border bg-input px-4 text-sm text-text placeholder:text-text-subtle outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20',
+            errors.password ? 'border-danger' : 'border-border',
           )}
           {...register('password')}
         />
         {errors.password && (
-          <span className="text-xs text-red-500">{errors.password.message}</span>
+          <span className="text-xs text-danger">{errors.password.message}</span>
         )}
       </div>
 
       <div className="mt-0.5 flex items-center justify-between gap-2.5">
         <label
           htmlFor="remember"
-          className="inline-flex items-center gap-[7px] font-['Montserrat',sans-serif] text-[12px] font-medium text-[#708097]"
+          className="inline-flex items-center gap-2 text-xs font-medium text-text-muted"
         >
           <input
             id="remember"
             type="checkbox"
-            className="h-[14px] w-[14px] rounded-[4px] border border-[#8994a9] accent-[#00c8ff]"
+            className="h-4 w-4 rounded border border-border accent-primary"
           />
           <span>Lembrar de mim</span>
         </label>
         <Link
           to="/recovery-password"
-          className="font-['Noto_Sans',sans-serif] text-xs font-bold text-[#00c8ff] hover:underline"
+          className="text-xs font-bold text-primary transition-colors hover:text-primary-hover"
         >
           Esqueci minha senha
         </Link>
       </div>
 
       {errors.root && (
-        <p className="text-center text-xs text-red-500">{errors.root.message}</p>
+        <p className="rounded-xl bg-danger-soft px-4 py-3 text-center text-xs font-semibold text-danger">
+          {errors.root.message}
+        </p>
       )}
 
       <button
         type="submit"
         disabled={isLoading}
-        className="mt-6 h-10 w-[150px] justify-self-center rounded-[5px] bg-[#00c8ff] font-['Noto_Sans',sans-serif] text-xs font-bold tracking-[0.03em] text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-3 h-11 w-full rounded-xl bg-primary font-heading text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary-hover hover:shadow-primary/35 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isLoading ? 'Entrando...' : 'ENTRAR'}
+        {isLoading ? 'Entrando...' : 'Entrar'}
       </button>
     </form>
   )

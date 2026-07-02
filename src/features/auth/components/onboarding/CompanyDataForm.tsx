@@ -13,8 +13,8 @@ interface CompanyDataFormProps {
 }
 
 const fieldClass =
-  "h-[34px] w-full rounded-[4px] border bg-white px-[10px] font-['Noto_Sans',sans-serif] text-xs text-[#8994a9] outline-none transition-colors focus:border-[#70c9ec]"
-const labelClass = "font-['Noto_Sans',sans-serif] text-xs font-bold text-[#8994a9]"
+  "h-11 w-full rounded-xl border bg-input px-4 text-sm text-text placeholder:text-text-subtle outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+const labelClass = "text-xs font-bold uppercase tracking-wide text-text-muted"
 
 export function CompanyDataForm({ userId, onSuccess }: CompanyDataFormProps) {
   const [createCompany, { isLoading }] = useCreateCompanyMutation()
@@ -41,7 +41,7 @@ export function CompanyDataForm({ userId, onSuccess }: CompanyDataFormProps) {
   return (
     <form
       onSubmit={handleSubmit(handleCompanyData)}
-      className="mt-6 grid gap-3 px-0 lg:px-6"
+      className="mt-7 grid gap-4"
       noValidate
     >
       <div className="grid gap-1">
@@ -52,11 +52,11 @@ export function CompanyDataForm({ userId, onSuccess }: CompanyDataFormProps) {
           id="companyName"
           type="text"
           placeholder="Vanz Transportes LTDA"
-          className={cn(fieldClass, errors.companyName ? 'border-red-400' : 'border-[#8994a9]')}
+          className={cn(fieldClass, errors.companyName ? 'border-danger' : 'border-border')}
           {...register('companyName')}
         />
         {errors.companyName && (
-          <span className="text-xs text-red-500">{errors.companyName.message}</span>
+          <span className="text-xs text-danger">{errors.companyName.message}</span>
         )}
       </div>
 
@@ -68,11 +68,11 @@ export function CompanyDataForm({ userId, onSuccess }: CompanyDataFormProps) {
           id="companyTaxIdentifier"
           type="text"
           placeholder="00.000.000/0000-00"
-          className={cn(fieldClass, errors.taxIdentifier ? 'border-red-400' : 'border-[#8994a9]')}
+          className={cn(fieldClass, errors.taxIdentifier ? 'border-danger' : 'border-border')}
           {...register('taxIdentifier')}
         />
         {errors.taxIdentifier && (
-          <span className="text-xs text-red-500">{errors.taxIdentifier.message}</span>
+          <span className="text-xs text-danger">{errors.taxIdentifier.message}</span>
         )}
       </div>
 
@@ -84,10 +84,10 @@ export function CompanyDataForm({ userId, onSuccess }: CompanyDataFormProps) {
           id="companyEmail"
           type="email"
           placeholder="contato@vanz.com"
-          className={cn(fieldClass, errors.email ? 'border-red-400' : 'border-[#8994a9]')}
+          className={cn(fieldClass, errors.email ? 'border-danger' : 'border-border')}
           {...register('email')}
         />
-        {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
+        {errors.email && <span className="text-xs text-danger">{errors.email.message}</span>}
       </div>
 
       <div className="grid grid-cols-[80px_1fr] gap-2">
@@ -99,7 +99,7 @@ export function CompanyDataForm({ userId, onSuccess }: CompanyDataFormProps) {
             id="companyCountryCode"
             type="text"
             placeholder="55"
-            className={cn(fieldClass, errors.countryCode ? 'border-red-400' : 'border-[#8994a9]')}
+            className={cn(fieldClass, errors.countryCode ? 'border-danger' : 'border-border')}
             {...register('countryCode')}
           />
         </div>
@@ -111,25 +111,25 @@ export function CompanyDataForm({ userId, onSuccess }: CompanyDataFormProps) {
             id="companyPhone"
             type="text"
             placeholder="11988888888"
-            className={cn(fieldClass, errors.phone ? 'border-red-400' : 'border-[#8994a9]')}
+            className={cn(fieldClass, errors.phone ? 'border-danger' : 'border-border')}
             {...register('phone')}
           />
         </div>
       </div>
       {(errors.countryCode ?? errors.phone) && (
-        <span className="text-xs text-red-500">
+        <span className="text-xs text-danger">
           {errors.countryCode?.message ?? errors.phone?.message}
         </span>
       )}
 
-      {errors.root && <p className="text-center text-xs text-red-500">{errors.root.message}</p>}
+      {errors.root && <p className="text-center text-xs text-danger">{errors.root.message}</p>}
 
       <button
         type="submit"
         disabled={isLoading}
-        className="mt-6 h-10 w-[150px] justify-self-center rounded-[5px] bg-[#00c8ff] font-['Noto_Sans',sans-serif] text-xs font-bold tracking-[0.03em] text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-4 h-11 w-full rounded-xl bg-primary font-heading text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary-hover hover:shadow-primary/35 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isLoading ? 'Enviando...' : 'FINALIZAR'}
+        {isLoading ? 'Enviando...' : 'Finalizar'}
       </button>
     </form>
   )

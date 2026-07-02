@@ -6,6 +6,8 @@ Este documento define os tokens visuais do produto VANS — cores, tipografia, e
 
 Referência visual: mockup da tela de login (Figma).
 
+**Documentação viva:** acesse `/design-system` no app (`src/pages/DesignSystemPage.tsx`) para ver todos os tokens renderizados. Ao alterar tokens aqui ou no `style.css`, atualize a página também.
+
 ---
 
 # 1. Cores
@@ -45,6 +47,28 @@ Referência visual: mockup da tela de login (Figma).
 | `warning-light`    | `#FEF3C7` | Fundo de badge de alerta              |
 | `info`             | `#0EA5E9` | Informações, status cobrado           |
 | `info-light`       | `#E0F2FE` | Fundo de badge informativo            |
+
+---
+
+# 1.4 Tokens Semânticos (temas claro/escuro)
+
+Superfícies e textos usam tokens semânticos que mudam com o tema (classe `.dark` no `<html>`).
+Componentes novos usam SEMPRE estes tokens. Definição: `src/style.css` (`:root` / `.dark`).
+
+| Token          | Light     | Dark      | Uso                        |
+| -------------- | --------- | --------- | -------------------------- |
+| `app`          | `#F8FAFC` | `#0B1220` | Fundo geral                |
+| `card`         | `#FFFFFF` | `#101A2E` | Cards, sidebar, topbar     |
+| `card-hover`   | `#F1F5F9` | `#182338` | Hover de itens             |
+| `text`         | `#0F172A` | `#E6EAF2` | Texto principal            |
+| `text-muted`   | `#475569` | `#94A3B8` | Texto secundário           |
+| `text-subtle`  | `#94A3B8` | `#5B6B85` | Placeholders               |
+| `border`       | `#E2E8F0` | `#233049` | Bordas e divisores         |
+| `input`        | `#FFFFFF` | `#0D1728` | Fundo de inputs            |
+| `primary-soft` | `#E0F7FC` | `#0E2A38` | Destaque primário          |
+| `*-soft` (status) | `*-light` | tons escuros | Fundos de badge      |
+
+Spec completa do redesign: `specs/layout/layout-redesign-spec.md`.
 
 ---
 
@@ -119,23 +143,24 @@ Usar a escala base do Tailwind (múltiplos de 4px). Referência dos espaçamento
 
 # 6. Layout
 
-## 6.1 Sidebar (área logada)
-
-| Propriedade   | Valor  |
-| ------------- | ------ |
-| Largura       | 240px  |
-| Largura colapsada | 64px |
-| Background    | `navy` (`#0D1B3E`)    |
-| Texto         | `white` / `gray-400`  |
-| Item ativo    | `primary`             |
-
-## 6.2 Topbar
+## 6.1 Topbar (full-width, acima da sidebar)
 
 | Propriedade | Valor              |
 | ----------- | ------------------ |
 | Altura      | 64px               |
-| Background  | `white`            |
-| Borda baixo | `gray-200`         |
+| Background  | `card`             |
+| Borda baixo | `border`           |
+| Conteúdo    | Logo VANZ (primary) + toggle sidebar + título + busca + toggle tema + notificações + avatar |
+
+## 6.2 Sidebar (abaixo da topbar)
+
+| Propriedade   | Valor  |
+| ------------- | ------ |
+| Largura       | 240px  |
+| Largura colapsada | 72px |
+| Background    | `card` (branca no claro, escura no dark) |
+| Texto         | `text-muted`          |
+| Item ativo    | `bg-primary-soft text-primary` |
 
 ## 6.3 Conteúdo
 

@@ -23,13 +23,13 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   return (
     <Modal isOpen={isOpen} title={title} onClose={onCancel} maxWidth="sm">
-      <p className="text-sm text-gray-600">{description}</p>
+      <p className="text-sm text-text-muted">{description}</p>
       <div className="mt-6 flex justify-end gap-3">
         <button
           type="button"
           onClick={onCancel}
           disabled={isLoading}
-          className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+          className="rounded-md border border-border px-4 py-2 text-sm font-medium text-text-muted hover:bg-card-hover disabled:opacity-50"
         >
           Cancelar
         </button>

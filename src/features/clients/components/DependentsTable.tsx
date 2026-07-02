@@ -31,11 +31,11 @@ export function DependentsTable({
   if (isError) {
     return (
       <div className="flex flex-col items-center gap-3 py-10 text-center">
-        <p className="text-sm text-gray-600">Erro ao carregar dependentes.</p>
+        <p className="text-sm text-text-muted">Erro ao carregar dependentes.</p>
         <button
           type="button"
           onClick={onRefetch}
-          className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+          className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
         >
           Tentar novamente
         </button>
@@ -47,42 +47,42 @@ export function DependentsTable({
     <div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50">
-            <tr className="border-b border-gray-200">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">
                 Nome
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">
                 CPF
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">
                 Data de nascimento
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-text-subtle">
                 Ações
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-border">
             {isLoading
               ? Array.from({ length: SKELETON_ROWS }).map((_, i) => (
                   <tr key={i}>
                     {Array.from({ length: 4 }).map((_, j) => (
                       <td key={j} className="px-4 py-3">
-                        <div className="h-4 animate-pulse rounded bg-gray-200" />
+                        <div className="h-4 animate-pulse rounded bg-card-hover" />
                       </td>
                     ))}
                   </tr>
                 ))
               : dependents?.map((dep) => (
-                  <tr key={dep.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium text-gray-900">
+                  <tr key={dep.id} className="transition-colors hover:bg-card-hover">
+                    <td className="px-4 py-3 font-medium text-text">
                       {dep.name}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">
+                    <td className="px-4 py-3 text-text-muted">
                       {formatTaxIdentifier(dep.taxIdentifier)}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">
+                    <td className="px-4 py-3 text-text-muted">
                       {formatDate(dep.birthDate)}
                     </td>
                     <td className="px-4 py-3">
@@ -111,11 +111,11 @@ export function DependentsTable({
 
       {!isLoading && dependents?.length === 0 && (
         <div className="flex flex-col items-center gap-3 py-10 text-center">
-          <p className="text-sm text-gray-600">Nenhum dependente cadastrado.</p>
+          <p className="text-sm text-text-muted">Nenhum dependente cadastrado.</p>
           <button
             type="button"
             onClick={onNew}
-            className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover"
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover"
           >
             Adicionar dependente
           </button>

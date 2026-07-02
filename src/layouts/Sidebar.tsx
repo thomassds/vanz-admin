@@ -7,9 +7,11 @@ interface NavItem {
   label: string
   to: string
   icon: 'home' | 'users' | 'file' | 'wallet' | 'receipt' | 'truck' | 'location'
+  end?: boolean
 }
 
 const NAV_ITEMS: NavItem[] = [
+  { label: 'Mapa ao vivo', to: '/', icon: 'location', end: true },
   { label: 'Dashboard', to: '/dashboard', icon: 'home' },
   { label: 'Clientes', to: '/clients', icon: 'users' },
   { label: 'Contratos', to: '/contracts', icon: 'file' },
@@ -107,26 +109,24 @@ export function Sidebar() {
       <nav
         aria-label="Navegação principal"
         className={cn(
-          'fixed inset-y-0 left-0 z-40 flex w-60 flex-col bg-navy transition-transform duration-200 md:static md:translate-x-0 md:transition-[width]',
+          'fixed inset-y-0 left-0 z-40 flex w-60 flex-col border-r border-border bg-card pt-16 transition-transform duration-200 md:static md:translate-x-0 md:pt-0 md:transition-[width]',
           isOpen ? 'translate-x-0' : '-translate-x-full',
-          isOpen ? 'md:w-60' : 'md:w-16',
+          isOpen ? 'md:w-60' : 'md:w-[72px]',
         )}
       >
-        <div className="flex h-16 shrink-0 items-center justify-center px-4 font-['Montserrat',sans-serif] text-xl font-bold text-white">
-          {isOpen ? 'VANS' : 'V'}
-        </div>
-
-        <ul className="mt-2 flex flex-col gap-1 px-3">
+        <ul className="mt-4 flex flex-col gap-1 px-3">
           {NAV_ITEMS.map((item) => (
             <li key={item.to}>
               <NavLink
                 to={item.to}
+                end={item.end}
                 onClick={handleNavClick}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 rounded-md px-3 py-2.5 font-["Nunito",sans-serif] text-sm font-medium text-gray-400 transition-colors hover:bg-navy-light hover:text-white',
-                    isActive && 'bg-navy-light text-primary',
-                    !isOpen && 'md:justify-center',
+                    'relative flex items-center gap-3 rounded-xl px-3 py-2.5 font-body text-sm font-medium text-text-muted transition-all hover:bg-card-hover hover:text-text',
+                    isActive &&
+                      'bg-primary-soft font-bold text-primary hover:bg-primary-soft hover:text-primary before:absolute before:left-0 before:top-1/2 before:h-5 before:w-1 before:-translate-y-1/2 before:rounded-r-full before:bg-primary',
+                    !isOpen && 'md:justify-center md:before:hidden',
                   )
                 }
               >
@@ -136,6 +136,18 @@ export function Sidebar() {
             </li>
           ))}
         </ul>
+
+        <div className="mt-auto px-3 pb-4">
+          <div
+            className={cn(
+              'rounded-lg bg-primary-soft p-3 text-xs text-text-muted',
+              !isOpen && 'md:hidden',
+            )}
+          >
+            <p className="font-heading font-bold text-primary">Vanz</p>
+            <p className="mt-0.5">Gestão de transporte escolar</p>
+          </div>
+        </div>
       </nav>
     </>
   )

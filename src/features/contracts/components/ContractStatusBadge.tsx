@@ -2,11 +2,11 @@ import { cn } from '@/shared/utils/cn'
 import type { ContractStatus } from '../types/contract.types'
 
 const STATUS_MAP: Record<ContractStatus, { label: string; className: string }> = {
-  active: { label: 'Ativo', className: 'bg-success-light text-success' },
-  inactive: { label: 'Inativo', className: 'bg-gray-100 text-gray-500' },
-  pending: { label: 'Pendente', className: 'bg-yellow-50 text-yellow-700' },
-  suspended: { label: 'Suspenso', className: 'bg-orange-50 text-orange-700' },
-  canceled: { label: 'Cancelado', className: 'bg-red-50 text-red-600' },
+  active: { label: 'Ativo', className: 'bg-success-soft text-success' },
+  inactive: { label: 'Inativo', className: 'bg-card-hover text-text-muted' },
+  pending: { label: 'Pendente', className: 'bg-warning-soft text-warning' },
+  suspended: { label: 'Suspenso', className: 'bg-orange-500/15 text-orange-500' },
+  canceled: { label: 'Cancelado', className: 'bg-danger-soft text-danger' },
 }
 
 interface ContractStatusBadgeProps {

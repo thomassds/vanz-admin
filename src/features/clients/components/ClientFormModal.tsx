@@ -70,15 +70,15 @@ export function ClientFormModal({ isOpen, onClose, client, onSuccess }: ClientFo
     >
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="grid gap-4">
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">
+          <label className="text-xs font-semibold text-text-muted">
             Nome <span className="text-danger">*</span>
           </label>
           <input
             type="text"
             placeholder="Nome completo"
             className={cn(
-              'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-              errors.name ? 'border-danger' : 'border-gray-200',
+              'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+              errors.name ? 'border-danger' : 'border-border',
             )}
             {...register('name')}
           />
@@ -86,7 +86,7 @@ export function ClientFormModal({ isOpen, onClose, client, onSuccess }: ClientFo
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">
+          <label className="text-xs font-semibold text-text-muted">
             CPF / CNPJ <span className="text-danger">*</span>
           </label>
           <Controller
@@ -100,8 +100,8 @@ export function ClientFormModal({ isOpen, onClose, client, onSuccess }: ClientFo
                 onChange={(e) => field.onChange(formatTaxIdentifier(e.target.value))}
                 onBlur={field.onBlur}
                 className={cn(
-                  'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                  errors.taxIdentifier ? 'border-danger' : 'border-gray-200',
+                  'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+                  errors.taxIdentifier ? 'border-danger' : 'border-border',
                 )}
               />
             )}
@@ -112,7 +112,7 @@ export function ClientFormModal({ isOpen, onClose, client, onSuccess }: ClientFo
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">Telefone</label>
+          <label className="text-xs font-semibold text-text-muted">Telefone</label>
           <Controller
             name="phone"
             control={control}
@@ -123,20 +123,20 @@ export function ClientFormModal({ isOpen, onClose, client, onSuccess }: ClientFo
                 value={field.value ?? ''}
                 onChange={(e) => field.onChange(formatPhone(e.target.value))}
                 onBlur={field.onBlur}
-                className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary"
+                className="h-9 w-full rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             )}
           />
         </div>
 
         <div className="grid gap-1">
-          <label className="text-xs font-semibold text-gray-600">E-mail</label>
+          <label className="text-xs font-semibold text-text-muted">E-mail</label>
           <input
             type="email"
             placeholder="email@exemplo.com"
             className={cn(
-              'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-              errors.email ? 'border-danger' : 'border-gray-200',
+              'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+              errors.email ? 'border-danger' : 'border-border',
             )}
             {...register('email')}
           />
@@ -152,14 +152,14 @@ export function ClientFormModal({ isOpen, onClose, client, onSuccess }: ClientFo
             type="button"
             onClick={onClose}
             disabled={isLoading}
-            className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+            className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-50"
           >
             Cancelar
           </button>
           <button
             type="submit"
             disabled={isLoading}
-            className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isLoading ? 'Salvando...' : 'Salvar'}
           </button>

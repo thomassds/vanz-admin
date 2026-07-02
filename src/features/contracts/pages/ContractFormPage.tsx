@@ -24,17 +24,22 @@ export default function ContractFormPage() {
         <button
           type="button"
           onClick={() => void navigate('/contracts')}
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-gray-600 hover:bg-gray-100"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border text-text-muted transition-colors hover:bg-card-hover hover:text-text"
           aria-label="Voltar"
         >
-          ←
+          <svg viewBox="0 0 24 24" className="h-4 w-4">
+            <path fill="currentColor" d="m10.8 12 4.6-4.6L14 6l-6 6 6 6 1.4-1.4L10.8 12Z" />
+          </svg>
         </button>
-        <h2 className="font-['Montserrat',sans-serif] text-2xl font-bold text-navy">
-          Novo contrato
-        </h2>
+        <header>
+          <h2 className="font-heading text-2xl font-bold text-text">Novo contrato</h2>
+          <p className="mt-0.5 text-sm text-text-muted">
+            Preencha os dados para criar o contrato
+          </p>
+        </header>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
         <ContractForm
           isLoading={isLoading}
           onSubmit={handleSubmit}

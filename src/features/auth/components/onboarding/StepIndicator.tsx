@@ -8,7 +8,7 @@ interface StepIndicatorProps {
 export function StepIndicator({ current, total }: StepIndicatorProps) {
   return (
     <div className="mb-6 flex flex-col items-center gap-2 lg:items-start">
-      <span className="font-['Montserrat',sans-serif] text-xs font-bold text-[#708097]">
+      <span className="text-xs font-bold uppercase tracking-wide text-text-muted">
         Etapa {current} de {total}
       </span>
       <div className="flex gap-1.5">
@@ -17,7 +17,7 @@ export function StepIndicator({ current, total }: StepIndicatorProps) {
             key={index}
             className={cn(
               'h-1.5 w-8 rounded-full transition-colors',
-              index < current ? 'bg-[#00c8ff]' : 'bg-[#e2e8f0]',
+              index < current ? 'bg-primary' : 'bg-border',
             )}
           />
         ))}

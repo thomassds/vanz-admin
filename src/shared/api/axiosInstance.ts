@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { notifyUnauthorized, readAuth } from './authBridge'
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL as string,
@@ -6,9 +7,8 @@ export const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
+  const { token, tenantId } = readAuth()
   if (token) config.headers.Authorization = `Bearer ${token}`
-  const tenantId = localStorage.getItem('tenantId')
   if (tenantId) config.headers['X-API-KEY'] = tenantId
   return config
 })
@@ -18,9 +18,16 @@ axiosInstance.interceptors.response.use(
   (error: unknown) => {
     const axiosError = error as { response?: { status?: number } }
     if (axiosError.response?.status === 401) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('tenantId')
-      window.location.href = '/login'
+      // Desloga via store (limpa o estado e o persist:auth);
+      // o ProtectedRoute redireciona para /login sem full reload.
+      notifyUnauthorized()
+    }
+    if (
+      axiosError.response?.status === 402 &&
+      window.location.pathname !== '/subscription'
+    ) {
+      // Assinatura expirada no meio do uso — leva à regularização
+      window.location.href = '/subscription'
     }
     return Promise.reject(error)
   },

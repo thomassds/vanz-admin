@@ -12,9 +12,9 @@ export function getVehicleStatusLabel(status: number): string {
 
 export function getVehicleStatusBadgeClass(status: number): string {
   switch (status) {
-    case 0: return 'bg-green-100 text-green-700'
-    case 1: return 'bg-gray-100 text-gray-600'
-    case 2: return 'bg-yellow-100 text-yellow-700'
-    default: return 'bg-gray-100 text-gray-600'
+    case 0: return 'bg-success-soft text-success'
+    case 1: return 'bg-card-hover text-text-muted'
+    case 2: return 'bg-warning-soft text-warning'
+    default: return 'bg-card-hover text-text-muted'
   }
 }

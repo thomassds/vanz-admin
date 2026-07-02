@@ -139,9 +139,9 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
   const inputClass = (hasError: boolean, disabled = false) =>
     cn(
-      'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-      hasError ? 'border-danger' : 'border-gray-200',
-      disabled && 'cursor-not-allowed bg-gray-50 text-gray-500',
+      'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+      hasError ? 'border-danger' : 'border-border',
+      disabled && 'cursor-not-allowed bg-app text-text-subtle',
     )
 
   const descriptionValue = isEditing
@@ -157,7 +157,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
           {/* Valor + Vencimento */}
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">
+              <label className="text-xs font-semibold text-text-muted">
                 Valor (R$) <span className="text-danger">*</span>
               </label>
               <Controller
@@ -181,7 +181,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
             </div>
 
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">
+              <label className="text-xs font-semibold text-text-muted">
                 Vencimento <span className="text-danger">*</span>
               </label>
               <Controller
@@ -210,7 +210,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
           {/* Categoria */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">
+            <label className="text-xs font-semibold text-text-muted">
               Categoria <span className="text-danger">*</span>
             </label>
             <Controller
@@ -222,8 +222,8 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                   onChange={(e) => field.onChange(Number(e.target.value))}
                   onBlur={field.onBlur}
                   className={cn(
-                    'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary',
-                    createForm.formState.errors.category ? 'border-danger' : 'border-gray-200',
+                    'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20',
+                    createForm.formState.errors.category ? 'border-danger' : 'border-border',
                   )}
                 >
                   <option value="">Selecione a categoria</option>
@@ -242,7 +242,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
           {/* Status */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Status</label>
+            <label className="text-xs font-semibold text-text-muted">Status</label>
             <Controller
               name="status"
               control={createForm.control}
@@ -251,7 +251,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                   value={field.value ?? 0}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                   onBlur={field.onBlur}
-                  className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary"
+                  className="h-9 w-full rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                 >
                   <option value={0}>Pendente</option>
                   <option value={1}>Pago</option>
@@ -264,7 +264,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
           {/* Contrato (opcional) */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Contrato (opcional)</label>
+            <label className="text-xs font-semibold text-text-muted">Contrato (opcional)</label>
             <div className="relative" ref={dropdownRef}>
               <input
                 type="text"
@@ -279,7 +279,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                 className={inputClass(false)}
               />
               {showDropdown && contractsData && contractsData.items.length > 0 && (
-                <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-md">
+                <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md border border-border bg-card shadow-md">
                   {contractsData.items
                     .filter(
                       (c) =>
@@ -295,7 +295,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                             setContractSearch(c.client?.name ?? c.id)
                             setShowDropdown(false)
                           }}
-                          className="w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-gray-50"
+                          className="w-full px-3 py-2 text-left text-sm text-text hover:bg-card-hover"
                         >
                           {c.client?.name ?? c.id}
                         </button>
@@ -309,7 +309,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
           {/* Veículo (opcional) */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Veículo (opcional)</label>
+            <label className="text-xs font-semibold text-text-muted">Veículo (opcional)</label>
             <div className="relative" ref={vehicleDropdownRef}>
               <input
                 type="text"
@@ -324,7 +324,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                 className={inputClass(false)}
               />
               {showVehicleDropdown && vehiclesData && vehiclesData.items.length > 0 && (
-                <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-md">
+                <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md border border-border bg-card shadow-md">
                   {vehiclesData.items
                     .filter(
                       (v) =>
@@ -341,10 +341,10 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                             setVehicleSearch(`${v.plate} — ${v.model}`)
                             setShowVehicleDropdown(false)
                           }}
-                          className="w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-gray-50"
+                          className="w-full px-3 py-2 text-left text-sm text-text hover:bg-card-hover"
                         >
                           <span className="font-medium">{v.plate}</span>
-                          <span className="ml-2 text-gray-500">{v.model}</span>
+                          <span className="ml-2 text-text-subtle">{v.model}</span>
                         </button>
                       </li>
                     ))}
@@ -356,16 +356,16 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
           {/* Descrição */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Descrição (opcional)</label>
+            <label className="text-xs font-semibold text-text-muted">Descrição (opcional)</label>
             <textarea
               {...createForm.register('description')}
               rows={3}
               maxLength={MAX_DESC}
               placeholder="Descreva a despesa..."
-              className="w-full resize-none rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary"
+              className="w-full resize-none rounded-md border border-border bg-card px-3 py-2 text-sm text-text outline-none placeholder:text-text-subtle focus:border-primary"
             />
             <div className="flex justify-end">
-              <span className="text-xs text-gray-400">{descriptionValue.length}/{MAX_DESC}</span>
+              <span className="text-xs text-text-subtle">{descriptionValue.length}/{MAX_DESC}</span>
             </div>
           </div>
 
@@ -378,14 +378,14 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+              className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-50"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? 'Salvando...' : 'Salvar'}
             </button>
@@ -397,7 +397,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
       {isEditing && (
         <form onSubmit={updateForm.handleSubmit(handleUpdate)} noValidate className="grid gap-4">
           {locked && (
-            <p className="rounded-md bg-gray-50 px-3 py-2 text-xs text-gray-500">
+            <p className="rounded-md bg-app px-3 py-2 text-xs text-text-subtle">
               Despesas com status <strong>Pago</strong> ou <strong>Cancelado</strong> não podem ser
               alteradas.
             </p>
@@ -406,7 +406,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
           {/* Valor + Vencimento */}
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Valor (R$)</label>
+              <label className="text-xs font-semibold text-text-muted">Valor (R$)</label>
               <Controller
                 name="value"
                 control={updateForm.control}
@@ -429,7 +429,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
             </div>
 
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Vencimento</label>
+              <label className="text-xs font-semibold text-text-muted">Vencimento</label>
               <Controller
                 name="dueDate"
                 control={updateForm.control}
@@ -457,7 +457,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
           {/* Categoria */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Categoria</label>
+            <label className="text-xs font-semibold text-text-muted">Categoria</label>
             <Controller
               name="category"
               control={updateForm.control}
@@ -468,9 +468,9 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                   onChange={(e) => field.onChange(Number(e.target.value))}
                   onBlur={field.onBlur}
                   className={cn(
-                    'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary',
-                    updateForm.formState.errors.category ? 'border-danger' : 'border-gray-200',
-                    locked && 'cursor-not-allowed bg-gray-50 text-gray-500',
+                    'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20',
+                    updateForm.formState.errors.category ? 'border-danger' : 'border-border',
+                    locked && 'cursor-not-allowed bg-app text-text-subtle',
                   )}
                 >
                   {CATEGORY_OPTIONS.map((opt) => (
@@ -486,7 +486,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
           {/* Status */}
           {!locked && (
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Status</label>
+              <label className="text-xs font-semibold text-text-muted">Status</label>
               <Controller
                 name="status"
                 control={updateForm.control}
@@ -495,7 +495,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                     value={field.value ?? payable.status}
                     onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                     onBlur={field.onBlur}
-                    className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary"
+                    className="h-9 w-full rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                   >
                     <option value={payable.status}>{getPayableStatusLabel(payable.status)} (atual)</option>
                     {allowedTransitions.map((s) => (
@@ -511,7 +511,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
           {/* Veículo (opcional) */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Veículo (opcional)</label>
+            <label className="text-xs font-semibold text-text-muted">Veículo (opcional)</label>
             <Controller
               name="vehicleId"
               control={updateForm.control}
@@ -522,8 +522,8 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
                   onChange={(e) => field.onChange(e.target.value || null)}
                   onBlur={field.onBlur}
                   className={cn(
-                    'h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary',
-                    locked && 'cursor-not-allowed bg-gray-50 text-gray-500',
+                    'h-9 w-full rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20',
+                    locked && 'cursor-not-allowed bg-app text-text-subtle',
                   )}
                 >
                   <option value="">Nenhum</option>
@@ -539,7 +539,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
 
           {/* Descrição */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Descrição (opcional)</label>
+            <label className="text-xs font-semibold text-text-muted">Descrição (opcional)</label>
             <textarea
               {...updateForm.register('description')}
               rows={3}
@@ -547,12 +547,12 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
               disabled={locked}
               placeholder="Descreva a despesa..."
               className={cn(
-                'w-full resize-none rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-                locked && 'cursor-not-allowed bg-gray-50 text-gray-500',
+                'w-full resize-none rounded-md border border-border bg-card px-3 py-2 text-sm text-text outline-none placeholder:text-text-subtle focus:border-primary',
+                locked && 'cursor-not-allowed bg-app text-text-subtle',
               )}
             />
             <div className="flex justify-end">
-              <span className="text-xs text-gray-400">{descriptionValue.length}/{MAX_DESC}</span>
+              <span className="text-xs text-text-subtle">{descriptionValue.length}/{MAX_DESC}</span>
             </div>
           </div>
 
@@ -565,7 +565,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+              className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-50"
             >
               {locked ? 'Fechar' : 'Cancelar'}
             </button>
@@ -573,7 +573,7 @@ export function PayableFormModal({ isOpen, payable, onClose, onSuccess }: Payabl
               <button
                 type="submit"
                 disabled={isLoading}
-                className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isLoading ? 'Salvando...' : 'Salvar'}
               </button>

@@ -18,20 +18,36 @@ const PayablesPage = lazy(() => import('@/features/finances/pages/PayablesPage')
 const VehiclesPage = lazy(() => import('@/features/vehicles/pages/VehiclesPage'))
 const TrackingPage = lazy(() => import('@/features/tracking/pages/TrackingPage'))
 const TrackingMapPage = lazy(() => import('@/features/tracking/pages/TrackingMapPage'))
+const LiveMapPage = lazy(() => import('@/features/tracking/pages/LiveMapPage'))
 const LandingPage = lazy(() => import('@/pages/LandingPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
+const DesignSystemPage = lazy(() => import('@/pages/DesignSystemPage'))
+const SubscriptionPage = lazy(() => import('@/features/subscription/pages/SubscriptionPage'))
 
 function PageLoader() {
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#00c8ff] border-t-transparent" />
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
     </div>
   )
 }
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: '/',
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <LiveMapPage />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: '/landing',
     element: (
       <Suspense fallback={<PageLoader />}>
         <LandingPage />
@@ -78,6 +94,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<PageLoader />}>
                 <DashboardPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/subscription',
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <SubscriptionPage />
               </Suspense>
             ),
           },
@@ -164,6 +188,14 @@ export const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: '/design-system',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <DesignSystemPage />
+      </Suspense>
+    ),
   },
   {
     path: '*',

@@ -195,7 +195,7 @@ describe('RecoveryPasswordPage', () => {
     await user.type(screen.getByLabelText('Confirmar senha'), 'Senha123')
     await user.click(screen.getByRole('button', { name: /redefinir senha/i }))
 
-    expect(await screen.findByText('BEM VINDO')).toBeInTheDocument()
+    expect(await screen.findByText('Bem-vindo')).toBeInTheDocument()
     expect(
       screen.getByText('Senha redefinida com sucesso! Faça login com sua nova senha.'),
     ).toBeInTheDocument()

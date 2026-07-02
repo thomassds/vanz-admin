@@ -17,7 +17,7 @@ export function VehicleFilters({ onSearch }: VehicleFiltersProps) {
       <select
         value={status}
         onChange={(e) => handleChange(e.target.value)}
-        className="h-9 rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary"
+        className="h-9 rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
       >
         <option value="">Todos os status</option>
         <option value="0">Ativo</option>

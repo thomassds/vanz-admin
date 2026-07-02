@@ -13,9 +13,9 @@ export function useTrackingSocket() {
   const socketRef = useRef<Socket | null>(null)
 
   useEffect(() => {
-    // Fallback to localStorage in case redux-persist hasn't rehydrated yet
-    const token = auth.token ?? localStorage.getItem('token')
-    const tenantId = auth.tenantId ?? localStorage.getItem('tenantId')
+    // Store é a única fonte de verdade; o PersistGate garante que os
+    // componentes só montam após a reidratação do redux-persist.
+    const { token, tenantId } = auth
 
     if (!token || !tenantId) {
       setStatus('disconnected')

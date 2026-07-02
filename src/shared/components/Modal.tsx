@@ -24,20 +24,23 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = 'md' }: Mod
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className={cn('w-full rounded-xl bg-white shadow-xl', maxWidthClass)}
+        className={cn(
+          'max-h-[90dvh] w-full overflow-y-auto rounded-2xl border border-border bg-card shadow-2xl shadow-black/20',
+          maxWidthClass,
+        )}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-          <h2 className="font-['Montserrat',sans-serif] text-base font-bold text-navy">{title}</h2>
+        <div className="flex items-center justify-between border-b border-border px-6 py-4">
+          <h2 className="font-heading text-base font-bold text-text">{title}</h2>
           <button
             type="button"
             aria-label="Fechar"
             onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+            className="flex h-7 w-7 items-center justify-center rounded-md text-text-subtle hover:bg-card-hover hover:text-text-muted"
           >
             ✕
           </button>

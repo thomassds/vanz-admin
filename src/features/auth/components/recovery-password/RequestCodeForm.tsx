@@ -36,11 +36,11 @@ export function RequestCodeForm({ onSuccess }: RequestCodeFormProps) {
   return (
     <form
       onSubmit={handleSubmit(handleRequestCode)}
-      className="mt-6 grid gap-3 px-0 lg:px-6"
+      className="mt-7 grid gap-4"
       noValidate
     >
       <div className="grid gap-1">
-        <label htmlFor="email" className="font-['Noto_Sans',sans-serif] text-xs font-bold text-[#8994a9]">
+        <label htmlFor="email" className="text-xs font-bold uppercase tracking-wide text-text-muted">
           Email
         </label>
         <input
@@ -49,22 +49,22 @@ export function RequestCodeForm({ onSuccess }: RequestCodeFormProps) {
           placeholder="Digite seu email cadastrado"
           autoComplete="email"
           className={cn(
-            "h-[34px] w-full rounded-[4px] border bg-white px-[10px] font-['Noto_Sans',sans-serif] text-xs text-[#8994a9] outline-none transition-colors focus:border-[#70c9ec]",
-            errors.email ? 'border-red-400' : 'border-[#8994a9]',
+            "h-11 w-full rounded-xl border bg-input px-4 text-sm text-text placeholder:text-text-subtle outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20",
+            errors.email ? 'border-danger' : 'border-border',
           )}
           {...register('email')}
         />
-        {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
+        {errors.email && <span className="text-xs text-danger">{errors.email.message}</span>}
       </div>
 
-      {errors.root && <p className="text-center text-xs text-red-500">{errors.root.message}</p>}
+      {errors.root && <p className="text-center text-xs text-danger">{errors.root.message}</p>}
 
       <button
         type="submit"
         disabled={isLoading}
-        className="mt-6 h-10 w-[150px] justify-self-center rounded-[5px] bg-[#00c8ff] font-['Noto_Sans',sans-serif] text-xs font-bold tracking-[0.03em] text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-4 h-11 w-full rounded-xl bg-primary font-heading text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary-hover hover:shadow-primary/35 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isLoading ? 'Enviando...' : 'ENVIAR CÓDIGO'}
+        {isLoading ? 'Enviando...' : 'Enviar código'}
       </button>
     </form>
   )

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { DashboardSummary } from '../types/dashboard.types'
 
 interface SummaryKpisProps {
@@ -7,50 +8,62 @@ interface SummaryKpisProps {
   onRefetch: () => void
 }
 
+type Accent = 'success' | 'danger' | 'warning' | 'info' | 'neutral'
+
 function formatCurrency(value: number): string {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
+
+const VALUE_CLASS: Record<Accent, string> = {
+  neutral: 'text-text',
+  success: 'text-success',
+  danger: 'text-danger',
+  warning: 'text-warning',
+  info: 'text-info',
+}
+
+const DOT_CLASS: Record<Accent, string> = {
+  neutral: 'bg-text-subtle',
+  success: 'bg-success',
+  danger: 'bg-danger',
+  warning: 'bg-warning',
+  info: 'bg-info',
 }
 
 function KpiCard({
   label,
   value,
-  accent,
+  accent = 'neutral',
 }: {
   label: string
   value: string | number
-  accent?: 'green' | 'red' | 'yellow' | 'blue'
+  accent?: Accent
 }) {
-  const accentClass =
-    accent === 'green'
-      ? 'text-green-600'
-      : accent === 'red'
-        ? 'text-red-500'
-        : accent === 'yellow'
-          ? 'text-yellow-600'
-          : accent === 'blue'
-            ? 'text-blue-600'
-            : 'text-navy'
-
   return (
-    <div className="flex flex-col gap-1 rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:p-4">
-      <span className="text-xs font-semibold text-gray-400 leading-tight">{label}</span>
-      <span className={`text-lg font-bold sm:text-xl ${accentClass}`}>{value}</span>
+    <div className="group flex flex-col gap-1.5 rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+      <span className="flex items-center gap-1.5 text-xs font-semibold leading-tight text-text-muted">
+        <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${DOT_CLASS[accent]}`} />
+        {label}
+      </span>
+      <span className={`font-heading text-xl font-bold sm:text-2xl ${VALUE_CLASS[accent]}`}>
+        {value}
+      </span>
     </div>
   )
 }
 
 function SkeletonCard() {
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:p-4">
-      <div className="h-3 w-20 animate-pulse rounded bg-gray-200" />
-      <div className="h-5 w-14 animate-pulse rounded bg-gray-200" />
+    <div className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-4 shadow-sm">
+      <div className="h-3 w-20 animate-pulse rounded bg-card-hover" />
+      <div className="h-6 w-16 animate-pulse rounded bg-card-hover" />
     </div>
   )
 }
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h3 className="mb-2 font-['Montserrat',sans-serif] text-sm font-bold text-navy sm:mb-3">
+    <h3 className="mb-2 font-heading text-sm font-bold text-text sm:mb-3">
       {children}
     </h3>
   )
@@ -59,12 +72,12 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 export function SummaryKpis({ summary, isLoading, isError, onRefetch }: SummaryKpisProps) {
   if (isError) {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-xl border border-gray-200 bg-white py-10 text-center shadow-sm">
-        <p className="text-sm text-gray-600">Erro ao carregar indicadores.</p>
+      <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card py-10 text-center shadow-sm">
+        <p className="text-sm text-text-muted">Erro ao carregar indicadores.</p>
         <button
           type="button"
           onClick={onRefetch}
-          className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+          className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
         >
           Tentar novamente
         </button>
@@ -83,9 +96,9 @@ export function SummaryKpis({ summary, isLoading, isError, onRefetch }: SummaryK
           ) : (
             <>
               <KpiCard label="Total" value={summary?.clients.total ?? 0} />
-              <KpiCard label="Ativos" value={summary?.clients.active ?? 0} accent="green" />
+              <KpiCard label="Ativos" value={summary?.clients.active ?? 0} accent="success" />
               <KpiCard label="Inativos" value={summary?.clients.inactive ?? 0} />
-              <KpiCard label="Novos no mês" value={summary?.clients.newThisMonth ?? 0} accent="blue" />
+              <KpiCard label="Novos no mês" value={summary?.clients.newThisMonth ?? 0} accent="info" />
             </>
           )}
         </div>
@@ -99,12 +112,12 @@ export function SummaryKpis({ summary, isLoading, isError, onRefetch }: SummaryK
             Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
           ) : (
             <>
-              <KpiCard label="Ativos" value={summary?.contracts.active ?? 0} accent="green" />
-              <KpiCard label="Pendentes" value={summary?.contracts.pending ?? 0} accent="yellow" />
+              <KpiCard label="Ativos" value={summary?.contracts.active ?? 0} accent="success" />
+              <KpiCard label="Pendentes" value={summary?.contracts.pending ?? 0} accent="warning" />
               <KpiCard
                 label="Vencendo em 30 dias"
                 value={summary?.contracts.expiringIn30Days ?? 0}
-                accent={(summary?.contracts.expiringIn30Days ?? 0) > 0 ? 'yellow' : undefined}
+                accent={(summary?.contracts.expiringIn30Days ?? 0) > 0 ? 'warning' : 'neutral'}
               />
             </>
           )}
@@ -126,22 +139,22 @@ export function SummaryKpis({ summary, isLoading, isError, onRefetch }: SummaryK
               <KpiCard
                 label="Recebido no mês"
                 value={formatCurrency(summary?.receivables.receivedThisMonth ?? 0)}
-                accent="green"
+                accent="success"
               />
               <KpiCard
                 label="Em aberto no mês"
                 value={formatCurrency(summary?.receivables.pendingThisMonth ?? 0)}
-                accent="yellow"
+                accent="warning"
               />
               <KpiCard
                 label="Total vencido"
                 value={formatCurrency(summary?.receivables.overdueTotal ?? 0)}
-                accent={(summary?.receivables.overdueTotal ?? 0) > 0 ? 'red' : undefined}
+                accent={(summary?.receivables.overdueTotal ?? 0) > 0 ? 'danger' : 'neutral'}
               />
               <KpiCard
                 label="Qtd. vencidos"
                 value={summary?.receivables.overdueCount ?? 0}
-                accent={(summary?.receivables.overdueCount ?? 0) > 0 ? 'red' : undefined}
+                accent={(summary?.receivables.overdueCount ?? 0) > 0 ? 'danger' : 'neutral'}
               />
             </>
           )}

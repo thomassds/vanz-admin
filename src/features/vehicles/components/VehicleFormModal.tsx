@@ -113,8 +113,8 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
 
   const inputClass = (hasError: boolean) =>
     cn(
-      'h-9 w-full rounded-md border bg-white px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary',
-      hasError ? 'border-danger' : 'border-gray-200',
+      'h-9 w-full rounded-xl border bg-input px-3 text-sm text-text outline-none transition-all placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/20',
+      hasError ? 'border-danger' : 'border-border',
     )
 
   return (
@@ -125,7 +125,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
           {/* Placa + Modelo */}
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">
+              <label className="text-xs font-semibold text-text-muted">
                 Placa <span className="text-danger">*</span>
               </label>
               <Controller
@@ -148,7 +148,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
             </div>
 
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">
+              <label className="text-xs font-semibold text-text-muted">
                 Modelo <span className="text-danger">*</span>
               </label>
               <input
@@ -166,7 +166,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
           {/* Capacidade + Ano */}
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">
+              <label className="text-xs font-semibold text-text-muted">
                 Capacidade (pax) <span className="text-danger">*</span>
               </label>
               <Controller
@@ -195,7 +195,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
             </div>
 
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Ano</label>
+              <label className="text-xs font-semibold text-text-muted">Ano</label>
               <Controller
                 name="year"
                 control={createForm.control}
@@ -223,7 +223,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
           {/* Última Revisão + Próxima Revisão */}
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Última revisão</label>
+              <label className="text-xs font-semibold text-text-muted">Última revisão</label>
               <Controller
                 name="lastRevisionAt"
                 control={createForm.control}
@@ -245,7 +245,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
             </div>
 
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Próxima revisão</label>
+              <label className="text-xs font-semibold text-text-muted">Próxima revisão</label>
               <Controller
                 name="nextRevisionAt"
                 control={createForm.control}
@@ -283,14 +283,14 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+              className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-50"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? 'Salvando...' : 'Salvar'}
             </button>
@@ -304,7 +304,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
           {/* Placa + Modelo */}
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Placa</label>
+              <label className="text-xs font-semibold text-text-muted">Placa</label>
               <Controller
                 name="plate"
                 control={updateForm.control}
@@ -324,7 +324,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
             </div>
 
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Modelo</label>
+              <label className="text-xs font-semibold text-text-muted">Modelo</label>
               <input
                 type="text"
                 {...updateForm.register('model')}
@@ -339,7 +339,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
           {/* Capacidade + Ano */}
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Capacidade (pax)</label>
+              <label className="text-xs font-semibold text-text-muted">Capacidade (pax)</label>
               <Controller
                 name="capacity"
                 control={updateForm.control}
@@ -365,7 +365,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
             </div>
 
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Ano</label>
+              <label className="text-xs font-semibold text-text-muted">Ano</label>
               <Controller
                 name="year"
                 control={updateForm.control}
@@ -391,7 +391,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
 
           {/* Status */}
           <div className="grid gap-1">
-            <label className="text-xs font-semibold text-gray-600">Status</label>
+            <label className="text-xs font-semibold text-text-muted">Status</label>
             <Controller
               name="status"
               control={updateForm.control}
@@ -400,7 +400,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
                   value={field.value ?? vehicle.status}
                   onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                   onBlur={field.onBlur}
-                  className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-primary"
+                  className="h-9 w-full rounded-xl border border-border bg-input px-3 text-sm text-text outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                 >
                   {STATUS_OPTIONS.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -416,7 +416,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
           {/* Última Revisão + Próxima Revisão */}
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Última revisão</label>
+              <label className="text-xs font-semibold text-text-muted">Última revisão</label>
               <Controller
                 name="lastRevisionAt"
                 control={updateForm.control}
@@ -438,7 +438,7 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
             </div>
 
             <div className="grid gap-1">
-              <label className="text-xs font-semibold text-gray-600">Próxima revisão</label>
+              <label className="text-xs font-semibold text-text-muted">Próxima revisão</label>
               <Controller
                 name="nextRevisionAt"
                 control={updateForm.control}
@@ -476,14 +476,14 @@ export function VehicleFormModal({ isOpen, vehicle, onClose, onSuccess }: Vehicl
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+              className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-50"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm shadow-primary/25 transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? 'Salvando...' : 'Salvar'}
             </button>

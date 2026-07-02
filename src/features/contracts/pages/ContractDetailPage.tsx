@@ -17,9 +17,11 @@ import type { ApiError } from '@/shared/types/api.types'
 
 function DetailItem({ label, value }: { label: string; value: string | null | undefined }) {
   return (
-    <div className="grid gap-0.5">
-      <span className="text-xs font-semibold text-gray-400">{label}</span>
-      <span className="text-sm text-gray-900">{value || '—'}</span>
+    <div className="grid gap-1">
+      <span className="text-xs font-semibold uppercase tracking-wide text-text-subtle">
+        {label}
+      </span>
+      <span className="text-sm font-medium text-text">{value || '—'}</span>
     </div>
   )
 }
@@ -68,11 +70,11 @@ export default function ContractDetailPage() {
   if (isError) {
     return (
       <div className="flex flex-col items-center gap-3 py-20 text-center">
-        <p className="text-sm text-gray-600">Contrato não encontrado.</p>
+        <p className="text-sm text-text-muted">Contrato não encontrado.</p>
         <button
           type="button"
           onClick={() => void navigate('/contracts')}
-          className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+          className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
         >
           Voltar para contratos
         </button>
@@ -88,21 +90,33 @@ export default function ContractDetailPage() {
         <button
           type="button"
           onClick={() => void navigate('/contracts')}
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-gray-600 hover:bg-gray-100"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border text-text-muted transition-colors hover:bg-card-hover hover:text-text"
           aria-label="Voltar"
         >
-          ←
+          <svg viewBox="0 0 24 24" className="h-4 w-4">
+            <path fill="currentColor" d="m10.8 12 4.6-4.6L14 6l-6 6 6 6 1.4-1.4L10.8 12Z" />
+          </svg>
         </button>
-        <h2 className="font-['Montserrat',sans-serif] text-2xl font-bold text-navy">
-          {isLoading ? 'Carregando...' : `Contrato — ${contract?.client?.name ?? ''}`}
-        </h2>
-        {contract && <ContractStatusBadge status={contract.status} />}
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-info shadow-sm shadow-primary/25">
+          <svg viewBox="0 0 24 24" className="h-5 w-5 text-white">
+            <path fill="currentColor" d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h8v1.5H8V12Zm0 4h8v1.5H8V16Z" />
+          </svg>
+        </span>
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <h2 className="truncate font-heading text-2xl font-bold text-text">
+              {isLoading ? 'Carregando...' : (contract?.client?.name ?? 'Contrato')}
+            </h2>
+            {contract && <ContractStatusBadge status={contract.status} />}
+          </div>
+          <p className="mt-0.5 text-sm text-text-muted">Detalhes do contrato</p>
+        </div>
       </div>
 
       {/* Dados do contrato */}
-      <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="mb-6 rounded-2xl border border-border bg-card p-6 shadow-sm">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="font-['Montserrat',sans-serif] text-sm font-bold text-navy">
+          <h3 className="font-heading text-sm font-bold text-text">
             Dados do contrato
           </h3>
           {contract && contract.status !== 'canceled' && (
@@ -112,7 +126,7 @@ export default function ContractDetailPage() {
                   type="button"
                   onClick={() => void handleActivate()}
                   disabled={isActivating}
-                  className="rounded-md border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-lg border border-success/40 px-3 py-1.5 text-sm font-medium text-success transition-colors hover:bg-success-soft disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isActivating ? 'Ativando...' : 'Ativar contrato'}
                 </button>
@@ -121,7 +135,7 @@ export default function ContractDetailPage() {
                 <button
                   type="button"
                   onClick={() => setSuspendModalOpen(true)}
-                  className="rounded-md border border-yellow-300 px-3 py-1.5 text-sm font-medium text-yellow-700 hover:bg-yellow-50"
+                  className="rounded-lg border border-warning/40 px-3 py-1.5 text-sm font-medium text-warning transition-colors hover:bg-warning-soft"
                 >
                   Suspender contrato
                 </button>
@@ -130,7 +144,7 @@ export default function ContractDetailPage() {
                 <button
                   type="button"
                   onClick={() => setRenewModalOpen(true)}
-                  className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100"
+                  className="rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
                 >
                   Renovar contrato
                 </button>
@@ -138,14 +152,14 @@ export default function ContractDetailPage() {
               <button
                 type="button"
                 onClick={() => setEditModalOpen(true)}
-                className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100"
+                className="rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
               >
                 Editar contrato
               </button>
               <button
                 type="button"
                 onClick={() => setCancelModalOpen(true)}
-                className="rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50"
+                className="rounded-lg border border-danger/40 px-3 py-1.5 text-sm font-medium text-danger transition-colors hover:bg-danger-soft"
               >
                 Cancelar contrato
               </button>
@@ -157,8 +171,8 @@ export default function ContractDetailPage() {
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="grid gap-1">
-                <div className="h-3 w-16 animate-pulse rounded bg-gray-200" />
-                <div className="h-4 w-32 animate-pulse rounded bg-gray-200" />
+                <div className="h-3 w-16 animate-pulse rounded bg-card-hover" />
+                <div className="h-4 w-32 animate-pulse rounded bg-card-hover" />
               </div>
             ))}
           </div>
@@ -198,20 +212,22 @@ export default function ContractDetailPage() {
               value={contract?.durationMonths != null ? `${contract.durationMonths} meses` : null}
             />
             <div className="col-span-2 grid gap-0.5 sm:col-span-3">
-              <span className="text-xs font-semibold text-gray-400">Dependentes</span>
+              <span className="text-xs font-semibold uppercase tracking-wide text-text-subtle">
+                Dependentes
+              </span>
               {contract?.dependents && contract.dependents.length > 0 ? (
                 <div className="flex flex-wrap gap-2 pt-0.5">
                   {contract.dependents.map((d) => (
                     <span
                       key={d.id}
-                      className="inline-flex items-center rounded-full border border-primary bg-primary/10 px-3 py-0.5 text-xs font-medium text-primary"
+                      className="inline-flex items-center rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold text-primary"
                     >
                       {d.name}
                     </span>
                   ))}
                 </div>
               ) : (
-                <span className="text-sm text-gray-900">—</span>
+                <span className="text-sm text-text">—</span>
               )}
             </div>
           </div>
@@ -220,20 +236,20 @@ export default function ContractDetailPage() {
 
       {/* Link para recebíveis */}
       {contract && (
-        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="mb-6 rounded-2xl border border-border bg-card p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-['Montserrat',sans-serif] text-sm font-bold text-navy">
+              <h3 className="font-heading text-sm font-bold text-text">
                 Recebíveis
               </h3>
-              <p className="mt-0.5 text-xs text-gray-500">
+              <p className="mt-0.5 text-xs text-text-subtle">
                 Visualize os recebíveis vinculados a este contrato.
               </p>
             </div>
             <button
               type="button"
               onClick={() => void navigate(`/finances/receivables?contractId=${contract.id}`)}
-              className="rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100"
+              className="rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
             >
               Ver recebíveis →
             </button>

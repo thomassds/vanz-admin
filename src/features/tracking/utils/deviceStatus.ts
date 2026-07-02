@@ -10,5 +10,5 @@ export function getDeviceStatusLabel(status: number): string {
 }
 
 export function getDeviceStatusBadgeClass(status: number): string {
-  return status === 0 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+  return status === 0 ? 'bg-success-soft text-success' : 'bg-card-hover text-text-muted'
 }

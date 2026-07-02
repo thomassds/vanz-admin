@@ -26,9 +26,9 @@ const STATUS_LABELS: Record<string, string> = {
 }
 
 const STATUS_CLASS: Record<string, string> = {
-  pending: 'bg-gray-100 text-gray-600',
-  charged: 'bg-blue-100 text-blue-700',
-  overdue: 'bg-red-100 text-red-600',
+  pending: 'bg-card-hover text-text-muted',
+  charged: 'bg-info-soft text-info',
+  overdue: 'bg-danger-soft text-danger',
 }
 
 export function UpcomingReceivablesTable({
@@ -46,11 +46,11 @@ export function UpcomingReceivablesTable({
   if (isError) {
     return (
       <div className="flex flex-col items-center gap-3 py-10 text-center">
-        <p className="text-sm text-gray-600">Erro ao carregar próximos vencimentos.</p>
+        <p className="text-sm text-text-muted">Erro ao carregar próximos vencimentos.</p>
         <button
           type="button"
           onClick={onRefetch}
-          className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+          className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-card-hover"
         >
           Tentar novamente
         </button>
@@ -62,47 +62,47 @@ export function UpcomingReceivablesTable({
     <div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50">
-            <tr className="border-b border-gray-200">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Cliente</th>
-              <th className="hidden px-4 py-3 text-left text-xs font-semibold text-gray-600 sm:table-cell">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">Cliente</th>
+              <th className="hidden px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle sm:table-cell">
                 Parcela
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Vencimento</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Valor</th>
-              <th className="hidden px-4 py-3 text-left text-xs font-semibold text-gray-600 sm:table-cell">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">Vencimento</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle">Valor</th>
+              <th className="hidden px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-text-subtle sm:table-cell">
                 Status
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600">Ação</th>
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-text-subtle">Ação</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-border">
             {isLoading
               ? Array.from({ length: SKELETON_ROWS }).map((_, i) => (
                   <tr key={i}>
                     {Array.from({ length: 6 }).map((_, j) => (
                       <td key={j} className="px-4 py-3">
-                        <div className="h-4 animate-pulse rounded bg-gray-200" />
+                        <div className="h-4 animate-pulse rounded bg-card-hover" />
                       </td>
                     ))}
                   </tr>
                 ))
               : data?.map((r) => (
-                  <tr key={r.id} className="hover:bg-gray-50">
+                  <tr key={r.id} className="transition-colors hover:bg-card-hover">
                     <td className="px-4 py-3">
-                      <span className="font-medium text-gray-900">{r.clientName}</span>
-                      <span className="mt-0.5 block text-xs text-gray-400 sm:hidden">
+                      <span className="font-medium text-text">{r.clientName}</span>
+                      <span className="mt-0.5 block text-xs text-text-subtle sm:hidden">
                         {STATUS_LABELS[r.status] ?? r.status}
                       </span>
                     </td>
-                    <td className="hidden px-4 py-3 text-gray-600 sm:table-cell">
+                    <td className="hidden px-4 py-3 text-text-muted sm:table-cell">
                       #{r.installmentNumber}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">{isoToBR(r.dueDate.slice(0, 10))}</td>
-                    <td className="px-4 py-3 text-gray-600">{formatCurrency(r.value)}</td>
+                    <td className="px-4 py-3 text-text-muted">{isoToBR(r.dueDate.slice(0, 10))}</td>
+                    <td className="px-4 py-3 tabular-nums text-text-muted">{formatCurrency(r.value)}</td>
                     <td className="hidden px-4 py-3 sm:table-cell">
                       <span
-                        className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_CLASS[r.status] ?? 'bg-gray-100 text-gray-600'}`}
+                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_CLASS[r.status] ?? 'bg-card-hover text-text-muted'}`}
                       >
                         {STATUS_LABELS[r.status] ?? r.status}
                       </span>
@@ -113,7 +113,7 @@ export function UpcomingReceivablesTable({
                         onClick={() =>
                           void navigate(`/finances/receivables?contractId=${r.contractId}`)
                         }
-                        className="text-xs font-medium text-primary hover:underline"
+                        className="text-xs font-bold text-primary transition-colors hover:text-primary-hover"
                       >
                         Ver →
                       </button>
@@ -126,30 +126,30 @@ export function UpcomingReceivablesTable({
 
       {!isLoading && (!data || data.length === 0) && (
         <div className="flex items-center justify-center py-12">
-          <p className="text-sm text-gray-500">Nenhum vencimento nos próximos 30 dias.</p>
+          <p className="text-sm text-text-subtle">Nenhum vencimento nos próximos 30 dias.</p>
         </div>
       )}
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-gray-200 px-4 py-3">
-          <span className="text-xs text-gray-500">{total} recebível{total !== 1 ? 'is' : ''}</span>
+        <div className="flex items-center justify-between border-t border-border px-4 py-3">
+          <span className="text-xs text-text-subtle">{total} recebível{total !== 1 ? 'is' : ''}</span>
           <div className="flex gap-1">
             <button
               type="button"
               disabled={page <= 1}
               onClick={() => onPageChange(page - 1)}
-              className="rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+              className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-40"
             >
               Anterior
             </button>
-            <span className="flex items-center px-3 text-xs text-gray-600">
+            <span className="flex items-center px-3 text-xs text-text-muted">
               {page} / {totalPages}
             </span>
             <button
               type="button"
               disabled={page >= totalPages}
               onClick={() => onPageChange(page + 1)}
-              className="rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+              className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-card-hover disabled:opacity-40"
             >
               Próxima
             </button>

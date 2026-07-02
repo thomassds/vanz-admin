@@ -27,7 +27,7 @@ export default function RecoveryPasswordPage() {
   return (
     <AuthLayout>
       <header>
-        <h2 className="m-0 text-center font-['Noto_Sans',sans-serif] text-[2.35rem] font-bold text-[#00c8ff] lg:text-left lg:text-[52px]">
+        <h2 className="m-0 font-heading text-3xl font-extrabold tracking-tight text-text">
           {STEP_TITLES[step]}
         </h2>
       </header>
@@ -65,10 +65,13 @@ export default function RecoveryPasswordPage() {
       )}
 
       {step === 'request-code' && (
-        <footer className="mt-8 lg:px-6">
-          <p className="text-center text-xs text-[#708097] lg:text-left">
+        <footer className="mt-8">
+          <p className="text-center text-sm text-text-muted">
             Lembrou a senha?{' '}
-            <Link to="/login" className="font-bold text-[#00c8ff] hover:underline">
+            <Link
+              to="/login"
+              className="font-bold text-primary transition-colors hover:text-primary-hover"
+            >
               Entrar
             </Link>
           </p>
